@@ -1,7 +1,7 @@
 package model;
 /***********************************************************************
  * Module:  Aplikacija.java
- * Author:  evaje
+ * Author:  student
  * Purpose: Defines the Class Aplikacija
  ***********************************************************************/
 
