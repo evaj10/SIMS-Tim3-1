@@ -1,10 +1,14 @@
 package view;
 
 import java.awt.Dimension;
+import view.LoginSpoljniDialog;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -44,6 +48,26 @@ public class LoginDialog extends JDialog {
 		JButton logIn = new JButton("ULAZAK U KUCU");
 		JButton izvestaj = new JButton("IZVESTAJI");
 
+		// dodaje se listener - ovo se poziva kad se klikne na dugme, tu cemo valjda
+		// pozivati i funkcije za promjenu stanja aplikacije ??
+		logIn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainFrame mf = MainFrame.getInstance();
+				mf.setVisible(true);
+				dispose(); // gasenje trenutnog dialoga
+			}
+		});
+
+		izvestaj.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				LoginSpoljniDialog loginSpoljniDialog = new LoginSpoljniDialog();
+				loginSpoljniDialog.setVisible(true);
+				dispose();
+			}
+		});
+
 		add(panel);
 
 		panel.add(labelLogo, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.CENTER,
@@ -62,6 +86,7 @@ public class LoginDialog extends JDialog {
 				new Insets(5, 80, 5, 80), 0, 0));
 		panel.add(izvestaj, new GridBagConstraints(0, 7, 1, 1, 0, 0, GridBagConstraints.EAST, GridBagConstraints.NONE,
 				new Insets(15, 5, 5, 20), 0, 0));
+
 	}
 
 	public static void main(String[] args) {
