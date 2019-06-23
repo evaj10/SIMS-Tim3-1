@@ -89,6 +89,7 @@ public class LoginDialog extends JDialog {
 
 	}
 
+	// ovdje pocinje ??
 	public static void main(String[] args) {
 		LoginDialog prozor = new LoginDialog();
 		prozor.setVisible(true);
