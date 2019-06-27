@@ -1,4 +1,4 @@
-package model;
+package controller;
 /***********************************************************************
  * Module:  Aplikacija.java
  * Author:  student
@@ -153,4 +153,19 @@ public class Aplikacija {
 			nalozi.clear();
 	}
 
+	public Tlocrt getTlocrt() {
+		return tlocrt;
+	}
+
+	public void setTlocrt(Tlocrt tlocrt) {
+		this.tlocrt = tlocrt;
+	}
+
+	public Stanje getStanje() {
+		return stanje;
+	}
+
+	public void setStanje(Stanje stanje) {
+		this.stanje = stanje;
+	}
 }

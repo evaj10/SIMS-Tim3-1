@@ -7,6 +7,7 @@ package model.komponente;
 public class Soba {
 
 	private int id;
+	private String ime;
 	private double temperatura;
 	private double vlaznost;
 	public java.util.List<Komponenta> komponente;
@@ -62,6 +63,14 @@ public class Soba {
 		this.id = id;
 	}
 
+	public String getIme() {
+		return ime;
+	}
+
+	public void setIme(String ime) {
+		this.ime = ime;
+	}
+	
 	public double getTemperatura() {
 		return temperatura;
 	}

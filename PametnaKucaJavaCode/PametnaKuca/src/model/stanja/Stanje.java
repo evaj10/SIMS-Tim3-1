@@ -5,7 +5,7 @@ package model.stanja;
  * Purpose: Defines the Class Stanje
  ***********************************************************************/
 
-import model.Aplikacija;
+import controller.Aplikacija;
 
 public abstract class Stanje {
 	public Aplikacija aplikacija;
