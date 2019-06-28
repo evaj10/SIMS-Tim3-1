@@ -7,6 +7,9 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,37 +18,91 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import konstante.Konstante;
 import view.IzvjestajDialog;
+
+/*
+ * Dijalog za Login spoljnog korisnika, klasa naslednica JDialog-a
+ */
 
 public class LoginSpoljniDialog extends JDialog {
 
 	private static final long serialVersionUID = 1884063759494311563L;
 
+	private JPanel panel;
+	private JLabel lblLogo;
+	private JLabel lblLogin;
+	private JLabel lblId;
+	private JTextField txfId;
+	private JButton btnBack;
+	private JButton btnLogin;
+
 	public LoginSpoljniDialog() {
 		setResizable(false);
-		setTitle("Pametna kuca - Prijava spoljnog korisnika");
-		setIconImage(new ImageIcon("logo.png").getImage());
+		setTitle("Inteligentna Softverska Aplikazija za Kucu - Prijava spoljnog korisnika");
+		setIconImage(new ImageIcon(Konstante.APP_LOGO).getImage());
+
 		// postavljamo dimenziju dijaloga u zavisnosti od velicine ekrana na cetvrtinu
+		setWindowSize();
+		setLocationRelativeTo(null);
+
+		// postavljamo raspored komponenti
+		createGUI();
+		createLayout();
+
+		// povezivanje dugmadi
+		attachBtnListeners();
+
+		// gasenje dijaloga = gasenje aplikacije
+		terminateOnExit();
+
+	}
+
+	private void setWindowSize() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int height = screenSize.height;
 		int width = screenSize.width;
 		setSize(width / 4, height / 2);
-		setLocationRelativeTo(null);
+	}
 
-		// postavljamo mrezni raspored
-		JPanel panel = new JPanel(new GridBagLayout());
+	private void createGUI() {
+		panel = new JPanel(new GridBagLayout());
 
-		ImageIcon imgLogo = new ImageIcon("logo.png");
-		JLabel labelLogo = new JLabel("", imgLogo, JLabel.CENTER);
-		JLabel log = new JLabel("Prijava spoljnog korisnika", JLabel.CENTER);
+		ImageIcon imgLogo = new ImageIcon(Konstante.APP_LOGO);
+		lblLogo = new JLabel("", imgLogo, JLabel.CENTER);
+		lblLogin = new JLabel("Prijava spoljnog korisnika", JLabel.CENTER);
 
-		JLabel labelaID = new JLabel("ID firme: ");
-		JTextField IDfirme = new JTextField();
+		lblId = new JLabel("ID firme: ");
+		txfId = new JTextField();
 
-		JButton povratak = new JButton("POVRATAK");
-		JButton ok = new JButton("OK");
+		btnBack = new JButton("POVRATAK");
+		btnLogin = new JButton("OK");
+	}
 
-		povratak.addActionListener(new ActionListener() {
+	private void createLayout() {
+		add(panel);
+
+		panel.add(lblLogo, new GridBagConstraints(0, 0, 2, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+				new Insets(0, 5, 5, 5), 0, 0));
+
+		panel.add(lblLogin, new GridBagConstraints(0, 1, 2, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+				new Insets(0, 5, 10, 5), 0, 0));
+
+		panel.add(lblId, new GridBagConstraints(0, 2, 2, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE,
+				new Insets(5, 50, 5, 50), 0, 0));
+
+		panel.add(txfId, new GridBagConstraints(0, 3, 2, 1, 100, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL, new Insets(5, 50, 5, 50), 0, 0));
+
+		panel.add(btnBack, new GridBagConstraints(0, 6, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
+				new Insets(55, 40, 5, 40), 0, 0));
+
+		panel.add(btnLogin, new GridBagConstraints(1, 6, 1, 1, 0, 0, GridBagConstraints.EAST, GridBagConstraints.BOTH,
+				new Insets(57, 40, 5, 40), 0, 0));
+	}
+
+	private void attachBtnListeners() {
+		btnBack.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				LoginDialog loginDialog = new LoginDialog();
@@ -54,7 +111,7 @@ public class LoginSpoljniDialog extends JDialog {
 			}
 		});
 
-		ok.addActionListener(new ActionListener() {
+		btnLogin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				IzvjestajDialog izvjestajDialog = new IzvjestajDialog();
@@ -62,21 +119,16 @@ public class LoginSpoljniDialog extends JDialog {
 				dispose();
 			}
 		});
+	}
 
-		add(panel);
-
-		panel.add(labelLogo, new GridBagConstraints(0, 0, 2, 1, 0, 0, GridBagConstraints.CENTER,
-				GridBagConstraints.BOTH, new Insets(0, 5, 5, 5), 0, 0));
-		panel.add(log, new GridBagConstraints(0, 1, 2, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-				new Insets(0, 5, 10, 5), 0, 0));
-		panel.add(labelaID, new GridBagConstraints(0, 2, 2, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE,
-				new Insets(5, 50, 5, 50), 0, 0));
-		panel.add(IDfirme, new GridBagConstraints(0, 3, 2, 1, 100, 0, GridBagConstraints.WEST,
-				GridBagConstraints.HORIZONTAL, new Insets(5, 50, 5, 50), 0, 0));
-		panel.add(povratak, new GridBagConstraints(0, 6, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
-				new Insets(55, 40, 5, 40), 0, 0));
-		panel.add(ok, new GridBagConstraints(1, 6, 1, 1, 0, 0, GridBagConstraints.EAST, GridBagConstraints.BOTH,
-				new Insets(57, 40, 5, 40), 0, 0));
+	private void terminateOnExit() {
+		WindowListener exitListener = new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+		};
+		this.addWindowListener(exitListener);
 	}
 
 }
