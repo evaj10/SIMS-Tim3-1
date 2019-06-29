@@ -31,7 +31,9 @@ public class MainFrame extends JFrame {
 
 	// glavni prozor je singlton
 	private static MainFrame instance = null;
-
+	
+	private static boolean made = false;
+	
 	private JPanel panel;
 
 	private MenuBar menuBar;
@@ -49,16 +51,20 @@ public class MainFrame extends JFrame {
 	int x;
 	int y;
 
-	public MainFrame() {
-		initGUI();
-	}
-
 	public static MainFrame getInstance() {
 		if (instance == null) {
 			instance = new MainFrame();
 			instance.initGUI();
 		}
 		return instance;
+	}
+	
+	public static boolean getMade() {
+		return made;
+	}
+	
+	public static void setMade(boolean in) {
+		made = in;
 	}
 
 	public void initGUI() {
@@ -105,15 +111,7 @@ public class MainFrame extends JFrame {
 		opcijePain.setBorder(BorderFactory.createMatteBorder(0, 5, 0, 0, Color.gray));
 		opcijePain.setPreferredSize(preferredSize);
 		opcijePain.setLayout(new GridLayout(7, 1, 0, 10));
-/*
-		JButton btnKreiranjeKorisnika = new JButton("Kreiranje korisnika");
-		JButton btnUnapredjivanjeKorisnika = new JButton("Unapredjivanje korisnika");
-		JButton btnIzmenaPodatakaKorisnika = new JButton("Izmena podataka korisnika");
-		JButton btnBrisanjeKorisnika = new JButton("Brisanje korisnika");
-		JButton btnPregledKorisnika = new JButton("Pregled korisnika");
-		JButton btnIzmenaPodataka = new JButton("Izmena sopstvenih podataka");
-		JButton btnLogOut = new JButton("Log Out");
-*/
+
 		opcijePain.add(btnKreiranjeKorisnika);
 		opcijePain.add(btnUnapredjivanjeKorisnika);
 		opcijePain.add(btnIzmenaPodatakaKorisnika);
@@ -177,15 +175,15 @@ public class MainFrame extends JFrame {
 	}
 	
 	public void addVodaIzvestajListener(ActionListener a) {
-		//menuBar.addActionListener(a);
+		menuBar.getMiVoda().addActionListener(a);
 	}
 	
 	public void addGasIzvestajListener(ActionListener a) {
-		//menuBar.addActionListener(a);
+		menuBar.getMiGas().addActionListener(a);
 	}
 	
 	public void addStrujaIzvestajListener(ActionListener a) {
-		//menuBar.addActionListener(a);
+		menuBar.getMiStruja().addActionListener(a);
 	}
 	
 	public void addKreiranjeKorisnikaListener(ActionListener a) {

@@ -71,7 +71,7 @@ public class IzvjestajDialog extends JDialog {
 	private void createGUI() {
 		panel = new JPanel(new GridBagLayout());
 
-		ImageIcon imgLogo = new ImageIcon(Konstante.APP_LOGO);
+		ImageIcon imgLogo = new ImageIcon(Konstante.FILES_LOGO);
 		lblLogo = new JLabel("", imgLogo, JLabel.CENTER);
 		lblLogin = new JLabel("Odabir izvjestaja", JLabel.CENTER);
 

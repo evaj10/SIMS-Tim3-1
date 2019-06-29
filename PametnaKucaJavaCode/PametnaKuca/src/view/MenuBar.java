@@ -25,6 +25,7 @@ public class MenuBar extends JMenuBar {
 	private JMenuItem miPregledKorisnika;
 	
 	private JMenu mIzvestaji;
+
 	private JMenuItem miVoda;
 	private JMenuItem miGas;
 	private JMenuItem miStruja;
@@ -77,6 +78,7 @@ public class MenuBar extends JMenuBar {
 
 				mnucbItem.setSelected(true);
 			}
+
 			mnucbItem.addActionListener(new ActionListener() {
 
 				@Override
@@ -95,5 +97,29 @@ public class MenuBar extends JMenuBar {
 			});
 			mIzgledAplikacije.add(mnucbItem);
 		}
+	}
+	
+	public JMenuItem getMiVoda() {
+		return miVoda;
+	}
+
+	public void setMiVoda(JMenuItem miVoda) {
+		this.miVoda = miVoda;
+	}
+
+	public JMenuItem getMiGas() {
+		return miGas;
+	}
+
+	public void setMiGas(JMenuItem miGas) {
+		this.miGas = miGas;
+	}
+
+	public JMenuItem getMiStruja() {
+		return miStruja;
+	}
+
+	public void setMiStruja(JMenuItem miStruja) {
+		this.miStruja = miStruja;
 	}
 }

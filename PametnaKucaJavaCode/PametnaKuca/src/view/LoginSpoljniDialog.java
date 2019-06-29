@@ -66,7 +66,7 @@ public class LoginSpoljniDialog extends JDialog {
 	private void createGUI() {
 		panel = new JPanel(new GridBagLayout());
 
-		ImageIcon imgLogo = new ImageIcon(Konstante.APP_LOGO);
+		ImageIcon imgLogo = new ImageIcon(Konstante.COMPANY_LOGO);
 		lblLogo = new JLabel("", imgLogo, JLabel.CENTER);
 		lblLogin = new JLabel("Prijava spoljnog korisnika", JLabel.CENTER);
 
