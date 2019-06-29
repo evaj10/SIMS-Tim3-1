@@ -18,6 +18,17 @@ public class Korisnik {
 	public Adresa adresa;
 	public Nalog nalog;
 
+	public Korisnik(int id, String ime, String prezime, Date datumRodjenja,
+			Pol pol, TipKorisnika tk, Adresa adr) {
+		this.id = id;
+		this.ime = ime;
+		this.prezime = prezime;
+		this.datumRodjenja = datumRodjenja;
+		this.pol = pol;
+		this.tipKorisnika = tk;
+		this.adresa = adr;
+	}
+	
 	public int getId() {
 		return id;
 	}

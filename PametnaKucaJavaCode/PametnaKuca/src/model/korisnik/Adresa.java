@@ -6,20 +6,26 @@ package model.korisnik;
 
 public class Adresa {
 
-	private int id;
+	//private int id;
 	private String ulica;
 	private int broj;
 
 	public Mesto mesto;
 
-	public int getId() {
+	public Adresa(String ulica, int broj, Mesto m) {
+		this.ulica = ulica;
+		this.broj = broj;
+		this.mesto = m;
+	}
+	
+	/*public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
 	}
-
+*/
 	public String getUlica() {
 		return ulica;
 	}

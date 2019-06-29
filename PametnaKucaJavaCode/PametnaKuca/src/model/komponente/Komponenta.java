@@ -11,6 +11,14 @@ public class Komponenta {
 	public Soba soba;
 	public TipKomponente tipKomponente;
 
+	public Komponenta(int id, String naziv, Soba soba, TipKomponente tk) {
+		this.id = id;
+		this.naziv = naziv;
+		this.vrednost = 0;
+		this.soba = soba;
+		this.tipKomponente = tk;
+	}
+	
 	public int getId() {
 		return id;
 	}

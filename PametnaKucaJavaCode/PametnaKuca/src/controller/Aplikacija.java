@@ -13,11 +13,12 @@ import model.korisnik.TipKorisnika;
 import model.stanja.Stanje;
 
 public class Aplikacija {
-	public Tlocrt tlocrt;
+	private Nalog trenutnoUlogovani;
+	private Tlocrt tlocrt;
 
-	public java.util.List<Nalog> nalozi;
-	public Stanje stanje;
-
+	private java.util.List<Nalog> nalozi;
+	private Stanje stanje;
+	
 	public void kreirajIzvestaj(TipIzvestaja tipIzvestaja) {
 		// TODO: implement
 	}
@@ -153,6 +154,14 @@ public class Aplikacija {
 			nalozi.clear();
 	}
 
+	public Nalog getTrenutnoUlogovani() {
+		return trenutnoUlogovani;
+	}
+
+	public void setTrenutnoUlogovani(Nalog nalog) {
+		this.trenutnoUlogovani = nalog;
+	}
+	
 	public Tlocrt getTlocrt() {
 		return tlocrt;
 	}

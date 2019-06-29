@@ -10,7 +10,10 @@ public class Mesto {
 
 	public java.util.List<Adresa> adrese;
 
-	
+	public Mesto(int pBr, String grad) {
+		this.postanskiBr = pBr;
+		this.grad = grad;
+	}
 	
 	public int getPostanskiBr() {
 		return postanskiBr;

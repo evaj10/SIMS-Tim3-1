@@ -12,6 +12,13 @@ public class Soba {
 	private double vlaznost;
 	public java.util.List<Komponenta> komponente;
 
+	public Soba(int id, String ime) {
+		this.id = id;
+		this.ime = ime;
+		this.temperatura = 0;
+		this.vlaznost = 0;
+	}
+	
 	public void iscrtajSobu() {
 		// TODO: implement
 	}

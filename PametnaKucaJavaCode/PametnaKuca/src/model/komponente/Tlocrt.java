@@ -5,8 +5,6 @@ package model.komponente;
  * Purpose: Defines the Class Tlocrt
  ***********************************************************************/
 
-import model.korisnik.Nalog;
-
 public class Tlocrt {
 	private int id;
 	private String slika;
@@ -14,8 +12,14 @@ public class Tlocrt {
 
 	public java.util.List<Soba> sobe;
 	public java.util.Collection<Komponenta> komponente;
-	public java.util.List<Nalog> nalozi;
+	//public java.util.List<Nalog> nalozi;
 
+	public Tlocrt(int id, String naziv, String slika) {
+		this.id = id;
+		this.naziv = naziv;
+		this.slika = slika;
+	}
+	
 	public void iscrtajTlocrt() {
 		// TODO: implement
 	}
@@ -99,7 +103,7 @@ public class Tlocrt {
 		if (komponente != null)
 			komponente.clear();
 	}
-
+/*
 	public java.util.List<Nalog> getNalozi() {
 		if (nalozi == null)
 			nalozi = new java.util.ArrayList<Nalog>();
@@ -139,7 +143,7 @@ public class Tlocrt {
 		if (nalozi != null)
 			nalozi.clear();
 	}
-
+*/
 	public int getId() {
 		return id;
 	}

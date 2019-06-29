@@ -9,8 +9,15 @@ public class Nalog {
 	private String sifra;
 	private String fileTlocrt;
 
-	public Korisnik korisnik;
+	private Korisnik korisnik;
 
+	public Nalog(String korIme, String sifra, String fileTlocrt, Korisnik k) {
+		this.korisnickoIme = korIme;
+		this.sifra = sifra;
+		this.fileTlocrt = fileTlocrt;
+		this.korisnik = k;
+	}
+	
 	public String getKorisnickoIme() {
 		return korisnickoIme;
 	}
