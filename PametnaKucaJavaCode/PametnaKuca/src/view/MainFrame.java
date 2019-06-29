@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -17,8 +18,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import controller.Aplikacija;
 import konstante.Konstante;
+import model.Aplikacija;
 
 /*
  * Glavni frame za prikaz tlocrta i manipulisanje komponentama i korisnicima, klasa naslednica JFrame-a
@@ -35,17 +36,28 @@ public class MainFrame extends JFrame {
 
 	private MenuBar menuBar;
 
+	private JButton btnKreiranjeKorisnika = new JButton("Kreiranje korisnika");
+	private JButton btnUnapredjivanjeKorisnika = new JButton("Unapredjivanje korisnika");
+	private JButton btnIzmenaPodatakaKorisnika = new JButton("Izmena podataka korisnika");
+	private JButton btnBrisanjeKorisnika = new JButton("Brisanje korisnika");
+	private JButton btnPregledKorisnika = new JButton("Pregled korisnika");
+	private JButton btnIzmenaPodataka = new JButton("Izmena sopstvenih podataka");
+	private JButton btnLogOut = new JButton("Log Out");
+	
 	private Aplikacija app;
 	
 	int x;
 	int y;
+
+	public MainFrame() {
+		initGUI();
+	}
 
 	public static MainFrame getInstance() {
 		if (instance == null) {
 			instance = new MainFrame();
 			instance.initGUI();
 		}
-
 		return instance;
 	}
 
@@ -93,20 +105,20 @@ public class MainFrame extends JFrame {
 		opcijePain.setBorder(BorderFactory.createMatteBorder(0, 5, 0, 0, Color.gray));
 		opcijePain.setPreferredSize(preferredSize);
 		opcijePain.setLayout(new GridLayout(7, 1, 0, 10));
-
+/*
 		JButton btnKreiranjeKorisnika = new JButton("Kreiranje korisnika");
 		JButton btnUnapredjivanjeKorisnika = new JButton("Unapredjivanje korisnika");
 		JButton btnIzmenaPodatakaKorisnika = new JButton("Izmena podataka korisnika");
 		JButton btnBrisanjeKorisnika = new JButton("Brisanje korisnika");
-		JButton btnIzvestaj = new JButton("Izvestaji");
+		JButton btnPregledKorisnika = new JButton("Pregled korisnika");
 		JButton btnIzmenaPodataka = new JButton("Izmena sopstvenih podataka");
 		JButton btnLogOut = new JButton("Log Out");
-
+*/
 		opcijePain.add(btnKreiranjeKorisnika);
 		opcijePain.add(btnUnapredjivanjeKorisnika);
 		opcijePain.add(btnIzmenaPodatakaKorisnika);
 		opcijePain.add(btnBrisanjeKorisnika);
-		opcijePain.add(btnIzvestaj);
+		opcijePain.add(btnPregledKorisnika);
 		opcijePain.add(btnIzmenaPodataka);
 		opcijePain.add(btnLogOut);
 
@@ -134,19 +146,16 @@ public class MainFrame extends JFrame {
 				int yw = centralPain.getSize().height;
 				//int z = lblTlocrtImage.getSize().width;
 				//int p = lblTlocrtImage.getSize().height;
-				System.out.println(xw);
-				System.out.println(yw);
+				
 				int xp = ((xw * 100) / x) / 2;
 				int yp = ((yw * 100) / y) / 2;
-				System.out.println(xp);
-				System.out.println(yp);
+				
 				btnProba.setBounds(lblTlocrtImage.getLocation().x + xp, 
 						lblTlocrtImage.getLocation().y + yp, 
 						lblTlocrtImage.getSize().width / 8, 
 						lblTlocrtImage.getSize().height / 14);
 				x = xw;
 				y = yw;
-				System.out.println();
 			}
 		}
 		this.addComponentListener(new ResizeListener());
@@ -166,4 +175,45 @@ public class MainFrame extends JFrame {
 		setSize(screenWidth * 3 / 4, screenHeight * 3 / 4);
 		setMinimumSize(getSize());
 	}
+	
+	public void addVodaIzvestajListener(ActionListener a) {
+		//menuBar.addActionListener(a);
+	}
+	
+	public void addGasIzvestajListener(ActionListener a) {
+		//menuBar.addActionListener(a);
+	}
+	
+	public void addStrujaIzvestajListener(ActionListener a) {
+		//menuBar.addActionListener(a);
+	}
+	
+	public void addKreiranjeKorisnikaListener(ActionListener a) {
+		btnKreiranjeKorisnika.addActionListener(a);
+	}
+	
+	public void addUnapredjivanjeKorisnikaListener(ActionListener a) {
+		btnUnapredjivanjeKorisnika.addActionListener(a);
+	}
+	
+	public void addIzmenaPodatakaKorisnikaListener(ActionListener a) {
+		btnIzmenaPodatakaKorisnika.addActionListener(a);
+	}
+	
+	public void addBrisanjeKorisnikaListener(ActionListener a) {
+		btnBrisanjeKorisnika.addActionListener(a);
+	}
+	
+	public void addPregledKorisnikaListener(ActionListener a) {
+		btnPregledKorisnika.addActionListener(a);
+	}
+	
+	public void addIzmenaSopstvenihPodatakaListener(ActionListener a) {
+		btnIzmenaPodataka.addActionListener(a);
+	}
+	
+	public void addLogoutListener(ActionListener a) {
+		btnLogOut.addActionListener(a);
+	}
+	
 }

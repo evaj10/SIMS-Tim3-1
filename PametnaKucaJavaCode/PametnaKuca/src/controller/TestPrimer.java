@@ -1,6 +1,7 @@
 package controller;
 
 import konstante.Konstante;
+import model.Aplikacija;
 import model.komponente.Alarm;
 import model.komponente.Klima;
 import model.komponente.Komponenta;

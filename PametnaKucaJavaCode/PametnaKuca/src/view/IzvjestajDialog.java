@@ -52,10 +52,10 @@ public class IzvjestajDialog extends JDialog {
 		// postavljamo raspored komponenti
 		createGUI();
 		createLayout();
-
+		/*
 		// povezivanje dugmadi
 		attachBtnListeners();
-
+		*/
 		// gasenje dijaloga = gasenje aplikacije
 		terminateOnExit();
 
@@ -108,6 +108,15 @@ public class IzvjestajDialog extends JDialog {
 				new Insets(57, 40, 5, 40), 0, 0));
 	}
 
+	public void addPovratakListener(ActionListener a) {
+		btnBack.addActionListener(a);
+	}
+	
+	public void addTraziListener(ActionListener a) {
+		btnChoose.addActionListener(a);
+	}
+
+	/*
 	private void attachBtnListeners() {
 		// klikom na povratak se otvara dialog Login
 		btnBack.addActionListener(new ActionListener() {
@@ -129,11 +138,13 @@ public class IzvjestajDialog extends JDialog {
 				 * LoginDialog loginDialog=new LoginDialog(); loginDialog.setVisible(true);
 				 * dispose();
 				 */
+	/*
 				String izabrani = cmbReports.getSelectedItem().toString();
 				lblMessage.setText("Izvjestaj tipa " + cmbReports.getSelectedItem().toString() + " je poslat!");
 			}
 		});
 	}
+	*/
 
 	private void terminateOnExit() {
 		WindowListener exitListener = new WindowAdapter() {

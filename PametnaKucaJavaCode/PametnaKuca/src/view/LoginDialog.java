@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -52,7 +53,7 @@ public class LoginDialog extends JDialog {
 		createLayout();
 		
 		// povezivanje dugmadi
-		attachBtnListeners();
+		//attachBtnListeners();
 		
 		// gasenje dijaloga = gasenje aplikacije
 		terminateOnExit();
@@ -70,7 +71,10 @@ public class LoginDialog extends JDialog {
 
 		ImageIcon imgLogo = new ImageIcon(Konstante.APP_LOGO);
 		lblLogo = new JLabel("", imgLogo, JLabel.CENTER);
+		lblLogo.setMaximumSize(new Dimension(100, 100));
+		
 		lblLogin = new JLabel("Prijava", JLabel.CENTER);
+		lblLogin.setFont(new Font(Font.DIALOG,Font.BOLD,16));
 
 		lblName = new JLabel("Korisnicko ime: ");
 		txfUsername = new JTextField();
@@ -107,8 +111,18 @@ public class LoginDialog extends JDialog {
 
 		panel.add(btnReport, new GridBagConstraints(0, 7, 1, 1, 0, 0, GridBagConstraints.EAST, GridBagConstraints.NONE,
 				new Insets(15, 5, 5, 20), 0, 0));
+	
 	}
 	
+	public void addLoginListener(ActionListener a) {
+		btnLogIn.addActionListener(a);
+	}
+	
+	public void addIzvestajListener(ActionListener a) {
+		btnReport.addActionListener(a);
+	}
+	
+	/*
 	private void attachBtnListeners() {
 		// dodaje se listener - ovo se poziva kad se klikne na dugme, tu cemo valjda
 		// pozivati i funkcije za promjenu stanja aplikacije ??
@@ -129,15 +143,24 @@ public class LoginDialog extends JDialog {
 				dispose();
 			}
 		});
-	}
+	}*/
 	
 	private void terminateOnExit() {
 		WindowListener exitListener = new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+            	//System.out.println(lblLogo.getSize().height);
                    System.exit(0);
             }
         };
         this.addWindowListener(exitListener);
+	}
+	
+	public String getUsername() {
+		return txfUsername.getText();
+	}
+	
+	public String getPassword() {
+		return txfPassword.getText();
 	}
 }

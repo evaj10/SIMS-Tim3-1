@@ -5,7 +5,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -19,7 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import konstante.Konstante;
-import view.IzvjestajDialog;
 
 /*
  * Dijalog za Login spoljnog korisnika, klasa naslednica JDialog-a
@@ -49,10 +47,10 @@ public class LoginSpoljniDialog extends JDialog {
 		// postavljamo raspored komponenti
 		createGUI();
 		createLayout();
-
+		/*
 		// povezivanje dugmadi
 		attachBtnListeners();
-
+		*/
 		// gasenje dijaloga = gasenje aplikacije
 		terminateOnExit();
 
@@ -76,7 +74,7 @@ public class LoginSpoljniDialog extends JDialog {
 		txfId = new JTextField();
 
 		btnBack = new JButton("POVRATAK");
-		btnLogin = new JButton("OK");
+		btnLogin = new JButton("PRIJAVA");
 	}
 
 	private void createLayout() {
@@ -98,9 +96,18 @@ public class LoginSpoljniDialog extends JDialog {
 				new Insets(55, 40, 5, 40), 0, 0));
 
 		panel.add(btnLogin, new GridBagConstraints(1, 6, 1, 1, 0, 0, GridBagConstraints.EAST, GridBagConstraints.BOTH,
-				new Insets(57, 40, 5, 40), 0, 0));
+				new Insets(57, 35, 5, 35), 0, 0));
 	}
 
+	public void addPovratakListener(ActionListener a) {
+		btnBack.addActionListener(a);
+	}
+	
+	public void addLoginListener(ActionListener a) {
+		btnLogin.addActionListener(a);
+	}
+	
+	/*
 	private void attachBtnListeners() {
 		btnBack.addActionListener(new ActionListener() {
 			@Override
@@ -120,7 +127,7 @@ public class LoginSpoljniDialog extends JDialog {
 			}
 		});
 	}
-
+	 */
 	private void terminateOnExit() {
 		WindowListener exitListener = new WindowAdapter() {
 			@Override

@@ -1,4 +1,4 @@
-package controller;
+package model;
 /***********************************************************************
  * Module:  Aplikacija.java
  * Author:  student
@@ -25,7 +25,7 @@ public class Aplikacija {
 
 	public boolean logIn() {
 		// TODO: implement
-		return false;
+		return true;
 	}
 
 	public void logOut() {
