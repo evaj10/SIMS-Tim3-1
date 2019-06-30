@@ -22,6 +22,7 @@ public class MenuBar extends JMenuBar {
 	private JMenuItem miKreirajKorisnika;
 	private JMenuItem miUnaprediKorisnika;
 	private JMenuItem miIzmeniPodatkeKorisnika;
+	private JMenuItem miBrisanjeKorisnika;
 	private JMenuItem miPregledKorisnika;
 	
 	private JMenu mIzvestaji;
@@ -45,10 +46,12 @@ public class MenuBar extends JMenuBar {
 		miKreirajKorisnika = new JMenuItem("Kreiraj korisnika");
 		miUnaprediKorisnika = new JMenuItem("Unapredi korisnika");
 		miIzmeniPodatkeKorisnika = new JMenuItem("Izmeni podatke korisnika");
+		miBrisanjeKorisnika = new JMenuItem("Brisanje korisnika");
 		miPregledKorisnika = new JMenuItem("Pregled korisnika");
 		mKorisnici.add(miKreirajKorisnika);
 		mKorisnici.add(miUnaprediKorisnika);
 		mKorisnici.add(miIzmeniPodatkeKorisnika);
+		mKorisnici.add(miBrisanjeKorisnika);
 		mKorisnici.add(miPregledKorisnika);
 		add(mKorisnici);
 		
@@ -99,27 +102,45 @@ public class MenuBar extends JMenuBar {
 		}
 	}
 	
-	public JMenuItem getMiVoda() {
-		return miVoda;
+	
+	public JMenuItem getMiIzmeniPodatke() {
+		return miIzmeniPodatke;
 	}
 
-	public void setMiVoda(JMenuItem miVoda) {
-		this.miVoda = miVoda;
+	public JMenuItem getMiLogout() {
+		return miLogout;
+	}
+
+	public JMenuItem getMiKreirajKorisnika() {
+		return miKreirajKorisnika;
+	}
+
+	public JMenuItem getMiUnaprediKorisnika() {
+		return miUnaprediKorisnika;
+	}
+
+	public JMenuItem getMiBrisanjeKorisnika() {
+		return miBrisanjeKorisnika;
+	}
+
+	public JMenuItem getMiIzmeniPodatkeKorisnika() {
+		return miIzmeniPodatkeKorisnika;
+	}
+	
+	public JMenuItem getMiPregledKorisnika() {
+		return miPregledKorisnika;
+	}
+
+	public JMenuItem getMiVoda() {
+		return miVoda;
 	}
 
 	public JMenuItem getMiGas() {
 		return miGas;
 	}
 
-	public void setMiGas(JMenuItem miGas) {
-		this.miGas = miGas;
-	}
-
 	public JMenuItem getMiStruja() {
 		return miStruja;
 	}
 
-	public void setMiStruja(JMenuItem miStruja) {
-		this.miStruja = miStruja;
-	}
 }

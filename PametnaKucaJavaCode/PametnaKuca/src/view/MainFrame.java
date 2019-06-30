@@ -188,30 +188,37 @@ public class MainFrame extends JFrame {
 	
 	public void addKreiranjeKorisnikaListener(ActionListener a) {
 		btnKreiranjeKorisnika.addActionListener(a);
+		menuBar.getMiKreirajKorisnika().addActionListener(a);
 	}
 	
 	public void addUnapredjivanjeKorisnikaListener(ActionListener a) {
 		btnUnapredjivanjeKorisnika.addActionListener(a);
+		menuBar.getMiUnaprediKorisnika().addActionListener(a);
 	}
 	
 	public void addIzmenaPodatakaKorisnikaListener(ActionListener a) {
 		btnIzmenaPodatakaKorisnika.addActionListener(a);
+		menuBar.getMiIzmeniPodatkeKorisnika().addActionListener(a);
 	}
 	
 	public void addBrisanjeKorisnikaListener(ActionListener a) {
 		btnBrisanjeKorisnika.addActionListener(a);
+		menuBar.getMiBrisanjeKorisnika().addActionListener(a);
 	}
 	
 	public void addPregledKorisnikaListener(ActionListener a) {
 		btnPregledKorisnika.addActionListener(a);
+		menuBar.getMiPregledKorisnika().addActionListener(a);
 	}
 	
 	public void addIzmenaSopstvenihPodatakaListener(ActionListener a) {
 		btnIzmenaPodataka.addActionListener(a);
+		menuBar.getMiIzmeniPodatke().addActionListener(a);
 	}
 	
 	public void addLogoutListener(ActionListener a) {
 		btnLogOut.addActionListener(a);
+		menuBar.getMiLogout().addActionListener(a);
 	}
 	
 }
