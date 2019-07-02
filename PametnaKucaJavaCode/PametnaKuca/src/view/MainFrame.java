@@ -135,6 +135,7 @@ public class MainFrame extends JFrame {
 		lblTlocrtImage.setLayout(null);
 		btnProba.setBounds(lblTlocrtImage.getLocation().x + 200, lblTlocrtImage.getLocation().y, 100, 60);
 		
+		
 		class ResizeListener extends ComponentAdapter {
 			public void componentResized(ComponentEvent e) {
 				//lblTlocrtImage.getIcon();
