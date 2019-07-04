@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -162,6 +164,7 @@ public class Kontroler {
 			}
 			else {
 				nalog.getKorisnik().setTipKorisnika(TipKorisnika.readWrite);
+				// TODO // theApp.unaprediKorisnika(nalog);
 				JOptionPane.showMessageDialog((UnapredjivanjeDialog)theView, "Korisnik je uspesno unapredjen.", "Uspesno unapredjivanje", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
@@ -282,7 +285,8 @@ public class Kontroler {
 					return;
 				String korisnickoIme = (String) ((AbstractDialog) theView).getTable().getValueAt(row, 0);
 				Nalog nalog = theApp.getNalog(korisnickoIme);
-
+				
+				DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 				PanelDetailKorisnici panelDetailRegistar = (PanelDetailKorisnici) ((AbstractDialog) theView)
 						.getPanDetail();
 				panelDetailRegistar.getTxtKorisnickoIme().setText(nalog.getKorisnickoIme());
@@ -290,7 +294,7 @@ public class Kontroler {
 				panelDetailRegistar.getTxtPrezime().setText(nalog.getKorisnik().getPrezime());
 				panelDetailRegistar.getTxtIme().setText(nalog.getKorisnik().getIme());
 				panelDetailRegistar.getTxtDatumRodjenja()
-						.setText(String.valueOf(nalog.getKorisnik().getDatumRodjenja()));
+						.setText(df.format(nalog.getKorisnik().getDatumRodjenja()));
 				if (nalog.getKorisnik().getPol() == Pol.muski) {
 					panelDetailRegistar.getRdbtnMuski().setSelected(true);
 				} else if (nalog.getKorisnik().getPol() == Pol.zenski) {

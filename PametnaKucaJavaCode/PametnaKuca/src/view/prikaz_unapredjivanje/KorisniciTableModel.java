@@ -1,5 +1,7 @@
 package view.prikaz_unapredjivanje;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -41,13 +43,14 @@ public class KorisniciTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
+		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 		switch(columnIndex){
 			case 0: return korisnici.get(rowIndex).getKorisnickoIme();
 			case 1: return korisnici.get(rowIndex).getSifra();
 			case 2: return korisnici.get(rowIndex).getKorisnik().getPrezime();
 			case 3: return korisnici.get(rowIndex).getKorisnik().getIme();
 			case 4:	return korisnici.get(rowIndex).getKorisnik().getPol();
-			case 5:	return korisnici.get(rowIndex).getKorisnik().getDatumRodjenja();
+			case 5:	return df.format(korisnici.get(rowIndex).getKorisnik().getDatumRodjenja());
 			case 6:	return korisnici.get(rowIndex).getKorisnik().getTipKorisnika();
 		}
 		return "";
