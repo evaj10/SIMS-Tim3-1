@@ -1,13 +1,29 @@
 package controller;
 
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.List;
+
+import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import model.Aplikacija;
+import model.korisnik.Nalog;
+import model.korisnik.Pol;
+import model.korisnik.TipKorisnika;
 import view.IzvjestajDialog;
 import view.LoginDialog;
 import view.LoginSpoljniDialog;
 import view.MainFrame;
+import view.prikaz_unapredjivanje.AbstractDialog;
+import view.prikaz_unapredjivanje.KorisniciPrikazDialog;
+import view.prikaz_unapredjivanje.KorisniciTableModel;
+import view.prikaz_unapredjivanje.PanelDetailKorisnici;
+import view.prikaz_unapredjivanje.UnapredjivanjeDialog;
 
 public class Kontroler {
 
@@ -36,11 +52,22 @@ public class Kontroler {
 			((MainFrame) theView).addPregledKorisnikaListener(new PregledKorisnikaListener());
 			((MainFrame) theView).addIzmenaSopstvenihPodatakaListener(new IzmenaSopstvenihPodatakaListener());
 			((MainFrame) theView).addLogoutListener(new LogoutListener());
-		};
+		}
+		;
 		MainFrame.setMade(true);
 		((MainFrame) theView).setVisible(true);
 	}
 
+	private void funkcijaDialogToMainFrame() {
+		((Window) theView).addWindowListener(new WindowAdapter() {
+		    @Override
+		    public void windowClosed(WindowEvent e) {
+		    	// vracanje na MainFrame
+		        theView = MainFrame.getInstance();
+		    }
+		});
+	}
+	
 	public class LoginListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -110,10 +137,36 @@ public class Kontroler {
 		public void actionPerformed(ActionEvent e) {
 			// prikazi dijalog za unapredjivanje korisnika
 			System.out.println("UNAPREDJIVANJE KORISNIKA");
-			// TODO
+			List<Nalog> readNalozi = theApp.getReadNalozi();
+
+			KorisniciTableModel tm = new KorisniciTableModel(readNalozi);
+			UnapredjivanjeDialog d = new UnapredjivanjeDialog((MainFrame) theView, "ISAK - Unapredjivanje korisnika", tm);
+			d.addUnaprediKorisnikaListener(new UnaprediKorisnikaListener());
+			theView = d;
+			d.setVisible(true);
+			
+			// dodavanje listenera za zatvaranje dijaloga i vracanje theView na MainFrame
+			funkcijaDialogToMainFrame();
 		}
 	}
 
+	public class UnaprediKorisnikaListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// izvrsi unapredjivanje korisnika
+			System.out.println("UNAPREDI KORISNIKA");
+			String korisnickoIme = ((PanelDetailKorisnici) ((UnapredjivanjeDialog)theView).getPanDetail()).getTxtKorisnickoIme().getText();
+			Nalog nalog = theApp.getNalog(korisnickoIme);
+			if (nalog == null) {
+				JOptionPane.showMessageDialog((UnapredjivanjeDialog)theView, "Nije odabran nijedan korisnik!", "Greska", JOptionPane.ERROR_MESSAGE);
+			}
+			else {
+				nalog.getKorisnik().setTipKorisnika(TipKorisnika.readWrite);
+				JOptionPane.showMessageDialog((UnapredjivanjeDialog)theView, "Korisnik je uspesno unapredjen.", "Uspesno unapredjivanje", JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
+	}
+	
 	public class IzmenaPodatakaKorisnikaListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -137,7 +190,14 @@ public class Kontroler {
 		public void actionPerformed(ActionEvent e) {
 			// prikazi dijalog za pregled korisnika
 			System.out.println("PREGLED KORISNIKA");
-			// TODO
+			List<Nalog> nalozi = theApp.getNalozi();
+
+			KorisniciTableModel tm = new KorisniciTableModel(nalozi);
+			KorisniciPrikazDialog d = new KorisniciPrikazDialog((MainFrame) theView, "ISAK - Pregled korisnika", tm);
+			theView = d;
+			d.setVisible(true);
+			// dodavanje listenera za zatvaranje dijaloga i vracanje theView na MainFrame
+			funkcijaDialogToMainFrame();
 		}
 	}
 
@@ -210,4 +270,40 @@ public class Kontroler {
 		}
 	}
 
+	public class NaloziSelectionListener implements ListSelectionListener {
+		@Override
+		public void valueChanged(ListSelectionEvent e) {
+
+			if (!e.getValueIsAdjusting()) {
+				int row = ((AbstractDialog) theView).getTable().getSelectedRow();
+
+				/* Nista nije selektovano */
+				if (row == -1)
+					return;
+				String korisnickoIme = (String) ((AbstractDialog) theView).getTable().getValueAt(row, 0);
+				Nalog nalog = theApp.getNalog(korisnickoIme);
+
+				PanelDetailKorisnici panelDetailRegistar = (PanelDetailKorisnici) ((AbstractDialog) theView)
+						.getPanDetail();
+				panelDetailRegistar.getTxtKorisnickoIme().setText(nalog.getKorisnickoIme());
+				panelDetailRegistar.getTxtLozinka().setText(nalog.getSifra());
+				panelDetailRegistar.getTxtPrezime().setText(nalog.getKorisnik().getPrezime());
+				panelDetailRegistar.getTxtIme().setText(nalog.getKorisnik().getIme());
+				panelDetailRegistar.getTxtDatumRodjenja()
+						.setText(String.valueOf(nalog.getKorisnik().getDatumRodjenja()));
+				if (nalog.getKorisnik().getPol() == Pol.muski) {
+					panelDetailRegistar.getRdbtnMuski().setSelected(true);
+				} else if (nalog.getKorisnik().getPol() == Pol.zenski) {
+					panelDetailRegistar.getRdbtnZenski().setSelected(true);
+				} else {
+					panelDetailRegistar.getRdbtnOstalo().setSelected(true);
+				}
+				if (nalog.getKorisnik().getTipKorisnika() == TipKorisnika.read) {
+					panelDetailRegistar.getRdbtnRead().setSelected(true);
+				} else {
+					panelDetailRegistar.getRdbtnReadWrite().setSelected(true);
+				}
+			}
+		}
+	}
 }

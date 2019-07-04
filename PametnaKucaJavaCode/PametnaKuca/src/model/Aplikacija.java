@@ -19,6 +19,15 @@ public class Aplikacija {
 	private java.util.List<Nalog> nalozi;
 	private Stanje stanje;
 	
+	public Nalog getNalog(String korisnickoIme) {
+		for (Nalog n : nalozi) {
+			if (n.getKorisnickoIme() == korisnickoIme) {
+				return n;
+			}
+		}
+		return null;
+	}
+	
 	public void kreirajIzvestaj(TipIzvestaja tipIzvestaja) {
 		// TODO: implement
 	}
@@ -120,6 +129,20 @@ public class Aplikacija {
 		return nalozi;
 	}
 
+	public java.util.List<Nalog> getReadNalozi() {
+		if (nalozi == null) {
+			nalozi = new java.util.ArrayList<Nalog>();
+			return nalozi;
+		}
+		java.util.ArrayList<Nalog> readNalozi = new java.util.ArrayList<Nalog>();
+		for (Nalog n : nalozi) {
+			if (n.getKorisnik().getTipKorisnika() == TipKorisnika.read) {
+				readNalozi.add(n);
+			}
+		}
+		return readNalozi;
+	}
+	
 	public java.util.Iterator getIteratorNalozi() {
 		if (nalozi == null)
 			nalozi = new java.util.ArrayList<Nalog>();
