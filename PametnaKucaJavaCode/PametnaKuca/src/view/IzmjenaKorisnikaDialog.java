@@ -6,9 +6,14 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -22,6 +27,9 @@ import javax.swing.JTextField;
 
 import konstante.Konstante;
 import model.Aplikacija;
+import model.korisnik.Nalog;
+import model.korisnik.Pol;
+import model.korisnik.TipKorisnika;
 
 public class IzmjenaKorisnikaDialog extends JDialog {
 
@@ -105,13 +113,19 @@ public class IzmjenaKorisnikaDialog extends JDialog {
 		lblPol = new JLabel("Pol:");
 		rbM = new JRadioButton("Muski");
 		rbZ = new JRadioButton("Zenski");
-		rbN = new JRadioButton("Neodredjen");
+		rbN = new JRadioButton("Ostalo");
 		bgPol = new ButtonGroup();
 		bgPol.add(rbZ);
 		bgPol.add(rbM);
 		bgPol.add(rbN);
 		btnBack = new JButton("POVRATAK");
 		btnConfirm = new JButton("POTVRDI");
+
+		cmbUsers.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				setSelected(getSelected());
+			}
+		});
 	}
 
 	private void createLayout() {
@@ -172,6 +186,64 @@ public class IzmjenaKorisnikaDialog extends JDialog {
 				GridBagConstraints.BOTH, new Insets(50, 50, 15, 50), 0, 0));
 	}
 
+	public void addToCmb(List<Nalog> nalozi) {
+		for (Nalog n : nalozi) {
+			cmbUsers.addItem(n);
+		}
+	}
+
+	public Nalog getSelected() {
+		return (Nalog) cmbUsers.getSelectedItem();
+	}
+
+	public void setSelected(Nalog n) {
+		if (n.getKorisnik().getTipKorisnika() == TipKorisnika.read)
+			lblTipUser.setText("READ");
+		else
+			lblTipUser.setText("READ/WRITE");
+		txfIme.setText(n.getKorisnik().getIme());
+		txfPrezime.setText(n.getKorisnik().getPrezime());
+		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+		String datum = df.format(n.getKorisnik().getDatumRodjenja());
+		String[] tokens = datum.split("-");
+		cmbDay.setSelectedItem(tokens[0]);
+		cmbMonth.setSelectedIndex((Integer.parseInt(tokens[1]) - 1));
+		cmbYear.setSelectedItem(tokens[2]);
+		Pol p = n.getKorisnik().getPol();
+		if (p == Pol.zenski)
+			rbZ.setSelected(true);
+		else if (p == Pol.muski)
+			rbM.setSelected(true);
+		else
+			rbN.setSelected(true);
+	}
+
+	public String getTxfIme() {
+		return txfIme.getText();
+	}
+
+	public String getTxfPrezime() {
+		return txfPrezime.getText();
+	}
+
+	public String getDatum() {
+		int mjesec = cmbMonth.getSelectedIndex() + 1;
+		String datumRodjenja = cmbDay.getSelectedItem() + "-" + mjesec + "-" + cmbYear.getSelectedItem();
+		return datumRodjenja;
+	}
+
+	public Pol getPol() {
+		Pol pol;
+		if (rbZ.isSelected())
+			pol = Pol.zenski;
+		else if (rbM.isSelected())
+			pol = Pol.muski;
+		else
+			pol = Pol.ostalo;
+
+		return pol;
+	}
+
 	public void addPovratakListener(ActionListener a) {
 		btnBack.addActionListener(a);
 	}
@@ -191,9 +263,9 @@ public class IzmjenaKorisnikaDialog extends JDialog {
 	}
 
 	// testiranje
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		IzmjenaKorisnikaDialog ikd = new IzmjenaKorisnikaDialog();
 		ikd.setVisible(true);
-	}
+	}*/
 
 }

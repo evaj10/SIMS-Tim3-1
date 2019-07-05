@@ -16,6 +16,51 @@ public abstract class TipKomponente implements Serializable {
 	public Povecaj povecaj;
 	public Smanji smanji;
 	public Ukljuci_Iskljuci ukljuciIskljuci;
+	public String opisVrijednosti;
+	public String slika;
+
+	public TipKomponente() {};
+	
+	@Override
+	public String toString() {
+		return "TipKomponente []";
+	}
+
+	public Povecaj getPovecaj() {
+		return povecaj;
+	}
+	
+	public Smanji getSmanji() {
+		return smanji;
+	}
+	
+	
+	public Ukljuci_Iskljuci getUkljuciIskljuci() {
+		return ukljuciIskljuci;
+	}
+	
+	
+	public String getOpisVrijednosti() {
+		return opisVrijednosti;
+	}
+
+	public void setOpisVrijednosti(String opisVrijednosti) {
+		this.opisVrijednosti = opisVrijednosti;
+	}
+
+	public String getSlika() {
+		return slika;
+	}
+
+	public void setSlika(String slika) {
+		this.slika = slika;
+	}
+
+	public TipKomponente(String opisVrijednosti, String slika) {
+		super();
+		this.opisVrijednosti = opisVrijednosti;
+		this.slika = slika;
+	}
 
 	public TipKomponente() {}
 	

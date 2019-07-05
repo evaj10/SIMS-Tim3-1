@@ -1,4 +1,7 @@
 package model.komponente.funkcije;
+
+import model.komponente.Komponenta;
+
 /***********************************************************************
  * Module:  Ukljuci_Iskljuci.java
  * Author:  evaje
@@ -7,4 +10,5 @@ package model.komponente.funkcije;
 
 
 public interface Ukljuci_Iskljuci {
+	public void uradi(Komponenta k, boolean OnOff);
 }

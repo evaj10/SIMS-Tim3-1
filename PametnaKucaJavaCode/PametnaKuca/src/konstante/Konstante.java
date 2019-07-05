@@ -7,4 +7,6 @@ public abstract class Konstante {
 	public static final String FILES_LOGO = "images" + separator + "files.gif";
 	public static final String TLOCRT1 = "images" + separator + "tlocrt1.png";
 	public static final String FILE_NAME = "files" + separator + "file.bin";
+	public static final String HLADJENJE = "images" + separator + "logo.gif";
+
 }

@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class Nalog implements Serializable {
+
 	private String korisnickoIme;
 	private String sifra;
 	private String fileTlocrt;

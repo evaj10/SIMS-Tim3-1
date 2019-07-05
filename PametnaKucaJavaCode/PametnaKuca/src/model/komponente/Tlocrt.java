@@ -17,16 +17,29 @@ public class Tlocrt implements Serializable {
 	private Adresa adresa;
 
 	public java.util.List<Soba> sobe;
-	public java.util.Collection<Komponenta> komponente;
+	public java.util.ArrayList<Komponenta> komponente;
+	
+	public Tlocrt() {
+		komponente = new java.util.ArrayList<Komponenta>();
+	}
 
 	public Tlocrt(String naziv, String slika, Adresa adresa) {
 		this.naziv = naziv;
 		this.slika = slika;
 		this.adresa = adresa;
-	}
+		komponente = new java.util.ArrayList<Komponenta>();	}
 	
 	public void iscrtajTlocrt() {
 		// TODO: implement
+	}
+	
+	public Komponenta nadjiKomponentu(int i) {
+		for (Komponenta k : komponente) {
+			if (k.getId() == i) {
+				return k;
+			}
+		}
+		return null;
 	}
 
 	public java.util.List<Soba> getSobe() {

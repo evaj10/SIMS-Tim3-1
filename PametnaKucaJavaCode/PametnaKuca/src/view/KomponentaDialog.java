@@ -33,6 +33,7 @@ public class KomponentaDialog extends JDialog {
 
 	private JPanel panel;
 
+	private JLabel lblId;
 	private JLabel lblLogo;
 	private JLabel lblNaziv;
 	private JLabel lblNazivKomponente;
@@ -80,6 +81,7 @@ public class KomponentaDialog extends JDialog {
 	private void createGUI() {
 		panel = new JPanel(new GridBagLayout());
 
+		lblId = new JLabel("");
 		ImageIcon imgLogo = new ImageIcon(Konstante.COMPANY_LOGO);
 		lblLogo = new JLabel("", imgLogo, JLabel.CENTER);
 
@@ -99,8 +101,7 @@ public class KomponentaDialog extends JDialog {
 
 		slider.setMajorTickSpacing(100);
 		slider.setPaintLabels(true);
-		// ovaj listener moze preci u kontroler ako bude trebalo, sad je ovdje da se
-		// vidi kako ce izgledati
+
 		txfVrijednostKomponente.setText("" + slider.getValue());
 		slider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent ce) {
@@ -164,6 +165,52 @@ public class KomponentaDialog extends JDialog {
 
 	public void addPotvrdiListener(ActionListener a) {
 		btnConfirm.addActionListener(a);
+	}
+	
+	public void setSlika(String slika) {
+		ImageIcon imgLogo = new ImageIcon(slika);
+		lblLogo.setIcon(imgLogo);
+	}
+	
+	public void setNaziv(String n) {
+		lblNazivKomponente.setText(n);
+	}
+	
+	public void setTip(String t) {
+		lblTipKomponente.setText(t);
+	}
+	
+	public void setSoba(String s) {
+		lblSobaKomponente.setText(s);;
+	}
+	
+	public void setToggleButton(boolean b) {
+		tbOnOff.setSelected(b);
+	}
+	
+	public void setOpisVrijednosti(String o) {
+		lblVrijednost.setText(o);
+	}
+	
+	public void setVrijednost(int i) {
+		txfVrijednostKomponente.setText(String.valueOf(i));
+		slider.setValue(i);
+	}
+	
+	public void setId(int i) {
+		lblId.setText(String.valueOf(i));
+	}
+	
+	public int getVrijednost() {
+		return Integer.parseInt(txfVrijednostKomponente.getText());
+	}
+	
+	public boolean getOnOff() {
+		return tbOnOff.isSelected();
+	}
+	
+	public int getId() {
+		return Integer.parseInt(lblId.getText());
 	}
 
 	private void terminateOnExit() {
