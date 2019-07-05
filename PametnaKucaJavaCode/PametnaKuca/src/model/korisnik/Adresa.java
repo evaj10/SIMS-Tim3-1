@@ -1,31 +1,27 @@
 package model.korisnik;
 
+import java.io.Serializable;
+
 /***********************************************************************
  * Module: Adresa.java Author: evaje Purpose: Defines the Class Adresa
  ***********************************************************************/
 
-public class Adresa {
+@SuppressWarnings("serial")
+public class Adresa implements Serializable{
 
-	//private int id;
 	private String ulica;
 	private int broj;
 
 	public Mesto mesto;
 
+	public Adresa() {}
+	
 	public Adresa(String ulica, int broj, Mesto m) {
 		this.ulica = ulica;
 		this.broj = broj;
 		this.mesto = m;
 	}
-	
-	/*public int getId() {
-		return id;
-	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-*/
 	public String getUlica() {
 		return ulica;
 	}
@@ -45,19 +41,4 @@ public class Adresa {
 	public Mesto getMesto() {
 		return mesto;
 	}
-
-	public void setMesto(Mesto newMesto) {
-		if (this.mesto == null || !this.mesto.equals(newMesto)) {
-			if (this.mesto != null) {
-				Mesto oldMesto = this.mesto;
-				this.mesto = null;
-				oldMesto.removeAdrese(this);
-			}
-			if (newMesto != null) {
-				this.mesto = newMesto;
-				this.mesto.addAdrese(this);
-			}
-		}
-	}
-
 }

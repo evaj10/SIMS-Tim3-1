@@ -1,23 +1,28 @@
 package model.komponente;
+
+import java.io.Serializable;
+
+import model.korisnik.Adresa;
+
 /***********************************************************************
  * Module:  Tlocrt.java
  * Author:  evaje
  * Purpose: Defines the Class Tlocrt
  ***********************************************************************/
 
-public class Tlocrt {
-	private int id;
+@SuppressWarnings("serial")
+public class Tlocrt implements Serializable {
 	private String slika;
 	private String naziv;
+	private Adresa adresa;
 
 	public java.util.List<Soba> sobe;
 	public java.util.Collection<Komponenta> komponente;
-	//public java.util.List<Nalog> nalozi;
 
-	public Tlocrt(int id, String naziv, String slika) {
-		this.id = id;
+	public Tlocrt(String naziv, String slika, Adresa adresa) {
 		this.naziv = naziv;
 		this.slika = slika;
+		this.adresa = adresa;
 	}
 	
 	public void iscrtajTlocrt() {
@@ -103,54 +108,6 @@ public class Tlocrt {
 		if (komponente != null)
 			komponente.clear();
 	}
-/*
-	public java.util.List<Nalog> getNalozi() {
-		if (nalozi == null)
-			nalozi = new java.util.ArrayList<Nalog>();
-		return nalozi;
-	}
-
-	public java.util.Iterator getIteratorNalozi() {
-		if (nalozi == null)
-			nalozi = new java.util.ArrayList<Nalog>();
-		return nalozi.iterator();
-	}
-
-	public void setNalozi(java.util.List<Nalog> newNalozi) {
-		removeAllNalozi();
-		for (java.util.Iterator iter = newNalozi.iterator(); iter.hasNext();)
-			addNalozi((Nalog) iter.next());
-	}
-
-	public void addNalozi(Nalog newNalog) {
-		if (newNalog == null)
-			return;
-		if (this.nalozi == null)
-			this.nalozi = new java.util.ArrayList<Nalog>();
-		if (!this.nalozi.contains(newNalog))
-			this.nalozi.add(newNalog);
-	}
-
-	public void removeNalozi(Nalog oldNalog) {
-		if (oldNalog == null)
-			return;
-		if (this.nalozi != null)
-			if (this.nalozi.contains(oldNalog))
-				this.nalozi.remove(oldNalog);
-	}
-
-	public void removeAllNalozi() {
-		if (nalozi != null)
-			nalozi.clear();
-	}
-*/
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getSlika() {
 		return slika;
@@ -166,5 +123,13 @@ public class Tlocrt {
 
 	public void setNaziv(String naziv) {
 		this.naziv = naziv;
+	}
+
+	public Adresa getAdresa() {
+		return adresa;
+	}
+
+	public void setAdresa(Adresa adresa) {
+		this.adresa = adresa;
 	}
 }

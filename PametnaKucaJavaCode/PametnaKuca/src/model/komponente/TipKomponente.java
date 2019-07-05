@@ -5,16 +5,20 @@ package model.komponente;
  * Purpose: Defines the Class TipKomponente
  ***********************************************************************/
 
+import java.io.Serializable;
+
 import model.komponente.funkcije.Povecaj;
 import model.komponente.funkcije.Smanji;
 import model.komponente.funkcije.Ukljuci_Iskljuci;
 
-public abstract class TipKomponente {
+public abstract class TipKomponente implements Serializable {
 	public java.util.List<Komponenta> komponente;
 	public Povecaj povecaj;
 	public Smanji smanji;
 	public Ukljuci_Iskljuci ukljuciIskljuci;
 
+	public TipKomponente() {}
+	
 	public java.util.List<Komponenta> getKomponente() {
 		if (komponente == null)
 			komponente = new java.util.ArrayList<Komponenta>();

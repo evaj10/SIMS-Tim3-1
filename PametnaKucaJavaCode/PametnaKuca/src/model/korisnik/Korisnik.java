@@ -5,15 +5,18 @@ package model.korisnik;
  * Purpose: Defines the Class Korisnik
  ***********************************************************************/
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Korisnik {
+@SuppressWarnings("serial")
+public class Korisnik implements Serializable {
 	private String ime;
 	private String prezime;
 	private Date datumRodjenja;
 	private Pol pol;
 	private TipKorisnika tipKorisnika;
 
+	public Korisnik() {}
 
 	public Korisnik(String ime, String prezime, Date datumRodjenja,
 			Pol pol, TipKorisnika tk) {

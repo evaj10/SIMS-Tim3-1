@@ -8,6 +8,9 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -19,7 +22,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import konstante.Konstante;
-import model.Aplikacija;
+import model.komponente.Komponenta;
+import model.komponente.Soba;
+import view.dugmici.KomponentaButton;
+import view.dugmici.SobaButton;
 
 /*
  * Glavni frame za prikaz tlocrta i manipulisanje komponentama i korisnicima, klasa naslednica JFrame-a
@@ -46,8 +52,14 @@ public class MainFrame extends JFrame {
 	private JButton btnIzmenaPodataka = new JButton("Izmena sopstvenih podataka");
 	private JButton btnLogOut = new JButton("Log Out");
 	
-	private Aplikacija app;
+	private JPanel sobePain;
+	private JScrollPane spSobeScroll;
+	private JLabel lblTlocrtImage;
 	
+	private List<SobaButton> btnsSobe = new ArrayList<SobaButton>();
+	private List<KomponentaButton> btnsKomponente = new ArrayList<KomponentaButton>();
+	
+	// promena velicine komponenti pri promeni velicine prozora
 	int x;
 	int y;
 
@@ -73,6 +85,7 @@ public class MainFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setWindowSize();
 		setLocationRelativeTo(null);
+		setResizable(false);
 
 		createGUI();
 		setJMenuBar(menuBar);
@@ -89,21 +102,11 @@ public class MainFrame extends JFrame {
 		panel = new JPanel(new BorderLayout());
 
 		// kreiranje ScrollPane-a u levom delu prozora
-		JPanel sobePain = new JPanel();
+		sobePain = new JPanel();
 		Dimension preferredSize = new Dimension(this.getSize().width / 5, this.getSize().height);
 		sobePain.setPreferredSize(preferredSize);
-		sobePain.setLayout(new BoxLayout(sobePain, BoxLayout.Y_AXIS));
 
-		// sobe.setLayout(new GridBagLayout());
-		// sobe.setLayout(new GridLayout(7,1,0,10));
-
-		// dodavanje dugmeta za svaku sobu u tlocrtu
-		/*
-		 * for (Soba s : app.getTlocrt().getSobe()) { JButton btnSoba = new
-		 * JButton(s.getIme()); sobe.add(btnSoba); }
-		 */
-
-		JScrollPane spSobeScroll = new JScrollPane(sobePain);
+		spSobeScroll = new JScrollPane(sobePain);
 		spSobeScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		panel.add(spSobeScroll, BorderLayout.WEST);
 
@@ -124,18 +127,13 @@ public class MainFrame extends JFrame {
 
 		JPanel centralPain = new JPanel(new BorderLayout());
 
-		JLabel lblTlocrtImage = new JLabel();
+		lblTlocrtImage = new JLabel();
 		centralPain.add(lblTlocrtImage, BorderLayout.CENTER);
 
 		ImageIcon imgTlocrt = new StretchIcon(
 				new ImageIcon(Konstante.TLOCRT1).getImage(), false);
-		lblTlocrtImage.setIcon(imgTlocrt);
-
-		JButton btnProba = new JButton("PROBA");
-		lblTlocrtImage.setLayout(null);
-		btnProba.setBounds(lblTlocrtImage.getLocation().x + 200, lblTlocrtImage.getLocation().y, 100, 60);
-		
-		
+		lblTlocrtImage.setIcon(imgTlocrt);	
+		/*
 		class ResizeListener extends ComponentAdapter {
 			public void componentResized(ComponentEvent e) {
 				//lblTlocrtImage.getIcon();
@@ -160,7 +158,7 @@ public class MainFrame extends JFrame {
 		this.addComponentListener(new ResizeListener());
 		
 		lblTlocrtImage.add(btnProba);
-
+		*/
 		panel.add(centralPain, BorderLayout.CENTER);
 
 		add(panel);
@@ -220,6 +218,23 @@ public class MainFrame extends JFrame {
 	public void addLogoutListener(ActionListener a) {
 		btnLogOut.addActionListener(a);
 		menuBar.getMiLogout().addActionListener(a);
+	}
+
+	public void addSobe(List<Soba> sobe) {
+		sobePain.setLayout(new GridLayout(sobe.size(), 1, 0, 10));
+		for (Soba s : sobe) {
+			SobaButton s1 = new SobaButton(s);
+			btnsSobe.add(new SobaButton(s));
+			sobePain.add(s1);
+		}
+	}
+
+	public void addKomponente(Collection<Komponenta> komponente) {
+		for (Komponenta k : komponente) {
+			KomponentaButton k1 = new KomponentaButton(k);
+			k1.setBounds(k.getTacka().getX(), k.getTacka().getY(), 60, 60);
+			lblTlocrtImage.add(k1);
+		}
 	}
 	
 }

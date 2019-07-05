@@ -1,16 +1,21 @@
 package model.korisnik;
 
+import java.io.Serializable;
+
 /***********************************************************************
  * Module: Nalog.java Author: evaje Purpose: Defines the Class Nalog
  ***********************************************************************/
 
-public class Nalog {
+@SuppressWarnings("serial")
+public class Nalog implements Serializable {
 	private String korisnickoIme;
 	private String sifra;
 	private String fileTlocrt;
 
 	private Korisnik korisnik;
 
+	public Nalog() {}
+	
 	public Nalog(String korIme, String sifra, String fileTlocrt, Korisnik k) {
 		this.korisnickoIme = korIme;
 		this.sifra = sifra;

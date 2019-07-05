@@ -1,22 +1,29 @@
 package model.komponente;
 
+import java.io.Serializable;
+
 /***********************************************************************
  * Module: Komponenta.java Author: evaje Purpose: Defines the Class Komponenta
  ***********************************************************************/
 
-public class Komponenta {
+@SuppressWarnings("serial")
+public class Komponenta implements Serializable {
 	private int id;
 	private String naziv;
 	private int vrednost;
 	public Soba soba;
 	public TipKomponente tipKomponente;
+	public Tacka tacka;
 
-	public Komponenta(int id, String naziv, Soba soba, TipKomponente tk) {
+	public Komponenta() {}
+	
+	public Komponenta(int id, String naziv, Soba soba, TipKomponente tk, Tacka t) {
 		this.id = id;
 		this.naziv = naziv;
 		this.vrednost = 0;
 		this.soba = soba;
 		this.tipKomponente = tk;
+		this.tacka = t;
 	}
 	
 	public int getId() {
@@ -83,4 +90,11 @@ public class Komponenta {
 		}
 	}
 
+	public Tacka getTacka() {
+		return tacka;
+	}
+
+	public void setTacka(Tacka tacka) {
+		this.tacka = tacka;
+	}
 }

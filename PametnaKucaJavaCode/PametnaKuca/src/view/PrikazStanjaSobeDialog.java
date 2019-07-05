@@ -51,10 +51,10 @@ public class PrikazStanjaSobeDialog extends JDialog {
 	 * @throws ClassNotFoundException 
 	 */
 	public PrikazStanjaSobeDialog() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		setBounds(100, 100, 450, 247);
 		setLocationRelativeTo(null);
 		setResizable(false);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};

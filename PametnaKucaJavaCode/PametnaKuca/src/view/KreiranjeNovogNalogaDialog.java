@@ -74,10 +74,10 @@ public class KreiranjeNovogNalogaDialog extends JDialog {
 	 * @throws ClassNotFoundException 
 	 */
 	public KreiranjeNovogNalogaDialog() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		setBounds(100, 100, 683, 350);
 		setLocationRelativeTo(null);
 		setResizable(false);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("ISAK - Kreiranje Novog Naloga");
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

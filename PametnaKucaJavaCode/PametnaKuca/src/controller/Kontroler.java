@@ -61,12 +61,14 @@ public class Kontroler {
 			((MainFrame) theView).addPregledKorisnikaListener(new PregledKorisnikaListener());
 			((MainFrame) theView).addIzmenaSopstvenihPodatakaListener(new IzmenaSopstvenihPodatakaListener());
 			((MainFrame) theView).addLogoutListener(new LogoutListener());
+			
+			((MainFrame) theView).addSobe(theApp.getTlocrt().getSobe());
+			((MainFrame) theView).addKomponente(theApp.getTlocrt().getKomponente());
 		}
-		;
 		MainFrame.setMade(true);
 		((MainFrame) theView).setVisible(true);
 	}
-
+	
 	private void funkcijaDialogToMainFrame() {
 		((Window) theView).addWindowListener(new WindowAdapter() {
 		    @Override
@@ -165,8 +167,6 @@ public class Kontroler {
 			theApp.addNalozi(nalog);
 			
 			kreiranjeNovogNalogaToMainFrame();
-			
-			
 		}
 		
 	}
@@ -183,6 +183,9 @@ public class Kontroler {
 			((KreiranjeNovogNalogaDialog) theView).addPrijaviSeListener(new KreirajNoviNalogPrijaviSeListener());
 			
 			((KreiranjeNovogNalogaDialog) theView).setVisible(true);
+			
+			// dodavanje listenera za zatvaranje dijaloga i vracanje theView na MainFrame
+			funkcijaDialogToMainFrame();
 		}
 	}
 
@@ -195,6 +198,7 @@ public class Kontroler {
 
 			KorisniciTableModel tm = new KorisniciTableModel(readNalozi);
 			UnapredjivanjeDialog d = new UnapredjivanjeDialog((MainFrame) theView, "ISAK - Unapredjivanje korisnika", tm);
+			d.addListSelectionListener(new NaloziSelectionListener());
 			d.addUnaprediKorisnikaListener(new UnaprediKorisnikaListener());
 			theView = d;
 			d.setVisible(true);
@@ -215,8 +219,7 @@ public class Kontroler {
 				JOptionPane.showMessageDialog((UnapredjivanjeDialog)theView, "Nije odabran nijedan korisnik!", "Greska", JOptionPane.ERROR_MESSAGE);
 			}
 			else {
-				nalog.getKorisnik().setTipKorisnika(TipKorisnika.readWrite);
-				// TODO // theApp.unaprediKorisnika(nalog);
+				theApp.unaprediKorisnika(nalog);
 				JOptionPane.showMessageDialog((UnapredjivanjeDialog)theView, "Korisnik je uspesno unapredjen.", "Uspesno unapredjivanje", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
@@ -249,6 +252,7 @@ public class Kontroler {
 
 			KorisniciTableModel tm = new KorisniciTableModel(nalozi);
 			KorisniciPrikazDialog d = new KorisniciPrikazDialog((MainFrame) theView, "ISAK - Pregled korisnika", tm);
+			d.addListSelectionListener(new NaloziSelectionListener());
 			theView = d;
 			d.setVisible(true);
 			// dodavanje listenera za zatvaranje dijaloga i vracanje theView na MainFrame
@@ -326,6 +330,7 @@ public class Kontroler {
 			((LoginDialog) theView).addLoginListener(new LoginListener());
 			((LoginDialog) theView).addIzvestajListener(new IzvestajListener());
 			((LoginDialog) theView).setVisible(true);
+			FileKontroler.writeOutputFile(theApp);
 			// System.out.println("HELLO IZLOGOVAO SAM SE");
 		}
 	}

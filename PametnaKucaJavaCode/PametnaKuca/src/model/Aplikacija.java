@@ -5,27 +5,38 @@ package model;
  * Purpose: Defines the Class Aplikacija
  ***********************************************************************/
 
+import java.io.Serializable;
+
 import model.komponente.Komponenta;
 import model.komponente.Tlocrt;
 import model.korisnik.Nalog;
+import model.korisnik.SpoljniKorisnik;
 import model.korisnik.TipIzvestaja;
 import model.korisnik.TipKorisnika;
 import model.stanja.Stanje;
 
-public class Aplikacija {
+@SuppressWarnings("serial")
+public class Aplikacija implements Serializable {
 	private Nalog trenutnoUlogovani;
 	private Tlocrt tlocrt;
 
 	private java.util.List<Nalog> nalozi;
+	private java.util.List<SpoljniKorisnik> spoljniKorisnici;
 	private Stanje stanje;
+	
+	public Aplikacija() {}
 	
 	public Nalog getNalog(String korisnickoIme) {
 		for (Nalog n : nalozi) {
-			if (n.getKorisnickoIme() == korisnickoIme) {
+			if (n.getKorisnickoIme().equals(korisnickoIme)) {
 				return n;
 			}
 		}
 		return null;
+	}
+	
+	public void unaprediKorisnika(Nalog n) {
+		n.getKorisnik().setTipKorisnika(TipKorisnika.readWrite);
 	}
 	
 	public void kreirajIzvestaj(TipIzvestaja tipIzvestaja) {
@@ -177,6 +188,15 @@ public class Aplikacija {
 			nalozi.clear();
 	}
 
+	public void addSpoljniKorisnik(SpoljniKorisnik newSpoljniKorisnik) {
+		if (newSpoljniKorisnik == null)
+			return;
+		if (this.spoljniKorisnici == null)
+			this.spoljniKorisnici = new java.util.ArrayList<SpoljniKorisnik>();
+		if (!this.spoljniKorisnici.contains(newSpoljniKorisnik))
+			this.spoljniKorisnici.add(newSpoljniKorisnik);
+	}
+	
 	public Nalog getTrenutnoUlogovani() {
 		return trenutnoUlogovani;
 	}
@@ -199,5 +219,13 @@ public class Aplikacija {
 
 	public void setStanje(Stanje stanje) {
 		this.stanje = stanje;
+	}
+
+	public java.util.List<SpoljniKorisnik> getSpoljniKorisnici() {
+		return spoljniKorisnici;
+	}
+
+	public void setSpoljniKorisnici(java.util.List<SpoljniKorisnik> spoljniKorisnici) {
+		this.spoljniKorisnici = spoljniKorisnici;
 	}
 }

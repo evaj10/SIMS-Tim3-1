@@ -1,19 +1,22 @@
 package model.komponente;
 
+import java.io.Serializable;
+
 /***********************************************************************
  * Module: Soba.java Author: evaje Purpose: Defines the Class Soba
  ***********************************************************************/
 
-public class Soba {
+@SuppressWarnings("serial")
+public class Soba implements Serializable {
 
-	private int id;
 	private String ime;
 	private double temperatura;
 	private double vlaznost;
 	public java.util.List<Komponenta> komponente;
 
-	public Soba(int id, String ime) {
-		this.id = id;
+	public Soba() {}
+	
+	public Soba(String ime) {
 		this.ime = ime;
 		this.temperatura = 0;
 		this.vlaznost = 0;
@@ -60,14 +63,6 @@ public class Soba {
 				this.komponente.remove(oldKomponenta);
 				oldKomponenta.setSoba((Soba) null);
 			}
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getIme() {
