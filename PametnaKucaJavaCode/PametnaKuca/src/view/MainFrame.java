@@ -8,6 +8,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -20,6 +22,11 @@ import javax.swing.JScrollPane;
 
 import konstante.Konstante;
 import model.Aplikacija;
+import model.komponente.Klima;
+import model.komponente.Komponenta;
+import model.komponente.Soba;
+import model.komponente.TipKomponente;
+
 
 /*
  * Glavni frame za prikaz tlocrta i manipulisanje komponentama i korisnicima, klasa naslednica JFrame-a
@@ -45,6 +52,8 @@ public class MainFrame extends JFrame {
 	private JButton btnPregledKorisnika = new JButton("Pregled korisnika");
 	private JButton btnIzmenaPodataka = new JButton("Izmena sopstvenih podataka");
 	private JButton btnLogOut = new JButton("Log Out");
+	
+	private ArrayList<ButtonComponent> uredjaji = new ArrayList<ButtonComponent>();
 	
 	private Aplikacija app;
 	
@@ -131,9 +140,20 @@ public class MainFrame extends JFrame {
 				new ImageIcon(Konstante.TLOCRT1).getImage(), false);
 		lblTlocrtImage.setIcon(imgTlocrt);
 
-		JButton btnProba = new JButton("PROBA");
+		
+		
+		
+		TipKomponente tipKlima = new Klima("Temperatura:", Konstante.HLADJENJE);
+		Soba spavaca = new Soba(2, "Spavaca soba 1");
+		Komponenta klima = new Komponenta(4, "Klima da ladi", spavaca, tipKlima);
+		ButtonComponent btnProba = new ButtonComponent("PROBA", klima);
+		uredjaji.add(btnProba);
+		
+		
 		lblTlocrtImage.setLayout(null);
 		btnProba.setBounds(lblTlocrtImage.getLocation().x + 200, lblTlocrtImage.getLocation().y, 100, 60);
+		
+		
 		
 		
 		class ResizeListener extends ComponentAdapter {
@@ -222,4 +242,11 @@ public class MainFrame extends JFrame {
 		menuBar.getMiLogout().addActionListener(a);
 	}
 	
+	public void addComponentsListeners(ActionListener a) {
+		for (ButtonComponent bc : uredjaji)
+			bc.addActionListener(a);
+	}
+	
+	
+
 }

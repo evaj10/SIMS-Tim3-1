@@ -1,4 +1,7 @@
 package model.komponente.funkcije;
+
+import model.komponente.Komponenta;
+
 /***********************************************************************
  * Module:  Smanji.java
  * Author:  evaje
@@ -7,4 +10,5 @@ package model.komponente.funkcije;
 
 
 public interface Smanji {
+	public void uradi(Komponenta k, int naKoliko);
 }

@@ -5,6 +5,7 @@ package model.korisnik;
  ***********************************************************************/
 
 public class Nalog {
+
 	private String korisnickoIme;
 	private String sifra;
 	private String fileTlocrt;
@@ -48,6 +49,13 @@ public class Nalog {
 
 	public void setKorisnik(Korisnik korisnik) {
 		this.korisnik = korisnik;
+	}
+	
+	
+	
+	@Override
+	public String toString() {
+		return korisnickoIme;
 	}
 
 }

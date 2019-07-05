@@ -18,12 +18,16 @@ import javax.swing.event.ListSelectionListener;
 
 import konstante.Konstante;
 import model.Aplikacija;
+import model.komponente.Komponenta;
 import model.korisnik.Korisnik;
 import model.korisnik.Nalog;
 import model.korisnik.Pol;
 import model.korisnik.TipKorisnika;
+import view.ButtonComponent;
 import view.IzmenaSopstvenihPodatakaDialog;
+import view.IzmjenaKorisnikaDialog;
 import view.IzvjestajDialog;
+import view.KomponentaDialog;
 import view.KreiranjeNovogNalogaDialog;
 import view.LoginDialog;
 import view.LoginSpoljniDialog;
@@ -61,6 +65,8 @@ public class Kontroler {
 			((MainFrame) theView).addPregledKorisnikaListener(new PregledKorisnikaListener());
 			((MainFrame) theView).addIzmenaSopstvenihPodatakaListener(new IzmenaSopstvenihPodatakaListener());
 			((MainFrame) theView).addLogoutListener(new LogoutListener());
+			
+			((MainFrame) theView).addComponentsListeners(new KomponentaDialogListener());
 		}
 		;
 		MainFrame.setMade(true);
@@ -69,26 +75,24 @@ public class Kontroler {
 
 	private void funkcijaDialogToMainFrame() {
 		((Window) theView).addWindowListener(new WindowAdapter() {
-		    @Override
-		    public void windowClosed(WindowEvent e) {
-		    	// vracanje na MainFrame
-		        theView = MainFrame.getInstance();
-		    }
+			@Override
+			public void windowClosed(WindowEvent e) {
+				// vracanje na MainFrame
+				theView = MainFrame.getInstance();
+			}
 		});
 	}
-	
-	private void izmenaSopstvenihPodatakToMainFrame()
-	{
+
+	private void izmenaSopstvenihPodatakToMainFrame() {
 		((IzmenaSopstvenihPodatakaDialog) theView).dispose();
 		theView = MainFrame.getInstance();
 	}
-	
-	private void kreiranjeNovogNalogaToMainFrame()
-	{
+
+	private void kreiranjeNovogNalogaToMainFrame() {
 		((KreiranjeNovogNalogaDialog) theView).dispose();
 		theView = MainFrame.getInstance();
 	}
-	
+
 	public class LoginListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -144,8 +148,7 @@ public class Kontroler {
 		}
 	}
 
-	public class KreirajNoviNalogPrijaviSeListener implements ActionListener
-	{
+	public class KreirajNoviNalogPrijaviSeListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -156,21 +159,19 @@ public class Kontroler {
 			Date datumRodjenja = parseDate(((KreiranjeNovogNalogaDialog) theView).getDatumRodjenja());
 			Pol pol = ((KreiranjeNovogNalogaDialog) theView).getPol();
 			TipKorisnika tipKorisnika = ((KreiranjeNovogNalogaDialog) theView).getTipKorisnika();
-			
-			Korisnik korisnik = new Korisnik(ime, prezime, datumRodjenja, 
-					pol, tipKorisnika);
-					
+
+			Korisnik korisnik = new Korisnik(ime, prezime, datumRodjenja, pol, tipKorisnika);
+
 			Nalog nalog = new Nalog(korisnickoIme, lozinka, Konstante.TLOCRT1, korisnik);
-			
+
 			theApp.addNalozi(nalog);
-			
+
 			kreiranjeNovogNalogaToMainFrame();
-			
-			
+
 		}
-		
+
 	}
-	
+
 	public class KreiranjeKorisnikaListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -181,7 +182,7 @@ public class Kontroler {
 				e1.printStackTrace();
 			}
 			((KreiranjeNovogNalogaDialog) theView).addPrijaviSeListener(new KreirajNoviNalogPrijaviSeListener());
-			
+
 			((KreiranjeNovogNalogaDialog) theView).setVisible(true);
 		}
 	}
@@ -194,11 +195,12 @@ public class Kontroler {
 			List<Nalog> readNalozi = theApp.getReadNalozi();
 
 			KorisniciTableModel tm = new KorisniciTableModel(readNalozi);
-			UnapredjivanjeDialog d = new UnapredjivanjeDialog((MainFrame) theView, "ISAK - Unapredjivanje korisnika", tm);
+			UnapredjivanjeDialog d = new UnapredjivanjeDialog((MainFrame) theView, "ISAK - Unapredjivanje korisnika",
+					tm);
 			d.addUnaprediKorisnikaListener(new UnaprediKorisnikaListener());
 			theView = d;
 			d.setVisible(true);
-			
+
 			// dodavanje listenera za zatvaranje dijaloga i vracanje theView na MainFrame
 			funkcijaDialogToMainFrame();
 		}
@@ -209,25 +211,64 @@ public class Kontroler {
 		public void actionPerformed(ActionEvent e) {
 			// izvrsi unapredjivanje korisnika
 			System.out.println("UNAPREDI KORISNIKA");
-			String korisnickoIme = ((PanelDetailKorisnici) ((UnapredjivanjeDialog)theView).getPanDetail()).getTxtKorisnickoIme().getText();
+			String korisnickoIme = ((PanelDetailKorisnici) ((UnapredjivanjeDialog) theView).getPanDetail())
+					.getTxtKorisnickoIme().getText();
 			Nalog nalog = theApp.getNalog(korisnickoIme);
 			if (nalog == null) {
-				JOptionPane.showMessageDialog((UnapredjivanjeDialog)theView, "Nije odabran nijedan korisnik!", "Greska", JOptionPane.ERROR_MESSAGE);
-			}
-			else {
+				JOptionPane.showMessageDialog((UnapredjivanjeDialog) theView, "Nije odabran nijedan korisnik!",
+						"Greska", JOptionPane.ERROR_MESSAGE);
+			} else {
 				nalog.getKorisnik().setTipKorisnika(TipKorisnika.readWrite);
 				// TODO // theApp.unaprediKorisnika(nalog);
-				JOptionPane.showMessageDialog((UnapredjivanjeDialog)theView, "Korisnik je uspesno unapredjen.", "Uspesno unapredjivanje", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog((UnapredjivanjeDialog) theView, "Korisnik je uspesno unapredjen.",
+						"Uspesno unapredjivanje", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 	}
-	
+
 	public class IzmenaPodatakaKorisnikaListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// prikazi dijalog za izmenu podataka korisnika
 			System.out.println("IZMENA PODATAKA KORISNIKA");
-			// TODO
+
+			List<Nalog> naloziBezSvog = theApp.getNaloziBezSvog();
+			IzmjenaKorisnikaDialog ikd = new IzmjenaKorisnikaDialog();
+			ikd.addToCmb(naloziBezSvog);
+
+			ikd.addPotvrdiListener(new PotvrdiIzmjenuKorisnikaListener());
+			ikd.addPovratakListener(new PovrakatIzmjenaKorisnikaListener());
+
+			theView = ikd;
+			((IzmjenaKorisnikaDialog) theView).setVisible(true);
+
+		}
+	}
+
+	public class PotvrdiIzmjenuKorisnikaListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			Nalog izmijenjen = ((IzmjenaKorisnikaDialog) theView).getSelected();
+			List<Nalog> sviNalozi = theApp.getNalozi();
+			for (Nalog n : sviNalozi) {
+				if (n.getKorisnickoIme().equals(izmijenjen.getKorisnickoIme())) {
+					n.getKorisnik().setIme(((IzmjenaKorisnikaDialog) theView).getTxfIme());
+					n.getKorisnik().setPrezime(((IzmjenaKorisnikaDialog) theView).getTxfPrezime());
+					n.getKorisnik().setDatumRodjenja(parseDate(((IzmjenaKorisnikaDialog) theView).getDatum()));
+					n.getKorisnik().setPol(((IzmjenaKorisnikaDialog) theView).getPol());
+				}
+			}
+			((IzmjenaKorisnikaDialog) theView).dispose();
+			funkcijaDialogToMainFrame();
+		}
+	}
+
+	public class PovrakatIzmjenaKorisnikaListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			((IzmjenaKorisnikaDialog) theView).dispose();
+			funkcijaDialogToMainFrame();
 		}
 	}
 
@@ -256,40 +297,38 @@ public class Kontroler {
 		}
 	}
 
-	
-	public class IzmenaSopstvenihPodatakaCancelListener implements ActionListener
-	{
+	public class IzmenaSopstvenihPodatakaCancelListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			izmenaSopstvenihPodatakToMainFrame();
-			
+
 		}
-		
+
 	}
-	
-	public class IzmenaSopstvenihPodatakaOK implements ActionListener
-	{
+
+	public class IzmenaSopstvenihPodatakaOK implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			theApp.getTrenutnoUlogovani().getKorisnik().setIme(((IzmenaSopstvenihPodatakaDialog) theView).getIme());
-			theApp.getTrenutnoUlogovani().getKorisnik().setPrezime(((IzmenaSopstvenihPodatakaDialog) theView).getPrezime());
-			theApp.getTrenutnoUlogovani().setKorisnickoIme(((IzmenaSopstvenihPodatakaDialog) theView).getKorisnickoIme());
+			theApp.getTrenutnoUlogovani().getKorisnik()
+					.setPrezime(((IzmenaSopstvenihPodatakaDialog) theView).getPrezime());
+			theApp.getTrenutnoUlogovani()
+					.setKorisnickoIme(((IzmenaSopstvenihPodatakaDialog) theView).getKorisnickoIme());
 			theApp.getTrenutnoUlogovani().setSifra(((IzmenaSopstvenihPodatakaDialog) theView).getLozinka());
-			
+
 			Date datumRodjenja = parseDate(((IzmenaSopstvenihPodatakaDialog) theView).getDatumRodjenja());
 			theApp.getTrenutnoUlogovani().getKorisnik().setDatumRodjenja(datumRodjenja);
-			
+
 			theApp.getTrenutnoUlogovani().getKorisnik().setPol(((IzmenaSopstvenihPodatakaDialog) theView).getPol());
-			
+
 			izmenaSopstvenihPodatakToMainFrame();
-			
-			
+
 		}
-		
+
 	}
-	
+
 	public class IzmenaSopstvenihPodatakaListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -301,18 +340,20 @@ public class Kontroler {
 			}
 			((IzmenaSopstvenihPodatakaDialog) theView).addCancelListener(new IzmenaSopstvenihPodatakaCancelListener());
 			((IzmenaSopstvenihPodatakaDialog) theView).addOkListener(new IzmenaSopstvenihPodatakaOK());
-			
+
 			((IzmenaSopstvenihPodatakaDialog) theView).setIme(theApp.getTrenutnoUlogovani().getKorisnik().getIme());
-			((IzmenaSopstvenihPodatakaDialog) theView).setPrezime(theApp.getTrenutnoUlogovani().getKorisnik().getPrezime());
-			((IzmenaSopstvenihPodatakaDialog) theView).setKorisnickoIme(theApp.getTrenutnoUlogovani().getKorisnickoIme());
+			((IzmenaSopstvenihPodatakaDialog) theView)
+					.setPrezime(theApp.getTrenutnoUlogovani().getKorisnik().getPrezime());
+			((IzmenaSopstvenihPodatakaDialog) theView)
+					.setKorisnickoIme(theApp.getTrenutnoUlogovani().getKorisnickoIme());
 			((IzmenaSopstvenihPodatakaDialog) theView).setLozinka(theApp.getTrenutnoUlogovani().getSifra());
-			
+
 			DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 			String datum = df.format(theApp.getTrenutnoUlogovani().getKorisnik().getDatumRodjenja());
 			((IzmenaSopstvenihPodatakaDialog) theView).setDatum(datum);
-			
+
 			((IzmenaSopstvenihPodatakaDialog) theView).setPol(theApp.getTrenutnoUlogovani().getKorisnik().getPol());
-			
+
 			((IzmenaSopstvenihPodatakaDialog) theView).setVisible(true);
 		}
 	}
@@ -389,7 +430,7 @@ public class Kontroler {
 					return;
 				String korisnickoIme = (String) ((AbstractDialog) theView).getTable().getValueAt(row, 0);
 				Nalog nalog = theApp.getNalog(korisnickoIme);
-				
+
 				DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 				PanelDetailKorisnici panelDetailRegistar = (PanelDetailKorisnici) ((AbstractDialog) theView)
 						.getPanDetail();
@@ -397,8 +438,7 @@ public class Kontroler {
 				panelDetailRegistar.getTxtLozinka().setText(nalog.getSifra());
 				panelDetailRegistar.getTxtPrezime().setText(nalog.getKorisnik().getPrezime());
 				panelDetailRegistar.getTxtIme().setText(nalog.getKorisnik().getIme());
-				panelDetailRegistar.getTxtDatumRodjenja()
-						.setText(df.format(nalog.getKorisnik().getDatumRodjenja()));
+				panelDetailRegistar.getTxtDatumRodjenja().setText(df.format(nalog.getKorisnik().getDatumRodjenja()));
 				if (nalog.getKorisnik().getPol() == Pol.muski) {
 					panelDetailRegistar.getRdbtnMuski().setSelected(true);
 				} else if (nalog.getKorisnik().getPol() == Pol.zenski) {
@@ -415,11 +455,60 @@ public class Kontroler {
 		}
 	}
 	
-	 public static Date parseDate(String date) {
-	     try {
-	         return new SimpleDateFormat("dd-MM-yyyy").parse(date);
-	     } catch (ParseException e) {
-	         return null;
-	     }
-	  }
+	
+	public class KomponentaDialogListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			Komponenta k = ((ButtonComponent) e.getSource()).getKomponenta();
+			KomponentaDialog kd = new KomponentaDialog();
+			kd.setId(k.getId());
+			kd.setSlika(k.getTipKomponente().getSlika());
+			kd.setNaziv(k.getNaziv());
+			kd.setTip(k.getTipKomponente().toString());
+			kd.setSoba(k.getSoba().getIme());
+			kd.setToggleButton(k.getUkljucena());
+			kd.setOpisVrijednosti(k.getTipKomponente().getOpisVrijednosti());
+			kd.setVrijednost(k.getVrednost());
+			
+
+			kd.addPotvrdiListener(new PotvrdiKomponentuListener());
+			kd.addPovratakListener(new PovrakatKomponentaListener());
+
+			theView = kd;
+			((KomponentaDialog) theView).setVisible(true);
+
+		}
+	}
+	
+	
+	public class PotvrdiKomponentuListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			int idKomponente = ((KomponentaDialog) theView).getId();
+			Komponenta izmijenjena = theApp.getTlocrt().nadjiKomponentu(idKomponente);
+			izmijenjena.getTipKomponente().getPovecaj().uradi(izmijenjena, ((KomponentaDialog) theView).getVrijednost());
+			izmijenjena.getTipKomponente().getUkljuciIskljuci().uradi(izmijenjena, ((KomponentaDialog) theView).getOnOff());
+
+			((KomponentaDialog) theView).dispose();
+			funkcijaDialogToMainFrame();
+		}
+	}
+
+	public class PovrakatKomponentaListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			((KomponentaDialog) theView).dispose();
+			funkcijaDialogToMainFrame();
+		}
+	}
+
+	public static Date parseDate(String date) {
+		try {
+			return new SimpleDateFormat("dd-MM-yyyy").parse(date);
+		} catch (ParseException e) {
+			return null;
+		}
+	}
 }

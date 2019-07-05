@@ -128,6 +128,20 @@ public class Aplikacija {
 			nalozi = new java.util.ArrayList<Nalog>();
 		return nalozi;
 	}
+	
+	public java.util.List<Nalog> getNaloziBezSvog() {
+		if (nalozi == null) {
+			nalozi = new java.util.ArrayList<Nalog>();
+			return nalozi;
+		}
+		java.util.ArrayList<Nalog> naloziBezSvog = new java.util.ArrayList<Nalog>();
+		for (Nalog n : nalozi) {
+			if (!n.getKorisnickoIme().equals(trenutnoUlogovani.getKorisnickoIme())) {
+				naloziBezSvog.add(n);
+			}
+		}
+		return naloziBezSvog;
+	}
 
 	public java.util.List<Nalog> getReadNalozi() {
 		if (nalozi == null) {

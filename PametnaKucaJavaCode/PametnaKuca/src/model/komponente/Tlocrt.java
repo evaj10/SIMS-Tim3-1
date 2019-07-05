@@ -11,17 +11,31 @@ public class Tlocrt {
 	private String naziv;
 
 	public java.util.List<Soba> sobe;
-	public java.util.Collection<Komponenta> komponente;
+	public java.util.ArrayList<Komponenta> komponente;
 	//public java.util.List<Nalog> nalozi;
+	
+	public Tlocrt() {
+		komponente = new java.util.ArrayList<Komponenta>();
+	}
 
 	public Tlocrt(int id, String naziv, String slika) {
 		this.id = id;
 		this.naziv = naziv;
 		this.slika = slika;
+		komponente = new java.util.ArrayList<Komponenta>();
 	}
 	
 	public void iscrtajTlocrt() {
 		// TODO: implement
+	}
+	
+	public Komponenta nadjiKomponentu(int i) {
+		for (Komponenta k : komponente) {
+			if (k.getId() == i) {
+				return k;
+			}
+		}
+		return null;
 	}
 
 	public java.util.List<Soba> getSobe() {
