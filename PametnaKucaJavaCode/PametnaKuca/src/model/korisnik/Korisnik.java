@@ -15,18 +15,15 @@ public class Korisnik {
 	private Pol pol;
 	private TipKorisnika tipKorisnika;
 
-	public Adresa adresa;
-	public Nalog nalog;
 
 	public Korisnik(int id, String ime, String prezime, Date datumRodjenja,
-			Pol pol, TipKorisnika tk, Adresa adr) {
+			Pol pol, TipKorisnika tk) {
 		this.id = id;
 		this.ime = ime;
 		this.prezime = prezime;
 		this.datumRodjenja = datumRodjenja;
 		this.pol = pol;
 		this.tipKorisnika = tk;
-		this.adresa = adr;
 	}
 	
 	public int getId() {
@@ -77,20 +74,6 @@ public class Korisnik {
 		this.tipKorisnika = tipKorisnika;
 	}
 
-	public Adresa getAdresa() {
-		return adresa;
-	}
-
-	public void setAdresa(Adresa adresa) {
-		this.adresa = adresa;
-	}
-
-	public Nalog getNalog() {
-		return nalog;
-	}
-
-	public void setNalog(Nalog nalog) {
-		this.nalog = nalog;
-	}
+	
 
 }

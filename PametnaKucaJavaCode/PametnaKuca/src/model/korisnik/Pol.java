@@ -8,5 +8,5 @@ package model.korisnik;
 public enum Pol {
    zenski,
    muski,
-   neodredjeno;
+   ostalo;
 }

@@ -122,29 +122,6 @@ public class LoginDialog extends JDialog {
 		btnReport.addActionListener(a);
 	}
 	
-	/*
-	private void attachBtnListeners() {
-		// dodaje se listener - ovo se poziva kad se klikne na dugme, tu cemo valjda
-		// pozivati i funkcije za promjenu stanja aplikacije ??
-		btnLogIn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				MainFrame mf = MainFrame.getInstance();
-				mf.setVisible(true);
-				dispose(); // gasenje trenutnog dialoga
-			}
-		});
-
-		btnReport.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				LoginSpoljniDialog loginSpoljniDialog = new LoginSpoljniDialog();
-				loginSpoljniDialog.setVisible(true);
-				dispose();
-			}
-		});
-	}*/
-	
 	private void terminateOnExit() {
 		WindowListener exitListener = new WindowAdapter() {
             @Override

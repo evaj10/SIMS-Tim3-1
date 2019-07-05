@@ -10,12 +10,6 @@ import model.komponente.Soba;
 import model.komponente.TipKomponente;
 import model.komponente.Tlocrt;
 import model.komponente.Zvucnik;
-import model.korisnik.Adresa;
-import model.korisnik.Korisnik;
-import model.korisnik.Mesto;
-import model.korisnik.Nalog;
-import model.korisnik.Pol;
-import model.korisnik.TipKorisnika;
 
 public class TestPrimer {
 
@@ -55,19 +49,19 @@ public class TestPrimer {
 		this.tlocrt.addKomponente(zvucnik);
 		this.tlocrt.addKomponente(klima);
 		
-		Korisnik read = new Korisnik(1, "Ksenija", "Prcic", null, 
+		/*Korisnik read = new Korisnik(1, "Ksenija", "Prcic", null, 
 				Pol.zenski, TipKorisnika.read, new Adresa("Bulevar Kralja Petra I", 36, 
 						new Mesto(21000, "Novi Sad")));
 		Korisnik write = new Korisnik(2, "Sonja", "Prcic", null, 
 				Pol.zenski, TipKorisnika.readWrite, new Adresa("Bulevar Kralja Petra I", 36, 
-						new Mesto(21000, "Novi Sad")));
+						new Mesto(21000, "Novi Sad")));*/
 		
-		Nalog ks = new Nalog("ksenijaMafija", "ksenija123", Konstante.TLOCRT1, read);
-		Nalog msp = new Nalog("msp", "msp", Konstante.TLOCRT1, write);
+		//Nalog ks = new Nalog("ksenijaMafija", "ksenija123", Konstante.TLOCRT1, read);
+		//Nalog msp = new Nalog("msp", "msp", Konstante.TLOCRT1, write);
 		
 		this.app = new Aplikacija();
-		this.app.addNalozi(ks);
-		this.app.addNalozi(msp);
+		//this.app.addNalozi(ks);
+		//this.app.addNalozi(msp);
 		this.app.setTlocrt(this.tlocrt);
 	}
 } 

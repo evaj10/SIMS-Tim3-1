@@ -6,10 +6,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -17,6 +20,7 @@ import model.Aplikacija;
 import model.korisnik.Nalog;
 import model.korisnik.Pol;
 import model.korisnik.TipKorisnika;
+import view.IzmenaSopstvenihPodatakaDialog;
 import view.IzvjestajDialog;
 import view.LoginDialog;
 import view.LoginSpoljniDialog;
@@ -204,12 +208,85 @@ public class Kontroler {
 		}
 	}
 
+	public void IzmenaSopstvenihPodatakaNaMainFrame()
+	{
+		((IzmenaSopstvenihPodatakaDialog) theView).dispose();
+		theView = MainFrame.getInstance();
+		if (!MainFrame.getMade()) {
+			((MainFrame) theView).addVodaIzvestajListener(new VodaIzvestajListener());
+			((MainFrame) theView).addGasIzvestajListener(new GasIzvestajListener());
+			((MainFrame) theView).addStrujaIzvestajListener(new StrujaIzvestajListener());
+
+			((MainFrame) theView).addKreiranjeKorisnikaListener(new KreiranjeKorisnikaListener());
+			((MainFrame) theView).addUnapredjivanjeKorisnikaListener(new UnapredjivanjeKorisnikaListener());
+			((MainFrame) theView).addIzmenaPodatakaKorisnikaListener(new IzmenaPodatakaKorisnikaListener());
+			((MainFrame) theView).addBrisanjeKorisnikaListener(new BrisanjeKorisnikaListener());
+			((MainFrame) theView).addPregledKorisnikaListener(new PregledKorisnikaListener());
+			((MainFrame) theView).addIzmenaSopstvenihPodatakaListener(new IzmenaSopstvenihPodatakaListener());
+			((MainFrame) theView).addLogoutListener(new LogoutListener());
+		}
+		;
+		MainFrame.setMade(true);
+		((MainFrame) theView).setVisible(true);
+	}
+	
+	public class IzmenaSopstvenihPodatakaCancelListener implements ActionListener
+	{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			IzmenaSopstvenihPodatakaNaMainFrame();
+			
+		}
+		
+	}
+	
+	public class IzmenaSopstvenihPodatakaOK implements ActionListener
+	{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			theApp.getTrenutnoUlogovani().getKorisnik().setIme(((IzmenaSopstvenihPodatakaDialog) theView).getIme());
+			theApp.getTrenutnoUlogovani().getKorisnik().setPrezime(((IzmenaSopstvenihPodatakaDialog) theView).getPrezime());
+			theApp.getTrenutnoUlogovani().setKorisnickoIme(((IzmenaSopstvenihPodatakaDialog) theView).getKorisnickoIme());
+			theApp.getTrenutnoUlogovani().setSifra(((IzmenaSopstvenihPodatakaDialog) theView).getLozinka());
+			
+			Date datumRodjenja = parseDate(((IzmenaSopstvenihPodatakaDialog) theView).getDatumRodjenja());
+			theApp.getTrenutnoUlogovani().getKorisnik().setDatumRodjenja(datumRodjenja);
+			
+			theApp.getTrenutnoUlogovani().getKorisnik().setPol(((IzmenaSopstvenihPodatakaDialog) theView).getPol());
+			
+			IzmenaSopstvenihPodatakaNaMainFrame();
+			
+			
+		}
+		
+	}
+	
 	public class IzmenaSopstvenihPodatakaListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// prikazi dijalog za izmenu sopstvenih podataka
-			System.out.println("IZMENA SOPSTVENIH PODATAKA");
-			// TODO
+			try {
+				theView = new IzmenaSopstvenihPodatakaDialog();
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+					| UnsupportedLookAndFeelException e1) {
+				e1.printStackTrace();
+			}
+			((IzmenaSopstvenihPodatakaDialog) theView).addCancelListener(new IzmenaSopstvenihPodatakaCancelListener());
+			((IzmenaSopstvenihPodatakaDialog) theView).addOkListener(new IzmenaSopstvenihPodatakaOK());
+			
+			((IzmenaSopstvenihPodatakaDialog) theView).setIme(theApp.getTrenutnoUlogovani().getKorisnik().getIme());
+			((IzmenaSopstvenihPodatakaDialog) theView).setPrezime(theApp.getTrenutnoUlogovani().getKorisnik().getPrezime());
+			((IzmenaSopstvenihPodatakaDialog) theView).setKorisnickoIme(theApp.getTrenutnoUlogovani().getKorisnickoIme());
+			((IzmenaSopstvenihPodatakaDialog) theView).setLozinka(theApp.getTrenutnoUlogovani().getSifra());
+			
+			DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+			String datum = df.format(theApp.getTrenutnoUlogovani().getKorisnik().getDatumRodjenja());
+			((IzmenaSopstvenihPodatakaDialog) theView).setDatum(datum);
+			
+			((IzmenaSopstvenihPodatakaDialog) theView).setPol(theApp.getTrenutnoUlogovani().getKorisnik().getPol());
+			
+			((IzmenaSopstvenihPodatakaDialog) theView).setVisible(true);
 		}
 	}
 
@@ -310,4 +387,12 @@ public class Kontroler {
 			}
 		}
 	}
+	
+	 public static Date parseDate(String date) {
+	     try {
+	         return new SimpleDateFormat("dd-MM-yyyy").parse(date);
+	     } catch (ParseException e) {
+	         return null;
+	     }
+	  }
 }

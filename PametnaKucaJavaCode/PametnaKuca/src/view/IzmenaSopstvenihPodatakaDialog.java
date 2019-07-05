@@ -18,6 +18,8 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import model.korisnik.Pol;
+
 @SuppressWarnings("serial")
 public class IzmenaSopstvenihPodatakaDialog extends JDialog {
 	
@@ -35,9 +37,6 @@ public class IzmenaSopstvenihPodatakaDialog extends JDialog {
 	private JLabel lblStaraLozinka;
 	private JTextField txfLozinka;
 	
-	private JLabel lblPotvrdaLozinke;
-	private JTextField txfPonovoLozinka;
-	
 	private JLabel lblPol;
 	private ButtonGroup btngrpPol;
 	private JRadioButton rdbtnZenski;
@@ -48,6 +47,9 @@ public class IzmenaSopstvenihPodatakaDialog extends JDialog {
 	private JComboBox<Integer> cmbDan;
 	private JComboBox<String> cmbMesec;
 	private JComboBox<Integer> cmbGodina;
+	
+	private JButton btnOk;
+	private JButton btnCancel;
 
 	/**
 	 * Launch the application.
@@ -71,14 +73,14 @@ public class IzmenaSopstvenihPodatakaDialog extends JDialog {
 	 */
 	public IzmenaSopstvenihPodatakaDialog() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		setBounds(100, 100, 464, 402);
+		setBounds(100, 100, 464, 354);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 73, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
 		{
 			lblIzmenaPodataka = new JLabel("Izmena podataka");
@@ -155,7 +157,7 @@ public class IzmenaSopstvenihPodatakaDialog extends JDialog {
 			txfKorisnickoIme.setColumns(10);
 		}
 		{
-			lblStaraLozinka = new JLabel("Nova lozinka:");
+			lblStaraLozinka = new JLabel("Lozinka:");
 			lblStaraLozinka.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			GridBagConstraints gbc_lblStaraLozinka = new GridBagConstraints();
 			gbc_lblStaraLozinka.anchor = GridBagConstraints.WEST;
@@ -176,27 +178,6 @@ public class IzmenaSopstvenihPodatakaDialog extends JDialog {
 			txfLozinka.setColumns(10);
 		}
 		{
-			lblPotvrdaLozinke = new JLabel("Potvrda lozinke:");
-			lblPotvrdaLozinke.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			GridBagConstraints gbc_lblPotvrdaLozinke = new GridBagConstraints();
-			gbc_lblPotvrdaLozinke.anchor = GridBagConstraints.WEST;
-			gbc_lblPotvrdaLozinke.insets = new Insets(5, 25, 5, 5);
-			gbc_lblPotvrdaLozinke.gridx = 1;
-			gbc_lblPotvrdaLozinke.gridy = 6;
-			getContentPane().add(lblPotvrdaLozinke, gbc_lblPotvrdaLozinke);
-		}
-		{
-			txfPonovoLozinka = new JTextField();
-			GridBagConstraints gbc_textField_4 = new GridBagConstraints();
-			gbc_textField_4.gridwidth = 3;
-			gbc_textField_4.insets = new Insets(5, 5, 5, 25);
-			gbc_textField_4.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textField_4.gridx = 3;
-			gbc_textField_4.gridy = 6;
-			getContentPane().add(txfPonovoLozinka, gbc_textField_4);
-			txfPonovoLozinka.setColumns(10);
-		}
-		{
 			{
 				lblPol = new JLabel("Pol:");
 				lblPol.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -204,73 +185,74 @@ public class IzmenaSopstvenihPodatakaDialog extends JDialog {
 				gbc_lblPol.anchor = GridBagConstraints.WEST;
 				gbc_lblPol.insets = new Insets(5, 25, 5, 5);
 				gbc_lblPol.gridx = 1;
-				gbc_lblPol.gridy = 7;
+				gbc_lblPol.gridy = 6;
 				getContentPane().add(lblPol, gbc_lblPol);
 			}
+			btngrpPol = new ButtonGroup();
 			{
 				rdbtnZenski = new JRadioButton("Zenski");
 				rdbtnZenski.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				GridBagConstraints gbc_rdbtnZenski = new GridBagConstraints();
 				gbc_rdbtnZenski.insets = new Insets(5, 5, 5, 5);
 				gbc_rdbtnZenski.gridx = 3;
-				gbc_rdbtnZenski.gridy = 7;
+				gbc_rdbtnZenski.gridy = 6;
 				getContentPane().add(rdbtnZenski, gbc_rdbtnZenski);
 			}
+			btngrpPol.add(rdbtnZenski);
 			{
 				rdbtnMuski = new JRadioButton("Muski");
 				rdbtnMuski.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				GridBagConstraints gbc_rdbtnMuski = new GridBagConstraints();
 				gbc_rdbtnMuski.insets = new Insets(5, 5, 5, 5);
 				gbc_rdbtnMuski.gridx = 4;
-				gbc_rdbtnMuski.gridy = 7;
+				gbc_rdbtnMuski.gridy = 6;
 				getContentPane().add(rdbtnMuski, gbc_rdbtnMuski);
 			}
+			btngrpPol.add(rdbtnMuski);
 			{
-				rdbtnNeodredjen = new JRadioButton("Neodredjen");
+				rdbtnNeodredjen = new JRadioButton("Ostalo");
 				rdbtnNeodredjen.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				GridBagConstraints gbc_rdbtnNeodredjeni = new GridBagConstraints();
 				gbc_rdbtnNeodredjeni.insets = new Insets(5, 5, 5, 15);
 				gbc_rdbtnNeodredjeni.gridx = 5;
-				gbc_rdbtnNeodredjeni.gridy = 7;
+				gbc_rdbtnNeodredjeni.gridy = 6;
 				getContentPane().add(rdbtnNeodredjen, gbc_rdbtnNeodredjeni);
 			}
-			
-				btngrpPol = new ButtonGroup();
-				btngrpPol.add(rdbtnZenski);
-				btngrpPol.add(rdbtnMuski);
-				btngrpPol.add(rdbtnNeodredjen);
+			btngrpPol.add(rdbtnNeodredjen);
 			{
-				lblDatumRodjenja = new JLabel("Datum rodjenja:");
-				lblDatumRodjenja.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				GridBagConstraints gbc_lblDatumRodjenja = new GridBagConstraints();
-				gbc_lblDatumRodjenja.anchor = GridBagConstraints.WEST;
-				gbc_lblDatumRodjenja.insets = new Insets(5, 25, 5, 5);
-				gbc_lblDatumRodjenja.gridx = 1;
-				gbc_lblDatumRodjenja.gridy = 8;
-				getContentPane().add(lblDatumRodjenja, gbc_lblDatumRodjenja);
+				{
+					lblDatumRodjenja = new JLabel("Datum rodjenja:");
+					lblDatumRodjenja.setFont(new Font("Tahoma", Font.PLAIN, 14));
+					GridBagConstraints gbc_lblDatumRodjenja = new GridBagConstraints();
+					gbc_lblDatumRodjenja.anchor = GridBagConstraints.WEST;
+					gbc_lblDatumRodjenja.insets = new Insets(5, 25, 5, 5);
+					gbc_lblDatumRodjenja.gridx = 1;
+					gbc_lblDatumRodjenja.gridy = 7;
+					getContentPane().add(lblDatumRodjenja, gbc_lblDatumRodjenja);
+				}
 			}
 			{
 				cmbDan = new JComboBox<Integer>();
 				cmbDan.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				GridBagConstraints gbc_comboBox = new GridBagConstraints();
-				gbc_comboBox.insets = new Insets(5, 5, 5, 5);
-				gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-				gbc_comboBox.gridx = 3;
-				gbc_comboBox.gridy = 8;
+				GridBagConstraints gbc_comboBox_1 = new GridBagConstraints();
+				gbc_comboBox_1.insets = new Insets(5, 5, 5, 5);
+				gbc_comboBox_1.fill = GridBagConstraints.HORIZONTAL;
+				gbc_comboBox_1.gridx = 3;
+				gbc_comboBox_1.gridy = 7;
+				getContentPane().add(cmbDan, gbc_comboBox_1);
 				for(int i = 1; i <= 31 ; i++)
 				{
 					cmbDan.addItem(i);
 				}
-				getContentPane().add(cmbDan, gbc_comboBox);
 			}
 			{
 				cmbMesec = new JComboBox<String>();
 				cmbMesec.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				GridBagConstraints gbc_comboBox = new GridBagConstraints();
-				gbc_comboBox.insets = new Insets(5, 5, 5, 5);
-				gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-				gbc_comboBox.gridx = 4;
-				gbc_comboBox.gridy = 8;
+				GridBagConstraints gbc_comboBox_2 = new GridBagConstraints();
+				gbc_comboBox_2.insets = new Insets(5, 5, 5, 5);
+				gbc_comboBox_2.fill = GridBagConstraints.HORIZONTAL;
+				gbc_comboBox_2.gridx = 4;
+				gbc_comboBox_2.gridy = 7;
 				cmbMesec.addItem("Jan");
 				cmbMesec.addItem("Feb");
 				cmbMesec.addItem("Mart");
@@ -282,40 +264,138 @@ public class IzmenaSopstvenihPodatakaDialog extends JDialog {
 				cmbMesec.addItem("Sept");
 				cmbMesec.addItem("Nov");
 				cmbMesec.addItem("Dec");
-				getContentPane().add(cmbMesec, gbc_comboBox);
-			}
-			{
-				cmbGodina = new JComboBox<Integer>();
-				cmbGodina.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				GridBagConstraints gbc_comboBox = new GridBagConstraints();
-				gbc_comboBox.insets = new Insets(5, 5, 5, 25);
-				gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-				gbc_comboBox.gridx = 5;
-				gbc_comboBox.gridy = 8;
-				for(int i = 2020;i > 1901; i--)
-				{
-					cmbGodina.addItem(i);
-				}
-				getContentPane().add(cmbGodina, gbc_comboBox);
+				getContentPane().add(cmbMesec, gbc_comboBox_2);
 			}
 		}
-		JButton btnNewButton = new JButton("Cancel");
-		btnNewButton.addActionListener(new ActionListener() {
+		{
+			cmbGodina = new JComboBox<Integer>();
+			cmbGodina.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			GridBagConstraints gbc_comboBox = new GridBagConstraints();
+			gbc_comboBox.insets = new Insets(5, 5, 5, 25);
+			gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
+			gbc_comboBox.gridx = 5;
+			gbc_comboBox.gridy = 7;
+			getContentPane().add(cmbGodina, gbc_comboBox);
+			for(int i = 2020;i > 1901; i--)
+			{
+				cmbGodina.addItem(i);
+			}
+		}
+		btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.insets = new Insets(30, 5, 0, 5);
+		gbc_btnNewButton.insets = new Insets(30, 5, 5, 5);
 		gbc_btnNewButton.gridx = 1;
 		gbc_btnNewButton.gridy = 10;
-		getContentPane().add(btnNewButton, gbc_btnNewButton);
+		getContentPane().add(btnCancel, gbc_btnNewButton);
 		{
-			JButton btnOk = new JButton("OK");
+			btnOk = new JButton("OK");
 			GridBagConstraints gbc_btnOk = new GridBagConstraints();
-			gbc_btnOk.insets = new Insets(30, 5, 0, 5);
+			gbc_btnOk.insets = new Insets(30, 5, 5, 5);
 			gbc_btnOk.gridx = 5;
 			gbc_btnOk.gridy = 10;
 			getContentPane().add(btnOk, gbc_btnOk);
+		}
+	}
+	
+	
+	public void addOkListener(ActionListener a) {
+		btnOk.addActionListener(a);
+	}
+	
+	public void addCancelListener(ActionListener a) {
+		btnCancel.addActionListener(a);
+	}
+	
+	public String getIme()
+	{
+		return txfIme.getText();
+	}
+	
+	public void setIme(String ime)
+	{
+		txfIme.setText(ime);
+	}
+	
+	public String getPrezime()
+	{
+		return txfPrezime.getText();
+	}
+	
+	public void setPrezime(String prezime)
+	{
+		txfPrezime.setText(prezime);
+	}
+	
+	public String getKorisnickoIme()
+	{
+		return txfKorisnickoIme.getText();
+	}
+	
+	public void setKorisnickoIme(String korisnickoIme)
+	{
+		txfKorisnickoIme.setText(korisnickoIme);
+	}
+	
+	public String getLozinka()
+	{
+		return txfLozinka.getText();
+	}
+	
+	public void setLozinka(String lozinka)
+	{
+		txfLozinka.setText(lozinka);
+	}
+	
+	public String getDatumRodjenja() {
+		int mesec = cmbMesec.getSelectedIndex()+1;
+		String datumRodjenja = cmbDan.getSelectedItem() + "-" + mesec + "-" + cmbGodina.getSelectedItem();
+		System.out.println(datumRodjenja);
+		return datumRodjenja;
+	}
+	
+	public void setDatum(String datum)
+	{
+		String[] tokens = datum.split("-");
+		cmbDan.setSelectedItem(Integer.parseInt(tokens[0]));
+		cmbMesec.setSelectedIndex((Integer.parseInt(tokens[1])-1));
+		cmbGodina.setSelectedItem(Integer.parseInt(tokens[2]));
+	}
+	
+	public Pol getPol()
+	{
+		Pol pol;
+		if(rdbtnZenski.isSelected())
+		{
+			pol = Pol.zenski;
+		}
+		else if(rdbtnMuski.isSelected())
+		{
+			pol = Pol.muski;
+		}
+		else {
+			pol = Pol.ostalo;
+		}
+		
+		return pol;
+	}
+
+	public void setPol(Pol pol)
+	{
+		if(pol == Pol.zenski)
+		{
+			rdbtnZenski.setSelected(true);
+		}
+		else if(pol == Pol.muski)
+		{
+			rdbtnMuski.setSelected(true);
+		}
+		else
+		{
+			rdbtnNeodredjen.setSelected(true);
 		}
 	}
 
