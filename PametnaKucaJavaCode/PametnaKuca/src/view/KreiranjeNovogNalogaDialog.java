@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
@@ -21,6 +22,9 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
+
+import model.korisnik.Pol;
+import model.korisnik.TipKorisnika;
 
 @SuppressWarnings("serial")
 public class KreiranjeNovogNalogaDialog extends JDialog {
@@ -363,6 +367,70 @@ public class KreiranjeNovogNalogaDialog extends JDialog {
 			gbc_btnPrijaviSe.gridy = 9;
 			contentPanel.add(btnPrijaviSe, gbc_btnPrijaviSe);
 		}
+	}
+	
+	public void addPrijaviSeListener(ActionListener a) {
+		btnPrijaviSe.addActionListener(a);
+	}
+	
+	public String getIme()
+	{
+		return txtIme.getText();
+	}
+	
+	public String getPrezime()
+	{
+		return txtPrezime.getText();
+	}
+	
+	public String getKorisnickoIme()
+	{
+		return txtKorisnickoIme.getText();
+	}
+	
+	
+	public String getLozinka()
+	{
+		return txtLozinka.getText();
+	}
+
+	public String getDatumRodjenja() {
+		int mesec = cmbMesec.getSelectedIndex()+1;
+		String datumRodjenja = cmbDan.getSelectedItem() + "-" + mesec + "-" + cmbGodina.getSelectedItem();
+		return datumRodjenja;
+	}
+	
+	public Pol getPol()
+	{
+		Pol pol;
+		if(rdbtnZenski.isSelected())
+		{
+			pol = Pol.zenski;
+		}
+		else if(rdbtnMuski.isSelected())
+		{
+			pol = Pol.muski;
+		}
+		else {
+			pol = Pol.ostalo;
+		}
+		
+		return pol;
+	}
+	
+	public TipKorisnika getTipKorisnika()
+	{
+		TipKorisnika tipKorisnika;
+		if(rdbtnRead.isSelected())
+		{
+			tipKorisnika = TipKorisnika.read;
+		}
+		else
+		{
+			tipKorisnika = TipKorisnika.readWrite;
+		}
+		
+		return tipKorisnika;
 	}
 
 }

@@ -353,7 +353,6 @@ public class IzmenaSopstvenihPodatakaDialog extends JDialog {
 	public String getDatumRodjenja() {
 		int mesec = cmbMesec.getSelectedIndex()+1;
 		String datumRodjenja = cmbDan.getSelectedItem() + "-" + mesec + "-" + cmbGodina.getSelectedItem();
-		System.out.println(datumRodjenja);
 		return datumRodjenja;
 	}
 	

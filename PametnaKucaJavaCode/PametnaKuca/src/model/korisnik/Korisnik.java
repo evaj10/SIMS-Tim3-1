@@ -8,7 +8,6 @@ package model.korisnik;
 import java.util.Date;
 
 public class Korisnik {
-	private int id;
 	private String ime;
 	private String prezime;
 	private Date datumRodjenja;
@@ -16,9 +15,8 @@ public class Korisnik {
 	private TipKorisnika tipKorisnika;
 
 
-	public Korisnik(int id, String ime, String prezime, Date datumRodjenja,
+	public Korisnik(String ime, String prezime, Date datumRodjenja,
 			Pol pol, TipKorisnika tk) {
-		this.id = id;
 		this.ime = ime;
 		this.prezime = prezime;
 		this.datumRodjenja = datumRodjenja;
@@ -26,14 +24,6 @@ public class Korisnik {
 		this.tipKorisnika = tk;
 	}
 	
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public String getIme() {
 		return ime;
 	}

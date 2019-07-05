@@ -16,12 +16,15 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import konstante.Konstante;
 import model.Aplikacija;
+import model.korisnik.Korisnik;
 import model.korisnik.Nalog;
 import model.korisnik.Pol;
 import model.korisnik.TipKorisnika;
 import view.IzmenaSopstvenihPodatakaDialog;
 import view.IzvjestajDialog;
+import view.KreiranjeNovogNalogaDialog;
 import view.LoginDialog;
 import view.LoginSpoljniDialog;
 import view.MainFrame;
@@ -72,6 +75,18 @@ public class Kontroler {
 		        theView = MainFrame.getInstance();
 		    }
 		});
+	}
+	
+	private void izmenaSopstvenihPodatakToMainFrame()
+	{
+		((IzmenaSopstvenihPodatakaDialog) theView).dispose();
+		theView = MainFrame.getInstance();
+	}
+	
+	private void kreiranjeNovogNalogaToMainFrame()
+	{
+		((KreiranjeNovogNalogaDialog) theView).dispose();
+		theView = MainFrame.getInstance();
 	}
 	
 	public class LoginListener implements ActionListener {
@@ -129,12 +144,45 @@ public class Kontroler {
 		}
 	}
 
+	public class KreirajNoviNalogPrijaviSeListener implements ActionListener
+	{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String ime = ((KreiranjeNovogNalogaDialog) theView).getIme();
+			String prezime = ((KreiranjeNovogNalogaDialog) theView).getPrezime();
+			String korisnickoIme = ((KreiranjeNovogNalogaDialog) theView).getKorisnickoIme();
+			String lozinka = ((KreiranjeNovogNalogaDialog) theView).getLozinka();
+			Date datumRodjenja = parseDate(((KreiranjeNovogNalogaDialog) theView).getDatumRodjenja());
+			Pol pol = ((KreiranjeNovogNalogaDialog) theView).getPol();
+			TipKorisnika tipKorisnika = ((KreiranjeNovogNalogaDialog) theView).getTipKorisnika();
+			
+			Korisnik korisnik = new Korisnik(ime, prezime, datumRodjenja, 
+					pol, tipKorisnika);
+					
+			Nalog nalog = new Nalog(korisnickoIme, lozinka, Konstante.TLOCRT1, korisnik);
+			
+			theApp.addNalozi(nalog);
+			
+			kreiranjeNovogNalogaToMainFrame();
+			
+			
+		}
+		
+	}
+	
 	public class KreiranjeKorisnikaListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// prikazi dijalog za kreiranje novog korisnika
-			System.out.println("KREIRANJE KORISNIKA");
-			// TODO
+			try {
+				theView = new KreiranjeNovogNalogaDialog();
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+					| UnsupportedLookAndFeelException e1) {
+				e1.printStackTrace();
+			}
+			((KreiranjeNovogNalogaDialog) theView).addPrijaviSeListener(new KreirajNoviNalogPrijaviSeListener());
+			
+			((KreiranjeNovogNalogaDialog) theView).setVisible(true);
 		}
 	}
 
@@ -208,34 +256,13 @@ public class Kontroler {
 		}
 	}
 
-	public void IzmenaSopstvenihPodatakaNaMainFrame()
-	{
-		((IzmenaSopstvenihPodatakaDialog) theView).dispose();
-		theView = MainFrame.getInstance();
-		if (!MainFrame.getMade()) {
-			((MainFrame) theView).addVodaIzvestajListener(new VodaIzvestajListener());
-			((MainFrame) theView).addGasIzvestajListener(new GasIzvestajListener());
-			((MainFrame) theView).addStrujaIzvestajListener(new StrujaIzvestajListener());
-
-			((MainFrame) theView).addKreiranjeKorisnikaListener(new KreiranjeKorisnikaListener());
-			((MainFrame) theView).addUnapredjivanjeKorisnikaListener(new UnapredjivanjeKorisnikaListener());
-			((MainFrame) theView).addIzmenaPodatakaKorisnikaListener(new IzmenaPodatakaKorisnikaListener());
-			((MainFrame) theView).addBrisanjeKorisnikaListener(new BrisanjeKorisnikaListener());
-			((MainFrame) theView).addPregledKorisnikaListener(new PregledKorisnikaListener());
-			((MainFrame) theView).addIzmenaSopstvenihPodatakaListener(new IzmenaSopstvenihPodatakaListener());
-			((MainFrame) theView).addLogoutListener(new LogoutListener());
-		}
-		;
-		MainFrame.setMade(true);
-		((MainFrame) theView).setVisible(true);
-	}
 	
 	public class IzmenaSopstvenihPodatakaCancelListener implements ActionListener
 	{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			IzmenaSopstvenihPodatakaNaMainFrame();
+			izmenaSopstvenihPodatakToMainFrame();
 			
 		}
 		
@@ -256,7 +283,7 @@ public class Kontroler {
 			
 			theApp.getTrenutnoUlogovani().getKorisnik().setPol(((IzmenaSopstvenihPodatakaDialog) theView).getPol());
 			
-			IzmenaSopstvenihPodatakaNaMainFrame();
+			izmenaSopstvenihPodatakToMainFrame();
 			
 			
 		}

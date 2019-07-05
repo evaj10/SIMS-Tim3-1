@@ -16,28 +16,26 @@ public class Main {
 
 	public static void main(String[] args) {
 		Aplikacija app = new Aplikacija();
-		
-		Korisnik read = new Korisnik(1, "Ksenija", "Prcic", parseDate("16-3-1998"), 
-		Pol.zenski, TipKorisnika.read);
-		
+
+		Korisnik read = new Korisnik("Ksenija", "Prcic", parseDate("16-3-1998"), Pol.zenski, TipKorisnika.read);
+
 		Nalog ks = new Nalog("ksenijaMafija", "ksenija123", Konstante.TLOCRT1, read);
-		
+
 		app.setTrenutnoUlogovani(ks);
-		
+
 		LoginDialog prozor = new LoginDialog();
-		
-		Kontroler kontroler = new Kontroler(prozor,app);
-		
+
+		Kontroler kontroler = new Kontroler(prozor, app);
+
 		prozor.setVisible(true);
 	}
-	
-	
-	 public static Date parseDate(String date) {
-	     try {
-	         return new SimpleDateFormat("dd-MM-yyyy").parse(date);
-	     } catch (ParseException e) {
-	         return null;
-	     }
-	  }
+
+	public static Date parseDate(String date) {
+		try {
+			return new SimpleDateFormat("dd-MM-yyyy").parse(date);
+		} catch (ParseException e) {
+			return null;
+		}
+	}
 
 }
