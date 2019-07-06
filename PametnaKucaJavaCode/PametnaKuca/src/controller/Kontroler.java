@@ -8,6 +8,8 @@ import java.awt.event.WindowEvent;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -29,6 +31,7 @@ import model.stanja.LogInSpoljni;
 import model.stanja.ReadRezim;
 import model.stanja.ReadWriteRezim;
 import model.stanja.SpoljniRezim;
+import view.BrisanjeKorisnikaDialog;
 import view.IzmenaSopstvenihPodatakaDialog;
 import view.IzmjenaKorisnikaDialog;
 import view.IzvjestajDialog;
@@ -37,6 +40,7 @@ import view.KreiranjeNovogNalogaDialog;
 import view.LoginDialog;
 import view.LoginSpoljniDialog;
 import view.MainFrame;
+import view.PrikazIzvestajaDialog;
 import view.PrikazStanjaSobeDialog;
 import view.dugmici.KomponentaButton;
 import view.dugmici.SobaButton;
@@ -101,6 +105,12 @@ public class Kontroler {
 		((KreiranjeNovogNalogaDialog) theView).dispose();
 		theView = MainFrame.getInstance();
 	}
+	
+	private String getAdresaIMesto() {
+		return theApp.getTlocrt().getAdresa().getUlica() + " " + 
+				theApp.getTlocrt().getAdresa().getBroj() + ", " + 
+				theApp.getTlocrt().getAdresa().getMesto().getGrad();
+	}
 
 	public class LoginListener implements ActionListener {
 		@Override
@@ -143,6 +153,15 @@ public class Kontroler {
 			// prikazi dijalog za uvid izvestaja o potrosnji vode
 			System.out.println("IZVESTAJ VODA");
 			// TODO
+			PrikazIzvestajaDialog d = new PrikazIzvestajaDialog();
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			Calendar calendar = Calendar.getInstance();
+			
+			d.setAll(getAdresaIMesto(), theApp.getTrenutnoUlogovani().getKorisnickoIme(), 
+					"Voda", sdf.format(calendar.getTime()), "100", "120", "20");
+			theView = d;
+			((PrikazIzvestajaDialog) theView).setVisible(true);
+			funkcijaDialogToMainFrame();
 		}
 	}
 
@@ -152,6 +171,15 @@ public class Kontroler {
 			// prikazi dijalog za uvid izvestaja o potrosnji gasa
 			System.out.println("IZVESTAJ GAS");
 			// TODO
+			PrikazIzvestajaDialog d = new PrikazIzvestajaDialog();
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			Calendar calendar = Calendar.getInstance();
+			
+			d.setAll(getAdresaIMesto(), theApp.getTrenutnoUlogovani().getKorisnickoIme(), 
+					"Gas", sdf.format(calendar.getTime()), "100", "120", "20");
+			theView = d;
+			((PrikazIzvestajaDialog) theView).setVisible(true);
+			funkcijaDialogToMainFrame();
 		}
 	}
 
@@ -161,6 +189,15 @@ public class Kontroler {
 			// prikazi dijalog za uvid izvestaja o potrosnji struje
 			System.out.println("IZVESTAJ STRUJA");
 			// TODO
+			PrikazIzvestajaDialog d = new PrikazIzvestajaDialog();
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			Calendar calendar = Calendar.getInstance();
+			
+			d.setAll(getAdresaIMesto(), theApp.getTrenutnoUlogovani().getKorisnickoIme(), 
+					"Struja", sdf.format(calendar.getTime()), "100", "120", "20");
+			theView = d;
+			((PrikazIzvestajaDialog) theView).setVisible(true);
+			funkcijaDialogToMainFrame();
 		}
 	}
 
@@ -288,12 +325,45 @@ public class Kontroler {
 	}
 
 	public class BrisanjeKorisnikaListener implements ActionListener {
+		public ArrayList<String> getKoris(){
+			ArrayList<String> koris = new ArrayList<String>();
+			for (Nalog n : theApp.getNalozi()) {
+				koris.add(n.getKorisnickoIme());
+			}
+			return koris;
+		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// prikazi dijalog za brisanje korisnika
 			System.out.println("BRISANJE KORISNIKA");
 			// TODO
+			BrisanjeKorisnikaDialog d = new BrisanjeKorisnikaDialog();
+			d.dialog.setKorisnici(getKoris());
+			d.addIzbrisiListener(new IzbrisiListener());
+			
+			theView = d;
+			((BrisanjeKorisnikaDialog) theView).setVisible(true);
+			funkcijaDialogToMainFrame();
 		}
+	}
+	
+	public class IzbrisiListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String korisnickoIme = ((BrisanjeKorisnikaDialog) theView).getTxfKorisnickoIme();
+			ArrayList<Nalog> nalozi = (ArrayList<Nalog>) theApp.getNalozi();
+			Nalog nalog = theApp.getNalog(korisnickoIme);
+			if(nalog != null) {
+				theApp.removeNalozi(nalog);
+				((BrisanjeKorisnikaDialog) theView).dispose();
+				theView = MainFrame.getInstance();
+			}else {
+				JOptionPane.showMessageDialog((BrisanjeKorisnikaDialog) theView,
+						"Nevalidna vrednost korisnickog imena!", "Neuspesno brisanje",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		
 	}
 
 	public class PregledKorisnikaListener implements ActionListener {
