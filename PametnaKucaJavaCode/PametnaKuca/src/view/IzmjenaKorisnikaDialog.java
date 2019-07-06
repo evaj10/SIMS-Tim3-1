@@ -65,6 +65,7 @@ public class IzmjenaKorisnikaDialog extends JDialog {
 		// postavljamo dimenziju dijaloga u zavisnosti od velicine ekrana na cetvrtinu
 		setWindowSize();
 		setLocationRelativeTo(null);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 		// postavljamo raspored komponenti
 		createGUI();

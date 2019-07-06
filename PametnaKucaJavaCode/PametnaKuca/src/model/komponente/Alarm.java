@@ -1,5 +1,6 @@
 package model.komponente;
 
+import konstante.Konstante;
 import model.komponente.funkcije.ImaPovecanje;
 import model.komponente.funkcije.ImaSmanjenje;
 import model.komponente.funkcije.ImaUkljuciIskljuci;
@@ -15,10 +16,12 @@ import model.komponente.funkcije.NemaSmanjenje;
 
 public class Alarm extends TipKomponente {
 
-	public Alarm() {};
+	public Alarm() {
+		super(Konstante.ALARM);
+	};
 	
 	public Alarm(String opisVrijednosti, String slika) {
-		super(opisVrijednosti, slika);
+		super(opisVrijednosti, Konstante.ALARM);
 		povecaj = new NemaPovecanje();
 		ukljuciIskljuci = new ImaUkljuciIskljuci();
 		smanji = new NemaSmanjenje();

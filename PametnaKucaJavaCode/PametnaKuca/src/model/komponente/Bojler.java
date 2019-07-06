@@ -1,5 +1,6 @@
 package model.komponente;
 
+import konstante.Konstante;
 import model.komponente.funkcije.ImaPovecanje;
 import model.komponente.funkcije.ImaSmanjenje;
 import model.komponente.funkcije.ImaUkljuciIskljuci;
@@ -12,10 +13,12 @@ import model.komponente.funkcije.ImaUkljuciIskljuci;
 
 
 public class Bojler extends TipKomponente {
-	public Bojler() {};
+	public Bojler() {
+		super(Konstante.HEATING);
+	};
 
 	public Bojler(String opisVrijednosti, String slika) {
-		super(opisVrijednosti, slika);
+		super(opisVrijednosti, Konstante.HEATING);
 		povecaj = new ImaPovecanje();
 		ukljuciIskljuci = new ImaUkljuciIskljuci();
 		smanji = new ImaSmanjenje();

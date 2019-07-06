@@ -88,13 +88,13 @@ public class TestPrimer {
 		Komponenta alarm = new Komponenta(1, "Panasonic KX-HN6002FXW", kuhinja, tipAlarm, 
 				new Tacka(60, 60));
 		Komponenta radijator = new Komponenta(2, "Grejac UGNEO", kupatilo, tipRadijator, 
-				new Tacka(410, 600));
+				new Tacka(270, 370));
 		Komponenta zvucnik = new Komponenta(3, "BOSE SoundTouch 30 Series III", dnevni, tipZvucnik, 
-				new Tacka(350, 60));
+				new Tacka(230, 30));
 		Komponenta klima1 = new Komponenta(4, "LG AM18BP", spavaca1, tipKlima, 
-				new Tacka(30, 600));
+				new Tacka(10, 400));
 		Komponenta klima2 = new Komponenta(5, "LG AM18BP", spavaca2, tipKlima, 
-				new Tacka(740, 600));
+				new Tacka(520, 400));
 
 		dnevni.addKomponente(zvucnik);
 		spavaca1.addKomponente(klima1);

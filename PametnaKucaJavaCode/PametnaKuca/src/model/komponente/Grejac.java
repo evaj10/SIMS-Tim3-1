@@ -1,5 +1,6 @@
 package model.komponente;
 
+import konstante.Konstante;
 import model.komponente.funkcije.ImaPovecanje;
 import model.komponente.funkcije.ImaSmanjenje;
 import model.komponente.funkcije.ImaUkljuciIskljuci;
@@ -13,9 +14,11 @@ import model.komponente.funkcije.ImaUkljuciIskljuci;
 
 public class Grejac extends TipKomponente {
 
-	public Grejac() {};
+	public Grejac() {
+		super(Konstante.HEATING);
+	};
 	public Grejac(String opisVrijednosti, String slika) {
-		super(opisVrijednosti, slika);
+		super(opisVrijednosti, Konstante.HEATING);
 		povecaj = new ImaPovecanje();
 		ukljuciIskljuci = new ImaUkljuciIskljuci();
 		smanji = new ImaSmanjenje();

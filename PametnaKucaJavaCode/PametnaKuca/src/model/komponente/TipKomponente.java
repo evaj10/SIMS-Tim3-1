@@ -21,6 +21,11 @@ public abstract class TipKomponente implements Serializable {
 
 	public TipKomponente() {};
 	
+	public TipKomponente(String slika) {
+		super();
+		this.slika = slika;
+	}
+	
 	@Override
 	public String toString() {
 		return "TipKomponente []";
@@ -61,8 +66,6 @@ public abstract class TipKomponente implements Serializable {
 		this.opisVrijednosti = opisVrijednosti;
 		this.slika = slika;
 	}
-
-	public TipKomponente() {}
 	
 	public java.util.List<Komponenta> getKomponente() {
 		if (komponente == null)

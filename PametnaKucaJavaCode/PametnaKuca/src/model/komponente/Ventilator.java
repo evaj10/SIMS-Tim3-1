@@ -1,5 +1,6 @@
 package model.komponente;
 
+import konstante.Konstante;
 import model.komponente.funkcije.ImaPovecanje;
 import model.komponente.funkcije.ImaSmanjenje;
 import model.komponente.funkcije.ImaUkljuciIskljuci;
@@ -12,9 +13,11 @@ import model.komponente.funkcije.ImaUkljuciIskljuci;
 
 public class Ventilator extends TipKomponente {
 
-	public Ventilator() {};
+	public Ventilator() {
+		super(Konstante.COOLING);
+	};
 	public Ventilator(String opisVrijednosti, String slika) {
-		super(opisVrijednosti, slika);
+		super(opisVrijednosti, Konstante.COOLING);
 		povecaj = new ImaPovecanje();
 		ukljuciIskljuci = new ImaUkljuciIskljuci();
 		smanji = new ImaSmanjenje();

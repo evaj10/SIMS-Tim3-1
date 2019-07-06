@@ -43,13 +43,33 @@ public class Aplikacija implements Serializable {
 		// TODO: implement
 	}
 
-	public boolean logIn() {
-		// TODO: implement
-		return true;
+	public boolean logIn(String korisnickoIme, String lozinka) {
+		for (Nalog n : nalozi) {
+			if (n.getKorisnickoIme().equals(korisnickoIme) && n.getSifra().equals(lozinka)) {
+				trenutnoUlogovani = n;
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void logOut() {
-		// TODO: implement
+		trenutnoUlogovani = null;
+	}
+	
+	public boolean loginSpoljni(String id) {
+		int unos;
+		try {
+			unos = Integer.parseInt(id);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+		for (SpoljniKorisnik sk : spoljniKorisnici) {
+			if (sk.getIdKompanije() == unos) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void upgradeKorisnik(TipKorisnika r) {

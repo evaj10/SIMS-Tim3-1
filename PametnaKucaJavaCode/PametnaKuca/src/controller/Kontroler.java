@@ -19,11 +19,16 @@ import javax.swing.event.ListSelectionListener;
 import konstante.Konstante;
 import model.Aplikacija;
 import model.komponente.Komponenta;
+import model.komponente.Soba;
 import model.korisnik.Korisnik;
 import model.korisnik.Nalog;
 import model.korisnik.Pol;
 import model.korisnik.TipKorisnika;
-import view.ButtonComponent;
+import model.stanja.LogInKorisnik;
+import model.stanja.LogInSpoljni;
+import model.stanja.ReadRezim;
+import model.stanja.ReadWriteRezim;
+import model.stanja.SpoljniRezim;
 import view.IzmenaSopstvenihPodatakaDialog;
 import view.IzmjenaKorisnikaDialog;
 import view.IzvjestajDialog;
@@ -32,6 +37,9 @@ import view.KreiranjeNovogNalogaDialog;
 import view.LoginDialog;
 import view.LoginSpoljniDialog;
 import view.MainFrame;
+import view.PrikazStanjaSobeDialog;
+import view.dugmici.KomponentaButton;
+import view.dugmici.SobaButton;
 import view.prikaz_unapredjivanje.AbstractDialog;
 import view.prikaz_unapredjivanje.KorisniciPrikazDialog;
 import view.prikaz_unapredjivanje.KorisniciTableModel;
@@ -39,7 +47,7 @@ import view.prikaz_unapredjivanje.PanelDetailKorisnici;
 import view.prikaz_unapredjivanje.UnapredjivanjeDialog;
 
 public class Kontroler {
-
+	
 	private Object theView;
 	private Aplikacija theApp;
 
@@ -48,6 +56,7 @@ public class Kontroler {
 		this.theApp = theApp;
 		((LoginDialog) this.theView).addLoginListener(new LoginListener());
 		((LoginDialog) this.theView).addIzvestajListener(new IzvestajListener());
+		theApp.setStanje(new LogInKorisnik());
 	}
 
 	private void loginToMainFrame() {
@@ -65,24 +74,28 @@ public class Kontroler {
 			((MainFrame) theView).addPregledKorisnikaListener(new PregledKorisnikaListener());
 			((MainFrame) theView).addIzmenaSopstvenihPodatakaListener(new IzmenaSopstvenihPodatakaListener());
 			((MainFrame) theView).addLogoutListener(new LogoutListener());
-			((MainFrame) theView).addSobe(theApp.getTlocrt().getSobe());
-			((MainFrame) theView).addKomponente(theApp.getTlocrt().getKomponente());			((MainFrame) theView).addComponentsListeners(new KomponentaDialogListener());		}
+
+			((MainFrame) theView).addSobe(theApp.getTlocrt().getSobe(), new SobaDialogListener());
+			((MainFrame) theView).addKomponente(theApp.getTlocrt().getKomponente(), new KomponentaDialogListener());
+		}
 		MainFrame.setMade(true);
 		((MainFrame) theView).setVisible(true);
 	}
-	
+
 	private void funkcijaDialogToMainFrame() {
 		((Window) theView).addWindowListener(new WindowAdapter() {
-
+			@Override
+			public void windowClosed(WindowEvent e) {
+				// vracanje na MainFrame
+				theView = MainFrame.getInstance();
+			}
 		});
 	}
-
 
 	private void izmenaSopstvenihPodatakToMainFrame() {
 		((IzmenaSopstvenihPodatakaDialog) theView).dispose();
 		theView = MainFrame.getInstance();
 	}
-
 
 	private void kreiranjeNovogNalogaToMainFrame() {
 		((KreiranjeNovogNalogaDialog) theView).dispose();
@@ -96,11 +109,17 @@ public class Kontroler {
 			String lozinka = ((LoginDialog) theView).getPassword();
 
 			// promeni theView na MainFrame
-			if (theApp.logIn()) {
+			if (theApp.logIn(korisnickoIme, lozinka)) {
+				if (theApp.getTrenutnoUlogovani().getKorisnik().getTipKorisnika() == TipKorisnika.read) {
+					theApp.promeniStanje(new ReadRezim());
+				} else {
+					theApp.promeniStanje(new ReadWriteRezim());
+				}
 				loginToMainFrame();
 			} else {
-				// obavestenje da je nevalidno korisnicko ime i lozinka
-				// theView.errorLogin();
+				JOptionPane.showMessageDialog((LoginDialog) theView,
+						"Nevalidna kombinacija korisnickog imena i lozinke!", "Neuspesno prijavljivanje",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
@@ -114,6 +133,7 @@ public class Kontroler {
 			((LoginSpoljniDialog) theView).setVisible(true);
 			((LoginSpoljniDialog) theView).addPovratakListener(new SpoljniDijalogPovratakListener());
 			((LoginSpoljniDialog) theView).addLoginListener(new SpoljniDijalogLoginListener());
+			theApp.promeniStanje(new LogInSpoljni());
 		}
 	}
 
@@ -144,7 +164,6 @@ public class Kontroler {
 		}
 	}
 
-	
 	public class KreirajNoviNalogPrijaviSeListener implements ActionListener {
 
 		@Override
@@ -157,14 +176,14 @@ public class Kontroler {
 			Pol pol = ((KreiranjeNovogNalogaDialog) theView).getPol();
 			TipKorisnika tipKorisnika = ((KreiranjeNovogNalogaDialog) theView).getTipKorisnika();
 
-
-
+			Korisnik korisnik = new Korisnik(ime, prezime,datumRodjenja, pol,tipKorisnika);
+			
 			Nalog nalog = new Nalog(korisnickoIme, lozinka, Konstante.TLOCRT1, korisnik);
 
 			theApp.addNalozi(nalog);
 
 			kreiranjeNovogNalogaToMainFrame();
-					}
+		}
 
 	}
 
@@ -180,7 +199,7 @@ public class Kontroler {
 			((KreiranjeNovogNalogaDialog) theView).addPrijaviSeListener(new KreirajNoviNalogPrijaviSeListener());
 
 			((KreiranjeNovogNalogaDialog) theView).setVisible(true);
-			
+
 			// dodavanje listenera za zatvaranje dijaloga i vracanje theView na MainFrame
 			funkcijaDialogToMainFrame();
 		}
@@ -194,7 +213,7 @@ public class Kontroler {
 			List<Nalog> readNalozi = theApp.getReadNalozi();
 
 			KorisniciTableModel tm = new KorisniciTableModel(readNalozi);
-
+			UnapredjivanjeDialog d = new UnapredjivanjeDialog((MainFrame) theView, "ISAK - Unapredjivanje korisnika", tm);
 			d.addListSelectionListener(new NaloziSelectionListener());
 			d.addUnaprediKorisnikaListener(new UnaprediKorisnikaListener());
 			theView = d;
@@ -210,13 +229,14 @@ public class Kontroler {
 		public void actionPerformed(ActionEvent e) {
 			// izvrsi unapredjivanje korisnika
 			System.out.println("UNAPREDI KORISNIKA");
-
+			String korisnickoIme = ((PanelDetailKorisnici) ((UnapredjivanjeDialog)theView).getPanDetail()).getTxtKorisnickoIme().getText();
 			Nalog nalog = theApp.getNalog(korisnickoIme);
 			if (nalog == null) {
-
-
+				JOptionPane.showMessageDialog((UnapredjivanjeDialog)theView, "Nije odabran nijedan korisnik!", "Greska", JOptionPane.ERROR_MESSAGE);
+			}
+			else {
 				theApp.unaprediKorisnika(nalog);
-
+				JOptionPane.showMessageDialog((UnapredjivanjeDialog)theView, "Korisnik je uspesno unapredjen.", "Uspesno unapredjivanje", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 	}
@@ -293,7 +313,6 @@ public class Kontroler {
 		}
 	}
 
-
 	public class IzmenaSopstvenihPodatakaCancelListener implements ActionListener {
 
 		@Override
@@ -303,7 +322,6 @@ public class Kontroler {
 		}
 
 	}
-
 
 	public class IzmenaSopstvenihPodatakaOK implements ActionListener {
 
@@ -366,6 +384,7 @@ public class Kontroler {
 			((LoginDialog) theView).addIzvestajListener(new IzvestajListener());
 			((LoginDialog) theView).setVisible(true);
 			FileKontroler.writeOutputFile(theApp);
+			theApp.promeniStanje(new LogInKorisnik());
 			// System.out.println("HELLO IZLOGOVAO SAM SE");
 		}
 	}
@@ -379,19 +398,28 @@ public class Kontroler {
 
 			((LoginDialog) theView).addLoginListener(new LoginListener());
 			((LoginDialog) theView).addIzvestajListener(new IzvestajListener());
-
+			theApp.promeniStanje(new LogInKorisnik());
 		}
 	}
 
 	public class SpoljniDijalogLoginListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			((LoginSpoljniDialog) theView).dispose();
-			theView = new IzvjestajDialog();
-			((IzvjestajDialog) theView).setVisible(true);
+			String korisnickoIme = ((LoginSpoljniDialog) theView).getId();
+			if(theApp.loginSpoljni(korisnickoIme)) {
+				((LoginSpoljniDialog) theView).dispose();
+				theView = new IzvjestajDialog();
+				((IzvjestajDialog) theView).setVisible(true);
 
-			((IzvjestajDialog) theView).addPovratakListener(new IzvestajPovratakListener());
-			((IzvjestajDialog) theView).addTraziListener(new IzvestajTraziListener());
+				((IzvjestajDialog) theView).addPovratakListener(new IzvestajPovratakListener());
+				((IzvjestajDialog) theView).addTraziListener(new IzvestajTraziListener());
+				theApp.promeniStanje(new SpoljniRezim());
+			}
+			else {
+				JOptionPane.showMessageDialog((LoginSpoljniDialog)theView, 
+						"Nepostojeci ID kompanije!", 
+						"Neuspesno prijavljivanje", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 
 	}
@@ -405,15 +433,49 @@ public class Kontroler {
 
 			((LoginDialog) theView).addLoginListener(new LoginListener());
 			((LoginDialog) theView).addIzvestajListener(new IzvestajListener());
+			theApp.promeniStanje(new LogInKorisnik());
 		}
 	}
 
 	public class IzvestajTraziListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			JOptionPane.showMessageDialog((IzvjestajDialog)theView, 
+					"Trazeni izvestaj uspesno generisan.", 
+					"Generisanje izvestaja", JOptionPane.INFORMATION_MESSAGE);
 			// TODO
 			// String odabir = ((IzvjestajDialog) theView).getVrstaIzvestaja();
 			// theApp.formirajIzvestaj(odabir);
+		}
+	}
+	
+	public class SobaOKListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			((PrikazStanjaSobeDialog) theView).dispose();
+			theView = MainFrame.getInstance();
+		}
+	}
+	
+	public class SobaDialogListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Soba s = ((SobaButton) e.getSource()).getSoba();
+			try {
+				theView = new PrikazStanjaSobeDialog();
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+					| UnsupportedLookAndFeelException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			((PrikazStanjaSobeDialog) theView).setTemperatura(s.getTemperatura()+ "");
+			((PrikazStanjaSobeDialog) theView).setVlaznost(s.getVlaznost()+"");
+			((PrikazStanjaSobeDialog) theView).setNaziv(s.getIme());
+			((PrikazStanjaSobeDialog) theView).addKomponente(s.getKomponente());
+			((PrikazStanjaSobeDialog) theView).addOKListener(new SobaOKListener());
+			((PrikazStanjaSobeDialog) theView).setVisible(true);
+			
+			funkcijaDialogToMainFrame();
 		}
 	}
 
@@ -454,13 +516,12 @@ public class Kontroler {
 			}
 		}
 	}
-	
-	
+
 	public class KomponentaDialogListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			Komponenta k = ((ButtonComponent) e.getSource()).getKomponenta();
+			Komponenta k = ((KomponentaButton) e.getSource()).getKomponenta();
 			KomponentaDialog kd = new KomponentaDialog();
 			kd.setId(k.getId());
 			kd.setSlika(k.getTipKomponente().getSlika());
@@ -470,7 +531,6 @@ public class Kontroler {
 			kd.setToggleButton(k.getUkljucena());
 			kd.setOpisVrijednosti(k.getTipKomponente().getOpisVrijednosti());
 			kd.setVrijednost(k.getVrednost());
-			
 
 			kd.addPotvrdiListener(new PotvrdiKomponentuListener());
 			kd.addPovratakListener(new PovrakatKomponentaListener());
@@ -480,16 +540,18 @@ public class Kontroler {
 
 		}
 	}
-	
-	
+
 	public class PotvrdiKomponentuListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
 			int idKomponente = ((KomponentaDialog) theView).getId();
+			System.out.println(idKomponente);
 			Komponenta izmijenjena = theApp.getTlocrt().nadjiKomponentu(idKomponente);
-			izmijenjena.getTipKomponente().getPovecaj().uradi(izmijenjena, ((KomponentaDialog) theView).getVrijednost());
-			izmijenjena.getTipKomponente().getUkljuciIskljuci().uradi(izmijenjena, ((KomponentaDialog) theView).getOnOff());
+			izmijenjena.getTipKomponente().getPovecaj().uradi(izmijenjena,
+					((KomponentaDialog) theView).getVrijednost());
+			izmijenjena.getTipKomponente().getUkljuciIskljuci().uradi(izmijenjena,
+					((KomponentaDialog) theView).getOnOff());
 
 			((KomponentaDialog) theView).dispose();
 			funkcijaDialogToMainFrame();

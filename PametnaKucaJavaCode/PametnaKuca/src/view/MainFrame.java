@@ -220,18 +220,20 @@ public class MainFrame extends JFrame {
 		menuBar.getMiLogout().addActionListener(a);
 	}
 
-	public void addSobe(List<Soba> sobe) {
+	public void addSobe(List<Soba> sobe, ActionListener a) {
 		sobePain.setLayout(new GridLayout(sobe.size(), 1, 0, 10));
 		for (Soba s : sobe) {
 			SobaButton s1 = new SobaButton(s);
-			btnsSobe.add(new SobaButton(s));
+			s1.addActionListener(a);
 			sobePain.add(s1);
 		}
 	}
 
-	public void addKomponente(Collection<Komponenta> komponente) {
+	public void addKomponente(Collection<Komponenta> komponente, ActionListener a) {
 		for (Komponenta k : komponente) {
 			KomponentaButton k1 = new KomponentaButton(k);
+			k1.setIcon(new ImageIcon(k.getTipKomponente().getSlika()));
+			k1.addActionListener(a);
 			k1.setBounds(k.getTacka().getX(), k.getTacka().getY(), 60, 60);
 			lblTlocrtImage.add(k1);
 		}

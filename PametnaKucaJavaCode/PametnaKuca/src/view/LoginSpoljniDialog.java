@@ -107,27 +107,10 @@ public class LoginSpoljniDialog extends JDialog {
 		btnLogin.addActionListener(a);
 	}
 	
-	/*
-	private void attachBtnListeners() {
-		btnBack.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				LoginDialog loginDialog = new LoginDialog();
-				loginDialog.setVisible(true);
-				dispose();
-			}
-		});
-
-		btnLogin.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				IzvjestajDialog izvjestajDialog = new IzvjestajDialog();
-				izvjestajDialog.setVisible(true);
-				dispose();
-			}
-		});
+	public String getId() {
+		return txfId.getText();
 	}
-	 */
+	
 	private void terminateOnExit() {
 		WindowListener exitListener = new WindowAdapter() {
 			@Override

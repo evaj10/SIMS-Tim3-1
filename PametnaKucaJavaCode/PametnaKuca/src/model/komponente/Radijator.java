@@ -1,5 +1,6 @@
 package model.komponente;
 
+import konstante.Konstante;
 import model.komponente.funkcije.ImaPovecanje;
 import model.komponente.funkcije.ImaSmanjenje;
 import model.komponente.funkcije.ImaUkljuciIskljuci;
@@ -12,9 +13,11 @@ import model.komponente.funkcije.ImaUkljuciIskljuci;
 
 public class Radijator extends TipKomponente {
 
-	public Radijator() {};
+	public Radijator() {
+		super(Konstante.HEATING);
+	};
 	public Radijator(String opisVrijednosti, String slika) {
-		super(opisVrijednosti, slika);
+		super(opisVrijednosti, Konstante.HEATING);
 		povecaj = new ImaPovecanje();
 		ukljuciIskljuci = new ImaUkljuciIskljuci();
 		smanji = new ImaSmanjenje();

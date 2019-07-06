@@ -4,13 +4,16 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+
+import model.komponente.Komponenta;
 
 @SuppressWarnings("serial")
 public class PrikazStanjaSobeDialog extends JDialog {
@@ -152,6 +155,33 @@ public class PrikazStanjaSobeDialog extends JDialog {
 			gbc_btnOk.gridx = 5;
 			gbc_btnOk.gridy = 5;
 			getContentPane().add(btnOk, gbc_btnOk);
+		}
+	}
+	
+	public void addOKListener(ActionListener a) {
+		btnOk.addActionListener(a);
+	}
+	
+	public void setNaziv(String n)
+	{
+		lblNazivSobe.setText(n);
+	}
+	
+	public void setTemperatura(String t)
+	{
+		lblBroj1.setText(t);
+	}
+	
+	public void setVlaznost(String v)
+	{
+		lblBroj2.setText(v);
+	}
+	
+	public void addKomponente(List<Komponenta> komponente)
+	{
+		for(Komponenta k : komponente)
+		{
+			cmbKomponente.addItem(k.getNaziv());
 		}
 	}
 

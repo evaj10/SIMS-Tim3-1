@@ -1,5 +1,6 @@
 package model.komponente;
 
+import konstante.Konstante;
 import model.komponente.funkcije.ImaPovecanje;
 import model.komponente.funkcije.ImaSmanjenje;
 import model.komponente.funkcije.ImaUkljuciIskljuci;
@@ -10,9 +11,11 @@ import model.komponente.funkcije.ImaUkljuciIskljuci;
 
 public class Zvucnik extends TipKomponente {
 
-	public Zvucnik() {};
+	public Zvucnik() {
+		super(Konstante.ENTERTAINMENT);
+	};
 	public Zvucnik(String opisVrijednosti, String slika) {
-		super(opisVrijednosti, slika);
+		super(opisVrijednosti, Konstante.ENTERTAINMENT);
 		povecaj = new ImaPovecanje();
 		ukljuciIskljuci = new ImaUkljuciIskljuci();
 		smanji = new ImaSmanjenje();
@@ -20,6 +23,6 @@ public class Zvucnik extends TipKomponente {
 	
 	@Override
 	public String toString() {
-		return "Klima";
+		return "Zvucnik";
 	}
 }

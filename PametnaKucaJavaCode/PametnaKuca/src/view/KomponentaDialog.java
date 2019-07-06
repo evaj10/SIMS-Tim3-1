@@ -58,6 +58,7 @@ public class KomponentaDialog extends JDialog {
 		// postavljamo dimenziju dijaloga u zavisnosti od velicine ekrana na cetvrtinu
 		setWindowSize();
 		setLocationRelativeTo(null);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 		// postavljamo raspored komponenti
 		createGUI();
@@ -83,7 +84,7 @@ public class KomponentaDialog extends JDialog {
 
 		lblId = new JLabel("");
 		ImageIcon imgLogo = new ImageIcon(Konstante.COMPANY_LOGO);
-		lblLogo = new JLabel("", imgLogo, JLabel.CENTER);
+		lblLogo = new JLabel("");
 
 		lblNaziv = new JLabel("Naziv uredjaja:");
 		lblNazivKomponente = new JLabel("?");
@@ -150,13 +151,13 @@ public class KomponentaDialog extends JDialog {
 				GridBagConstraints.BOTH, new Insets(5, 5, 5, 50), 0, 0));
 
 		panel.add(slider, new GridBagConstraints(0, 7, 2, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
-				new Insets(5, 5, 5, 5), 0, 0));
+				new Insets(5, 20, 5, 20), 0, 0));
 
 		panel.add(btnBack, new GridBagConstraints(0, 10, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
-				new Insets(5, 5, 15, 55), 0, 0));
+				new Insets(5, 20, 15, 5), 0, 0));
 
 		panel.add(btnConfirm, new GridBagConstraints(1, 10, 1, 1, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH, new Insets(5, 5, 15, 5), 0, 0));
+				GridBagConstraints.BOTH, new Insets(5, 5, 15, 20), 0, 0));
 	}
 
 	public void addPovratakListener(ActionListener a) {
