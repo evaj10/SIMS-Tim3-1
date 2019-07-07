@@ -2,11 +2,14 @@ package view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -63,12 +66,6 @@ public class KomponentaDialog extends JDialog {
 		// postavljamo raspored komponenti
 		createGUI();
 		createLayout();
-		/*
-		 * // povezivanje dugmadi attachBtnListeners();
-		 */
-		/*
-		 * // gasenje dijaloga = gasenje aplikacije terminateOnExit();
-		 */
 
 	}
 
@@ -92,14 +89,15 @@ public class KomponentaDialog extends JDialog {
 		lblTipKomponente = new JLabel("?");
 		lblSoba = new JLabel("Soba:");
 		lblSobaKomponente = new JLabel("?");
-		lblOnOff = new JLabel("On/Off");
+		lblOnOff = new JLabel("On/Off:");
 		tbOnOff = new JToggleButton();
 		UIManager.put("ToggleButton.select", Color.GREEN);
+		tbOnOff.setBackground(Color.RED);
 		SwingUtilities.updateComponentTreeUI(tbOnOff);
 		lblVrijednost = new JLabel("?vrijednost?:");
 		txfVrijednostKomponente = new JTextField();
-		slider = new JSlider(0, 100, 50);
-
+		txfVrijednostKomponente.setPreferredSize(new Dimension(35, 20));
+		slider = new JSlider(0, 100, 0);
 		slider.setMajorTickSpacing(100);
 		slider.setPaintLabels(true);
 
@@ -110,6 +108,26 @@ public class KomponentaDialog extends JDialog {
 			}
 		});
 
+		txfVrijednostKomponente.addKeyListener(new KeyListener() {
+			@Override
+			public void keyPressed(KeyEvent ke) {
+				if (ke.getKeyCode() == KeyEvent.VK_ENTER && !txfVrijednostKomponente.getText().equals("")) {
+					slider.setValue(Integer.parseInt(txfVrijednostKomponente.getText()));
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent ke) {
+			}
+
+			@Override
+			public void keyTyped(KeyEvent ke) {
+			}
+		});
+
+		tbOnOff.setMaximumSize(new Dimension(50, 20));
+		txfVrijednostKomponente.setSize(new Dimension(50, 20));
+
 		btnBack = new JButton("POVRATAK");
 		btnConfirm = new JButton("POTVRDI");
 	}
@@ -118,46 +136,46 @@ public class KomponentaDialog extends JDialog {
 		add(panel);
 
 		panel.add(lblLogo, new GridBagConstraints(0, 0, 2, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-				new Insets(5, 5, 5, 5), 0, 0));
+				new Insets(5, 10, 5, 5), 0, 0));
 
 		panel.add(lblNaziv, new GridBagConstraints(0, 2, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
-				new Insets(5, 50, 5, 5), 0, 0));
+				new Insets(5, 20, 5, 5), 0, 0));
 
 		panel.add(lblNazivKomponente, new GridBagConstraints(1, 2, 1, 1, 0, 0, GridBagConstraints.WEST,
-				GridBagConstraints.BOTH, new Insets(5, 5, 5, 50), 0, 0));
+				GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 0, 0));
 
 		panel.add(lblTip, new GridBagConstraints(0, 3, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
-				new Insets(5, 50, 5, 5), 0, 0));
+				new Insets(5, 20, 5, 5), 0, 0));
 
 		panel.add(lblTipKomponente, new GridBagConstraints(1, 3, 1, 1, 0, 0, GridBagConstraints.WEST,
-				GridBagConstraints.BOTH, new Insets(5, 5, 5, 50), 0, 0));
+				GridBagConstraints.BOTH, new Insets(5, 5, 5, 20), 0, 0));
 
 		panel.add(lblSoba, new GridBagConstraints(0, 4, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
-				new Insets(5, 50, 5, 5), 0, 0));
+				new Insets(5, 20, 5, 5), 0, 0));
 
 		panel.add(lblSobaKomponente, new GridBagConstraints(1, 4, 1, 1, 0, 0, GridBagConstraints.WEST,
-				GridBagConstraints.BOTH, new Insets(5, 5, 5, 50), 0, 0));
+				GridBagConstraints.BOTH, new Insets(5, 5, 5, 20), 0, 0));
 
 		panel.add(lblOnOff, new GridBagConstraints(0, 5, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
-				new Insets(5, 50, 5, 5), 0, 0));
+				new Insets(5, 20, 5, 5), 0, 0));
 
-		panel.add(tbOnOff, new GridBagConstraints(1, 5, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
-				new Insets(5, 5, 5, 50), 0, 0));
+		panel.add(tbOnOff, new GridBagConstraints(1, 5, 1, 1, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.VERTICAL, new Insets(5, 5, 5, 110), 0, 0));
 
 		panel.add(lblVrijednost, new GridBagConstraints(0, 6, 1, 1, 0, 0, GridBagConstraints.WEST,
-				GridBagConstraints.BOTH, new Insets(5, 50, 5, 5), 0, 0));
+				GridBagConstraints.BOTH, new Insets(5, 20, 5, 5), 0, 0));
 
 		panel.add(txfVrijednostKomponente, new GridBagConstraints(1, 6, 1, 1, 0, 0, GridBagConstraints.WEST,
-				GridBagConstraints.BOTH, new Insets(5, 5, 5, 50), 0, 0));
+				GridBagConstraints.CENTER, new Insets(5, 5, 5, 110), 0, 0));
 
 		panel.add(slider, new GridBagConstraints(0, 7, 2, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
 				new Insets(5, 20, 5, 20), 0, 0));
 
-		panel.add(btnBack, new GridBagConstraints(0, 10, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
+		panel.add(btnBack, new GridBagConstraints(0, 10, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE,
 				new Insets(5, 20, 15, 5), 0, 0));
 
 		panel.add(btnConfirm, new GridBagConstraints(1, 10, 1, 1, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH, new Insets(5, 5, 15, 20), 0, 0));
+				GridBagConstraints.NONE, new Insets(5, 5, 15, 20), 0, 0));
 	}
 
 	public void addPovratakListener(ActionListener a) {
@@ -167,67 +185,65 @@ public class KomponentaDialog extends JDialog {
 	public void addPotvrdiListener(ActionListener a) {
 		btnConfirm.addActionListener(a);
 	}
-	
+
 	public void setSlika(String slika) {
 		ImageIcon imgLogo = new ImageIcon(slika);
 		lblLogo.setIcon(imgLogo);
 	}
-	
+
 	public void setNaziv(String n) {
 		lblNazivKomponente.setText(n);
 	}
-	
+
 	public void setTip(String t) {
 		lblTipKomponente.setText(t);
 	}
-	
+
 	public void setSoba(String s) {
-		lblSobaKomponente.setText(s);;
+		lblSobaKomponente.setText(s);
+		;
 	}
-	
+
 	public void setToggleButton(boolean b) {
 		tbOnOff.setSelected(b);
 	}
-	
+
 	public void setOpisVrijednosti(String o) {
 		lblVrijednost.setText(o);
 	}
-	
+
 	public void setVrijednost(int i) {
 		txfVrijednostKomponente.setText(String.valueOf(i));
 		slider.setValue(i);
 	}
-	
+
 	public void setId(int i) {
 		lblId.setText(String.valueOf(i));
 	}
-	
+
 	public int getVrijednost() {
 		return Integer.parseInt(txfVrijednostKomponente.getText());
 	}
-	
+
 	public boolean getOnOff() {
 		return tbOnOff.isSelected();
 	}
-	
+
 	public int getId() {
 		return Integer.parseInt(lblId.getText());
 	}
 
-	private void terminateOnExit() {
-		WindowListener exitListener = new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-		};
-		this.addWindowListener(exitListener);
+	public void disableVrijednost() {
+		slider.setValue(0);
+		slider.setEnabled(false);
+		lblVrijednost.setText("");
+		txfVrijednostKomponente.setEnabled(false);
 	}
 
 	// testiranje
-	public static void main(String[] args) {
-		KomponentaDialog kd = new KomponentaDialog();
-		kd.setVisible(true);
-	}
+	/*
+	 * public static void main(String[] args) { KomponentaDialog kd = new
+	 * KomponentaDialog(); kd.setVisible(true); }
+	 */
 
 }

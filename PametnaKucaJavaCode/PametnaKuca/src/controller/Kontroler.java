@@ -22,6 +22,7 @@ import konstante.Konstante;
 import model.Aplikacija;
 import model.komponente.Komponenta;
 import model.komponente.Soba;
+import model.komponente.funkcije.NemaPromjenu;
 import model.korisnik.Korisnik;
 import model.korisnik.Nalog;
 import model.korisnik.Pol;
@@ -51,7 +52,7 @@ import view.prikaz_unapredjivanje.PanelDetailKorisnici;
 import view.prikaz_unapredjivanje.UnapredjivanjeDialog;
 
 public class Kontroler {
-	
+
 	private Object theView;
 	private Aplikacija theApp;
 
@@ -105,11 +106,10 @@ public class Kontroler {
 		((KreiranjeNovogNalogaDialog) theView).dispose();
 		theView = MainFrame.getInstance();
 	}
-	
+
 	private String getAdresaIMesto() {
-		return theApp.getTlocrt().getAdresa().getUlica() + " " + 
-				theApp.getTlocrt().getAdresa().getBroj() + ", " + 
-				theApp.getTlocrt().getAdresa().getMesto().getGrad();
+		return theApp.getTlocrt().getAdresa().getUlica() + " " + theApp.getTlocrt().getAdresa().getBroj() + ", "
+				+ theApp.getTlocrt().getAdresa().getMesto().getGrad();
 	}
 
 	public class LoginListener implements ActionListener {
@@ -156,9 +156,9 @@ public class Kontroler {
 			PrikazIzvestajaDialog d = new PrikazIzvestajaDialog();
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			Calendar calendar = Calendar.getInstance();
-			
-			d.setAll(getAdresaIMesto(), theApp.getTrenutnoUlogovani().getKorisnickoIme(), 
-					"Voda", sdf.format(calendar.getTime()), "100", "120", "20");
+
+			d.setAll(getAdresaIMesto(), theApp.getTrenutnoUlogovani().getKorisnickoIme(), "Voda",
+					sdf.format(calendar.getTime()), "100", "120", "20");
 			theView = d;
 			((PrikazIzvestajaDialog) theView).setVisible(true);
 			funkcijaDialogToMainFrame();
@@ -174,9 +174,9 @@ public class Kontroler {
 			PrikazIzvestajaDialog d = new PrikazIzvestajaDialog();
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			Calendar calendar = Calendar.getInstance();
-			
-			d.setAll(getAdresaIMesto(), theApp.getTrenutnoUlogovani().getKorisnickoIme(), 
-					"Gas", sdf.format(calendar.getTime()), "100", "120", "20");
+
+			d.setAll(getAdresaIMesto(), theApp.getTrenutnoUlogovani().getKorisnickoIme(), "Gas",
+					sdf.format(calendar.getTime()), "100", "120", "20");
 			theView = d;
 			((PrikazIzvestajaDialog) theView).setVisible(true);
 			funkcijaDialogToMainFrame();
@@ -192,9 +192,9 @@ public class Kontroler {
 			PrikazIzvestajaDialog d = new PrikazIzvestajaDialog();
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			Calendar calendar = Calendar.getInstance();
-			
-			d.setAll(getAdresaIMesto(), theApp.getTrenutnoUlogovani().getKorisnickoIme(), 
-					"Struja", sdf.format(calendar.getTime()), "100", "120", "20");
+
+			d.setAll(getAdresaIMesto(), theApp.getTrenutnoUlogovani().getKorisnickoIme(), "Struja",
+					sdf.format(calendar.getTime()), "100", "120", "20");
 			theView = d;
 			((PrikazIzvestajaDialog) theView).setVisible(true);
 			funkcijaDialogToMainFrame();
@@ -213,8 +213,8 @@ public class Kontroler {
 			Pol pol = ((KreiranjeNovogNalogaDialog) theView).getPol();
 			TipKorisnika tipKorisnika = ((KreiranjeNovogNalogaDialog) theView).getTipKorisnika();
 
-			Korisnik korisnik = new Korisnik(ime, prezime,datumRodjenja, pol,tipKorisnika);
-			
+			Korisnik korisnik = new Korisnik(ime, prezime, datumRodjenja, pol, tipKorisnika);
+
 			Nalog nalog = new Nalog(korisnickoIme, lozinka, Konstante.TLOCRT1, korisnik);
 
 			theApp.addNalozi(nalog);
@@ -250,7 +250,8 @@ public class Kontroler {
 			List<Nalog> readNalozi = theApp.getReadNalozi();
 
 			KorisniciTableModel tm = new KorisniciTableModel(readNalozi);
-			UnapredjivanjeDialog d = new UnapredjivanjeDialog((MainFrame) theView, "ISAK - Unapredjivanje korisnika", tm);
+			UnapredjivanjeDialog d = new UnapredjivanjeDialog((MainFrame) theView, "ISAK - Unapredjivanje korisnika",
+					tm);
 			d.addListSelectionListener(new NaloziSelectionListener());
 			d.addUnaprediKorisnikaListener(new UnaprediKorisnikaListener());
 			theView = d;
@@ -266,14 +267,16 @@ public class Kontroler {
 		public void actionPerformed(ActionEvent e) {
 			// izvrsi unapredjivanje korisnika
 			System.out.println("UNAPREDI KORISNIKA");
-			String korisnickoIme = ((PanelDetailKorisnici) ((UnapredjivanjeDialog)theView).getPanDetail()).getTxtKorisnickoIme().getText();
+			String korisnickoIme = ((PanelDetailKorisnici) ((UnapredjivanjeDialog) theView).getPanDetail())
+					.getTxtKorisnickoIme().getText();
 			Nalog nalog = theApp.getNalog(korisnickoIme);
 			if (nalog == null) {
-				JOptionPane.showMessageDialog((UnapredjivanjeDialog)theView, "Nije odabran nijedan korisnik!", "Greska", JOptionPane.ERROR_MESSAGE);
-			}
-			else {
+				JOptionPane.showMessageDialog((UnapredjivanjeDialog) theView, "Nije odabran nijedan korisnik!",
+						"Greska", JOptionPane.ERROR_MESSAGE);
+			} else {
 				theApp.unaprediKorisnika(nalog);
-				JOptionPane.showMessageDialog((UnapredjivanjeDialog)theView, "Korisnik je uspesno unapredjen.", "Uspesno unapredjivanje", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog((UnapredjivanjeDialog) theView, "Korisnik je uspesno unapredjen.",
+						"Uspesno unapredjivanje", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 	}
@@ -292,6 +295,7 @@ public class Kontroler {
 			ikd.addPovratakListener(new PovrakatIzmjenaKorisnikaListener());
 
 			theView = ikd;
+			funkcijaDialogToMainFrame();
 			((IzmjenaKorisnikaDialog) theView).setVisible(true);
 
 		}
@@ -313,6 +317,7 @@ public class Kontroler {
 			}
 			((IzmjenaKorisnikaDialog) theView).dispose();
 			funkcijaDialogToMainFrame();
+			theView = MainFrame.getInstance();
 		}
 	}
 
@@ -321,17 +326,19 @@ public class Kontroler {
 		public void actionPerformed(ActionEvent e) {
 			((IzmjenaKorisnikaDialog) theView).dispose();
 			funkcijaDialogToMainFrame();
+			theView = MainFrame.getInstance();
 		}
 	}
 
 	public class BrisanjeKorisnikaListener implements ActionListener {
-		public ArrayList<String> getKoris(){
+		public ArrayList<String> getKoris() {
 			ArrayList<String> koris = new ArrayList<String>();
 			for (Nalog n : theApp.getNalozi()) {
 				koris.add(n.getKorisnickoIme());
 			}
 			return koris;
 		}
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// prikazi dijalog za brisanje korisnika
@@ -340,30 +347,29 @@ public class Kontroler {
 			BrisanjeKorisnikaDialog d = new BrisanjeKorisnikaDialog();
 			d.dialog.setKorisnici(getKoris());
 			d.addIzbrisiListener(new IzbrisiListener());
-			
+
 			theView = d;
 			((BrisanjeKorisnikaDialog) theView).setVisible(true);
 			funkcijaDialogToMainFrame();
 		}
 	}
-	
-	public class IzbrisiListener implements ActionListener{
+
+	public class IzbrisiListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String korisnickoIme = ((BrisanjeKorisnikaDialog) theView).getTxfKorisnickoIme();
 			ArrayList<Nalog> nalozi = (ArrayList<Nalog>) theApp.getNalozi();
 			Nalog nalog = theApp.getNalog(korisnickoIme);
-			if(nalog != null) {
+			if (nalog != null) {
 				theApp.removeNalozi(nalog);
 				((BrisanjeKorisnikaDialog) theView).dispose();
 				theView = MainFrame.getInstance();
-			}else {
+			} else {
 				JOptionPane.showMessageDialog((BrisanjeKorisnikaDialog) theView,
-						"Nevalidna vrednost korisnickog imena!", "Neuspesno brisanje",
-						JOptionPane.ERROR_MESSAGE);
+						"Nevalidna vrednost korisnickog imena!", "Neuspesno brisanje", JOptionPane.ERROR_MESSAGE);
 			}
 		}
-		
+
 	}
 
 	public class PregledKorisnikaListener implements ActionListener {
@@ -476,7 +482,7 @@ public class Kontroler {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String korisnickoIme = ((LoginSpoljniDialog) theView).getId();
-			if(theApp.loginSpoljni(korisnickoIme)) {
+			if (theApp.loginSpoljni(korisnickoIme)) {
 				((LoginSpoljniDialog) theView).dispose();
 				theView = new IzvjestajDialog();
 				((IzvjestajDialog) theView).setVisible(true);
@@ -484,10 +490,8 @@ public class Kontroler {
 				((IzvjestajDialog) theView).addPovratakListener(new IzvestajPovratakListener());
 				((IzvjestajDialog) theView).addTraziListener(new IzvestajTraziListener());
 				theApp.promeniStanje(new SpoljniRezim());
-			}
-			else {
-				JOptionPane.showMessageDialog((LoginSpoljniDialog)theView, 
-						"Nepostojeci ID kompanije!", 
+			} else {
+				JOptionPane.showMessageDialog((LoginSpoljniDialog) theView, "Nepostojeci ID kompanije!",
 						"Neuspesno prijavljivanje", JOptionPane.ERROR_MESSAGE);
 			}
 		}
@@ -510,15 +514,14 @@ public class Kontroler {
 	public class IzvestajTraziListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JOptionPane.showMessageDialog((IzvjestajDialog)theView, 
-					"Trazeni izvestaj uspesno generisan.", 
+			JOptionPane.showMessageDialog((IzvjestajDialog) theView, "Trazeni izvestaj uspesno generisan.",
 					"Generisanje izvestaja", JOptionPane.INFORMATION_MESSAGE);
 			// TODO
 			// String odabir = ((IzvjestajDialog) theView).getVrstaIzvestaja();
 			// theApp.formirajIzvestaj(odabir);
 		}
 	}
-	
+
 	public class SobaOKListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -526,7 +529,7 @@ public class Kontroler {
 			theView = MainFrame.getInstance();
 		}
 	}
-	
+
 	public class SobaDialogListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -538,13 +541,13 @@ public class Kontroler {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			((PrikazStanjaSobeDialog) theView).setTemperatura(s.getTemperatura()+ "");
-			((PrikazStanjaSobeDialog) theView).setVlaznost(s.getVlaznost()+"");
+			((PrikazStanjaSobeDialog) theView).setTemperatura(s.getTemperatura() + "");
+			((PrikazStanjaSobeDialog) theView).setVlaznost(s.getVlaznost() + "");
 			((PrikazStanjaSobeDialog) theView).setNaziv(s.getIme());
 			((PrikazStanjaSobeDialog) theView).addKomponente(s.getKomponente());
 			((PrikazStanjaSobeDialog) theView).addOKListener(new SobaOKListener());
 			((PrikazStanjaSobeDialog) theView).setVisible(true);
-			
+
 			funkcijaDialogToMainFrame();
 		}
 	}
@@ -602,10 +605,15 @@ public class Kontroler {
 			kd.setOpisVrijednosti(k.getTipKomponente().getOpisVrijednosti());
 			kd.setVrijednost(k.getVrednost());
 
+			if (k.getTipKomponente().getPromijeni() instanceof NemaPromjenu) {
+				kd.disableVrijednost();
+			}
+
 			kd.addPotvrdiListener(new PotvrdiKomponentuListener());
 			kd.addPovratakListener(new PovrakatKomponentaListener());
 
 			theView = kd;
+			funkcijaDialogToMainFrame();
 			((KomponentaDialog) theView).setVisible(true);
 
 		}
@@ -616,15 +624,15 @@ public class Kontroler {
 		public void actionPerformed(ActionEvent e) {
 
 			int idKomponente = ((KomponentaDialog) theView).getId();
-			System.out.println(idKomponente);
 			Komponenta izmijenjena = theApp.getTlocrt().nadjiKomponentu(idKomponente);
-			izmijenjena.getTipKomponente().getPovecaj().uradi(izmijenjena,
+			izmijenjena.getTipKomponente().getPromijeni().uradi(izmijenjena,
 					((KomponentaDialog) theView).getVrijednost());
 			izmijenjena.getTipKomponente().getUkljuciIskljuci().uradi(izmijenjena,
 					((KomponentaDialog) theView).getOnOff());
 
 			((KomponentaDialog) theView).dispose();
 			funkcijaDialogToMainFrame();
+			theView = MainFrame.getInstance();
 		}
 	}
 
@@ -633,6 +641,7 @@ public class Kontroler {
 		public void actionPerformed(ActionEvent e) {
 			((KomponentaDialog) theView).dispose();
 			funkcijaDialogToMainFrame();
+			theView = MainFrame.getInstance();
 		}
 	}
 

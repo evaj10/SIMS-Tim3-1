@@ -1,32 +1,21 @@
 package model.komponente;
 
 import konstante.Konstante;
-import model.komponente.funkcije.ImaPovecanje;
-import model.komponente.funkcije.ImaSmanjenje;
 import model.komponente.funkcije.ImaUkljuciIskljuci;
-import model.komponente.funkcije.NemaPovecanje;
-import model.komponente.funkcije.NemaSmanjenje;
+import model.komponente.funkcije.NemaPromjenu;
 
 /***********************************************************************
- * Module:  Alarm.java
- * Author:  Ksenija
- * Purpose: Defines the Class Alarm
+ * Module: Alarm.java Author: Ksenija Purpose: Defines the Class Alarm
  ***********************************************************************/
-
 
 public class Alarm extends TipKomponente {
 
 	public Alarm() {
-		super(Konstante.ALARM);
-	};
-	
-	public Alarm(String opisVrijednosti, String slika) {
-		super(opisVrijednosti, Konstante.ALARM);
-		povecaj = new NemaPovecanje();
+		super(Konstante.ALARM, "");
+		promijeni = new NemaPromjenu();
 		ukljuciIskljuci = new ImaUkljuciIskljuci();
-		smanji = new NemaSmanjenje();
-	}
-	
+	};
+
 	@Override
 	public String toString() {
 		return "Alarm";

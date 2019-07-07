@@ -5,9 +5,11 @@ package model.stanja;
  * Purpose: Defines the Class Stanje
  ***********************************************************************/
 
+import java.io.Serializable;
+
 import model.Aplikacija;
 
-public abstract class Stanje {
+public abstract class Stanje implements Serializable {
 	public Aplikacija aplikacija;
 
 	public boolean logIn() {

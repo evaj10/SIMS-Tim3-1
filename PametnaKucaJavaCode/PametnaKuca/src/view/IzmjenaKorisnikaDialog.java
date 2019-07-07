@@ -70,12 +70,6 @@ public class IzmjenaKorisnikaDialog extends JDialog {
 		// postavljamo raspored komponenti
 		createGUI();
 		createLayout();
-		/*
-		 * // povezivanje dugmadi attachBtnListeners();
-		 */
-		/*
-		 * // gasenje dijaloga = gasenje aplikacije terminateOnExit();
-		 */
 
 	}
 
@@ -253,20 +247,10 @@ public class IzmjenaKorisnikaDialog extends JDialog {
 		btnConfirm.addActionListener(a);
 	}
 
-	private void terminateOnExit() {
-		WindowListener exitListener = new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-		};
-		this.addWindowListener(exitListener);
-	}
-
 	// testiranje
-	/*public static void main(String[] args) {
-		IzmjenaKorisnikaDialog ikd = new IzmjenaKorisnikaDialog();
-		ikd.setVisible(true);
-	}*/
+	/*
+	 * public static void main(String[] args) { IzmjenaKorisnikaDialog ikd = new
+	 * IzmjenaKorisnikaDialog(); ikd.setVisible(true); }
+	 */
 
 }

@@ -7,15 +7,16 @@ import java.io.Serializable;
  ***********************************************************************/
 
 @SuppressWarnings("serial")
-public class Adresa implements Serializable{
+public class Adresa implements Serializable {
 
 	private String ulica;
 	private int broj;
 
 	public Mesto mesto;
 
-	public Adresa() {}
-	
+	public Adresa() {
+	}
+
 	public Adresa(String ulica, int broj, Mesto m) {
 		this.ulica = ulica;
 		this.broj = broj;

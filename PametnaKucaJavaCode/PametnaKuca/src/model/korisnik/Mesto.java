@@ -11,13 +11,14 @@ public class Mesto implements Serializable {
 	private int postanskiBr;
 	private String grad;
 
-	public Mesto() {}
-	
+	public Mesto() {
+	}
+
 	public Mesto(int pBr, String grad) {
 		this.postanskiBr = pBr;
 		this.grad = grad;
 	}
-	
+
 	public int getPostanskiBr() {
 		return postanskiBr;
 	}

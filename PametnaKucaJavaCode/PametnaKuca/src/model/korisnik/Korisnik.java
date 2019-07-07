@@ -16,17 +16,17 @@ public class Korisnik implements Serializable {
 	private Pol pol;
 	private TipKorisnika tipKorisnika;
 
-	public Korisnik() {}
+	public Korisnik() {
+	}
 
-	public Korisnik(String ime, String prezime, Date datumRodjenja,
-			Pol pol, TipKorisnika tk) {
+	public Korisnik(String ime, String prezime, Date datumRodjenja, Pol pol, TipKorisnika tk) {
 		this.ime = ime;
 		this.prezime = prezime;
 		this.datumRodjenja = datumRodjenja;
 		this.pol = pol;
 		this.tipKorisnika = tk;
 	}
-	
+
 	public String getIme() {
 		return ime;
 	}
@@ -66,7 +66,5 @@ public class Korisnik implements Serializable {
 	public void setTipKorisnika(TipKorisnika tipKorisnika) {
 		this.tipKorisnika = tipKorisnika;
 	}
-
-	
 
 }

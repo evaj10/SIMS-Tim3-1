@@ -5,9 +5,7 @@ import java.io.Serializable;
 import model.korisnik.Adresa;
 
 /***********************************************************************
- * Module:  Tlocrt.java
- * Author:  evaje
- * Purpose: Defines the Class Tlocrt
+ * Module: Tlocrt.java Author: evaje Purpose: Defines the Class Tlocrt
  ***********************************************************************/
 
 @SuppressWarnings("serial")
@@ -18,7 +16,7 @@ public class Tlocrt implements Serializable {
 
 	public java.util.List<Soba> sobe;
 	public java.util.ArrayList<Komponenta> komponente;
-	
+
 	public Tlocrt() {
 		komponente = new java.util.ArrayList<Komponenta>();
 	}
@@ -27,12 +25,13 @@ public class Tlocrt implements Serializable {
 		this.naziv = naziv;
 		this.slika = slika;
 		this.adresa = adresa;
-		komponente = new java.util.ArrayList<Komponenta>();	}
-	
+		komponente = new java.util.ArrayList<Komponenta>();
+	}
+
 	public void iscrtajTlocrt() {
 		// TODO: implement
 	}
-	
+
 	public Komponenta nadjiKomponentu(int i) {
 		for (Komponenta k : komponente) {
 			if (k.getId() == i) {

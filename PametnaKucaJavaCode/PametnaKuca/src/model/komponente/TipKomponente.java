@@ -7,44 +7,38 @@ package model.komponente;
 
 import java.io.Serializable;
 
-import model.komponente.funkcije.Povecaj;
-import model.komponente.funkcije.Smanji;
+import model.komponente.funkcije.Promijeni;
 import model.komponente.funkcije.Ukljuci_Iskljuci;
 
 public abstract class TipKomponente implements Serializable {
 	public java.util.List<Komponenta> komponente;
-	public Povecaj povecaj;
-	public Smanji smanji;
+	public Promijeni promijeni;
 	public Ukljuci_Iskljuci ukljuciIskljuci;
 	public String opisVrijednosti;
 	public String slika;
 
-	public TipKomponente() {};
-	
-	public TipKomponente(String slika) {
+	public TipKomponente() {
+	};
+
+	public TipKomponente(String slika, String opis) {
 		super();
 		this.slika = slika;
+		this.opisVrijednosti = opis;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "TipKomponente []";
 	}
 
-	public Povecaj getPovecaj() {
-		return povecaj;
+	public Promijeni getPromijeni() {
+		return promijeni;
 	}
-	
-	public Smanji getSmanji() {
-		return smanji;
-	}
-	
-	
+
 	public Ukljuci_Iskljuci getUkljuciIskljuci() {
 		return ukljuciIskljuci;
 	}
-	
-	
+
 	public String getOpisVrijednosti() {
 		return opisVrijednosti;
 	}
@@ -61,12 +55,6 @@ public abstract class TipKomponente implements Serializable {
 		this.slika = slika;
 	}
 
-	public TipKomponente(String opisVrijednosti, String slika) {
-		super();
-		this.opisVrijednosti = opisVrijednosti;
-		this.slika = slika;
-	}
-	
 	public java.util.List<Komponenta> getKomponente() {
 		if (komponente == null)
 			komponente = new java.util.ArrayList<Komponenta>();

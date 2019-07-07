@@ -15,15 +15,21 @@ public class Nalog implements Serializable {
 
 	private Korisnik korisnik;
 
-	public Nalog() {}
-	
+	public Nalog() {
+	}
+
 	public Nalog(String korIme, String sifra, String fileTlocrt, Korisnik k) {
 		this.korisnickoIme = korIme;
 		this.sifra = sifra;
 		this.fileTlocrt = fileTlocrt;
 		this.korisnik = k;
 	}
-	
+
+	@Override
+	public String toString() {
+		return korisnickoIme;
+	}
+
 	public String getKorisnickoIme() {
 		return korisnickoIme;
 	}

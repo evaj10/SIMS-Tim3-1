@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class Komponenta implements Serializable {
+
 	private int id;
 	private String naziv;
 	private int vrednost;
@@ -16,8 +17,9 @@ public class Komponenta implements Serializable {
 	public TipKomponente tipKomponente;
 	public Tacka tacka;
 
-	public Komponenta() {}
-	
+	public Komponenta() {
+	}
+
 	public Komponenta(int id, String naziv, Soba soba, TipKomponente tk, Tacka t) {
 		this.id = id;
 		this.naziv = naziv;
@@ -27,7 +29,12 @@ public class Komponenta implements Serializable {
 		this.tipKomponente = tk;
 		this.tacka = t;
 	}
-	
+
+	@Override
+	public String toString() {
+		return naziv;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -51,7 +58,7 @@ public class Komponenta implements Serializable {
 	public void setVrednost(int vrednost) {
 		this.vrednost = vrednost;
 	}
-	
+
 	public boolean getUkljucena() {
 		return ukljucena;
 	}
