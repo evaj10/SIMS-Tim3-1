@@ -28,10 +28,6 @@ public class Tlocrt implements Serializable {
 		komponente = new java.util.ArrayList<Komponenta>();
 	}
 
-	public void iscrtajTlocrt() {
-		// TODO: implement
-	}
-
 	public Komponenta nadjiKomponentu(int i) {
 		for (Komponenta k : komponente) {
 			if (k.getId() == i) {
@@ -47,6 +43,7 @@ public class Tlocrt implements Serializable {
 		return sobe;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public java.util.Iterator getIteratorSobe() {
 		if (sobe == null)
 			sobe = new java.util.ArrayList<Soba>();
@@ -55,7 +52,8 @@ public class Tlocrt implements Serializable {
 
 	public void setSobe(java.util.List<Soba> newSobe) {
 		removeAllSobe();
-		for (java.util.Iterator iter = newSobe.iterator(); iter.hasNext();)
+		for (@SuppressWarnings("rawtypes")
+		java.util.Iterator iter = newSobe.iterator(); iter.hasNext();)
 			addSobe((Soba) iter.next());
 	}
 
@@ -87,6 +85,7 @@ public class Tlocrt implements Serializable {
 		return komponente;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public java.util.Iterator getIteratorKomponente() {
 		if (komponente == null)
 			komponente = new java.util.ArrayList<Komponenta>();
@@ -95,7 +94,8 @@ public class Tlocrt implements Serializable {
 
 	public void setKomponente(java.util.Collection<Komponenta> newKomponente) {
 		removeAllKomponente();
-		for (java.util.Iterator iter = newKomponente.iterator(); iter.hasNext();)
+		for (@SuppressWarnings("rawtypes")
+		java.util.Iterator iter = newKomponente.iterator(); iter.hasNext();)
 			addKomponente((Komponenta) iter.next());
 	}
 
@@ -138,7 +138,12 @@ public class Tlocrt implements Serializable {
 	}
 
 	public Adresa getAdresa() {
-		return adresa;
+		return this.adresa;
+	}
+	
+	public String dobaviAdresu() {
+		return adresa.getUlica() + " " + adresa.getBroj() + ", " + 
+				adresa.getMesto().getGrad();
 	}
 
 	public void setAdresa(Adresa adresa) {

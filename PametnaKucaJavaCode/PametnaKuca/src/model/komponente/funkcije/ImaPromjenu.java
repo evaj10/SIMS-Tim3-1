@@ -9,6 +9,7 @@ import model.komponente.Komponenta;
  * ImaPovecanje
  ***********************************************************************/
 
+@SuppressWarnings("serial")
 public class ImaPromjenu implements Promijeni, Serializable {
 	public void uradi(Komponenta k, int naKoliko) {
 		if (naKoliko > 100)

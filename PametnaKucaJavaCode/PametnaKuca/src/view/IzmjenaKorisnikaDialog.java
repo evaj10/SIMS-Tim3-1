@@ -8,9 +8,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -20,13 +17,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import konstante.Konstante;
-import model.Aplikacija;
 import model.korisnik.Nalog;
 import model.korisnik.Pol;
 import model.korisnik.TipKorisnika;
@@ -37,6 +34,7 @@ public class IzmjenaKorisnikaDialog extends JDialog {
 
 	private JPanel panel;
 	private JLabel lblChoose;
+	@SuppressWarnings("rawtypes")
 	private JComboBox cmbUsers;
 
 	private JLabel lblTip;
@@ -46,8 +44,11 @@ public class IzmjenaKorisnikaDialog extends JDialog {
 	private JLabel lblPrezime;
 	private JTextField txfPrezime;
 	private JLabel lblDatum;
+	@SuppressWarnings("rawtypes")
 	private JComboBox cmbDay;
+	@SuppressWarnings("rawtypes")
 	private JComboBox cmbMonth;
+	@SuppressWarnings("rawtypes")
 	private JComboBox cmbYear;
 	private JLabel lblPol;
 	private JRadioButton rbM;
@@ -57,7 +58,8 @@ public class IzmjenaKorisnikaDialog extends JDialog {
 	private JButton btnBack;
 	private JButton btnConfirm;
 
-	public IzmjenaKorisnikaDialog() {
+	public IzmjenaKorisnikaDialog(JFrame main) {
+		super(main, true);
 		setResizable(false);
 		setTitle("ISAK - Izmjena podataka korisnika");
 		setIconImage(new ImageIcon(Konstante.APP_LOGO).getImage());
@@ -80,6 +82,7 @@ public class IzmjenaKorisnikaDialog extends JDialog {
 		setSize(width / 3, height / 2);
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void createGUI() {
 		panel = new JPanel(new GridBagLayout());
 
@@ -181,6 +184,7 @@ public class IzmjenaKorisnikaDialog extends JDialog {
 				GridBagConstraints.BOTH, new Insets(50, 50, 15, 50), 0, 0));
 	}
 
+	@SuppressWarnings("unchecked")
 	public void addToCmb(List<Nalog> nalozi) {
 		for (Nalog n : nalozi) {
 			cmbUsers.addItem(n);

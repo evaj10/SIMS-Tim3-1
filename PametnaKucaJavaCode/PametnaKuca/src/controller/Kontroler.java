@@ -83,6 +83,12 @@ public class Kontroler {
 			((MainFrame) theView).addSobe(theApp.getTlocrt().getSobe(), new SobaDialogListener());
 			((MainFrame) theView).addKomponente(theApp.getTlocrt().getKomponente(), new KomponentaDialogListener());
 		}
+		if (theApp.getStanje() instanceof ReadRezim) {
+			((MainFrame) theView).restrict();
+		}
+		else {
+			((MainFrame) theView).permit();
+		}
 		MainFrame.setMade(true);
 		((MainFrame) theView).setVisible(true);
 	}
@@ -105,11 +111,6 @@ public class Kontroler {
 	private void kreiranjeNovogNalogaToMainFrame() {
 		((KreiranjeNovogNalogaDialog) theView).dispose();
 		theView = MainFrame.getInstance();
-	}
-
-	private String getAdresaIMesto() {
-		return theApp.getTlocrt().getAdresa().getUlica() + " " + theApp.getTlocrt().getAdresa().getBroj() + ", "
-				+ theApp.getTlocrt().getAdresa().getMesto().getGrad();
 	}
 
 	public class LoginListener implements ActionListener {
@@ -151,13 +152,11 @@ public class Kontroler {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// prikazi dijalog za uvid izvestaja o potrosnji vode
-			System.out.println("IZVESTAJ VODA");
-			// TODO
-			PrikazIzvestajaDialog d = new PrikazIzvestajaDialog();
+			PrikazIzvestajaDialog d = new PrikazIzvestajaDialog((MainFrame) theView);
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			Calendar calendar = Calendar.getInstance();
 
-			d.setAll(getAdresaIMesto(), theApp.getTrenutnoUlogovani().getKorisnickoIme(), "Voda",
+			d.setAll(theApp.getTlocrtAdresa(), theApp.getTrenutnoUlogovani().getKorisnickoIme(), "Voda",
 					sdf.format(calendar.getTime()), "100", "120", "20");
 			theView = d;
 			((PrikazIzvestajaDialog) theView).setVisible(true);
@@ -169,13 +168,11 @@ public class Kontroler {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// prikazi dijalog za uvid izvestaja o potrosnji gasa
-			System.out.println("IZVESTAJ GAS");
-			// TODO
-			PrikazIzvestajaDialog d = new PrikazIzvestajaDialog();
+			PrikazIzvestajaDialog d = new PrikazIzvestajaDialog((MainFrame) theView);
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			Calendar calendar = Calendar.getInstance();
 
-			d.setAll(getAdresaIMesto(), theApp.getTrenutnoUlogovani().getKorisnickoIme(), "Gas",
+			d.setAll(theApp.getTlocrtAdresa(), theApp.getTrenutnoUlogovani().getKorisnickoIme(), "Gas",
 					sdf.format(calendar.getTime()), "100", "120", "20");
 			theView = d;
 			((PrikazIzvestajaDialog) theView).setVisible(true);
@@ -187,13 +184,11 @@ public class Kontroler {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// prikazi dijalog za uvid izvestaja o potrosnji struje
-			System.out.println("IZVESTAJ STRUJA");
-			// TODO
-			PrikazIzvestajaDialog d = new PrikazIzvestajaDialog();
+			PrikazIzvestajaDialog d = new PrikazIzvestajaDialog((MainFrame) theView);
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			Calendar calendar = Calendar.getInstance();
 
-			d.setAll(getAdresaIMesto(), theApp.getTrenutnoUlogovani().getKorisnickoIme(), "Struja",
+			d.setAll(theApp.getTlocrtAdresa(), theApp.getTrenutnoUlogovani().getKorisnickoIme(), "Struja",
 					sdf.format(calendar.getTime()), "100", "120", "20");
 			theView = d;
 			((PrikazIzvestajaDialog) theView).setVisible(true);
@@ -228,7 +223,7 @@ public class Kontroler {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				theView = new KreiranjeNovogNalogaDialog();
+				theView = new KreiranjeNovogNalogaDialog((MainFrame) theView);
 			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 					| UnsupportedLookAndFeelException e1) {
 				e1.printStackTrace();
@@ -246,7 +241,6 @@ public class Kontroler {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// prikazi dijalog za unapredjivanje korisnika
-			System.out.println("UNAPREDJIVANJE KORISNIKA");
 			List<Nalog> readNalozi = theApp.getReadNalozi();
 
 			KorisniciTableModel tm = new KorisniciTableModel(readNalozi);
@@ -266,7 +260,6 @@ public class Kontroler {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// izvrsi unapredjivanje korisnika
-			System.out.println("UNAPREDI KORISNIKA");
 			String korisnickoIme = ((PanelDetailKorisnici) ((UnapredjivanjeDialog) theView).getPanDetail())
 					.getTxtKorisnickoIme().getText();
 			Nalog nalog = theApp.getNalog(korisnickoIme);
@@ -285,10 +278,9 @@ public class Kontroler {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// prikazi dijalog za izmenu podataka korisnika
-			System.out.println("IZMENA PODATAKA KORISNIKA");
 
 			List<Nalog> naloziBezSvog = theApp.getNaloziBezSvog();
-			IzmjenaKorisnikaDialog ikd = new IzmjenaKorisnikaDialog();
+			IzmjenaKorisnikaDialog ikd = new IzmjenaKorisnikaDialog((MainFrame) theView);
 			ikd.addToCmb(naloziBezSvog);
 
 			ikd.addPotvrdiListener(new PotvrdiIzmjenuKorisnikaListener());
@@ -342,9 +334,7 @@ public class Kontroler {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// prikazi dijalog za brisanje korisnika
-			System.out.println("BRISANJE KORISNIKA");
-			// TODO
-			BrisanjeKorisnikaDialog d = new BrisanjeKorisnikaDialog();
+			BrisanjeKorisnikaDialog d = new BrisanjeKorisnikaDialog((MainFrame)theView);
 			d.dialog.setKorisnici(getKoris());
 			d.addIzbrisiListener(new IzbrisiListener());
 
@@ -358,7 +348,6 @@ public class Kontroler {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String korisnickoIme = ((BrisanjeKorisnikaDialog) theView).getTxfKorisnickoIme();
-			ArrayList<Nalog> nalozi = (ArrayList<Nalog>) theApp.getNalozi();
 			Nalog nalog = theApp.getNalog(korisnickoIme);
 			if (nalog != null) {
 				theApp.removeNalozi(nalog);
@@ -376,7 +365,6 @@ public class Kontroler {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// prikazi dijalog za pregled korisnika
-			System.out.println("PREGLED KORISNIKA");
 			List<Nalog> nalozi = theApp.getNalozi();
 
 			KorisniciTableModel tm = new KorisniciTableModel(nalozi);
@@ -425,7 +413,7 @@ public class Kontroler {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				theView = new IzmenaSopstvenihPodatakaDialog();
+				theView = new IzmenaSopstvenihPodatakaDialog((MainFrame) theView);
 			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 					| UnsupportedLookAndFeelException e1) {
 				e1.printStackTrace();
@@ -447,6 +435,8 @@ public class Kontroler {
 			((IzmenaSopstvenihPodatakaDialog) theView).setPol(theApp.getTrenutnoUlogovani().getKorisnik().getPol());
 
 			((IzmenaSopstvenihPodatakaDialog) theView).setVisible(true);
+			
+			funkcijaDialogToMainFrame();
 		}
 	}
 
@@ -461,7 +451,6 @@ public class Kontroler {
 			((LoginDialog) theView).setVisible(true);
 			FileKontroler.writeOutputFile(theApp);
 			theApp.promeniStanje(new LogInKorisnik());
-			// System.out.println("HELLO IZLOGOVAO SAM SE");
 		}
 	}
 
@@ -516,9 +505,6 @@ public class Kontroler {
 		public void actionPerformed(ActionEvent e) {
 			JOptionPane.showMessageDialog((IzvjestajDialog) theView, "Trazeni izvestaj uspesno generisan.",
 					"Generisanje izvestaja", JOptionPane.INFORMATION_MESSAGE);
-			// TODO
-			// String odabir = ((IzvjestajDialog) theView).getVrstaIzvestaja();
-			// theApp.formirajIzvestaj(odabir);
 		}
 	}
 
@@ -535,10 +521,9 @@ public class Kontroler {
 		public void actionPerformed(ActionEvent e) {
 			Soba s = ((SobaButton) e.getSource()).getSoba();
 			try {
-				theView = new PrikazStanjaSobeDialog();
+				theView = new PrikazStanjaSobeDialog((MainFrame) theView);
 			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 					| UnsupportedLookAndFeelException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			((PrikazStanjaSobeDialog) theView).setTemperatura(s.getTemperatura() + "");
@@ -595,7 +580,7 @@ public class Kontroler {
 		public void actionPerformed(ActionEvent e) {
 
 			Komponenta k = ((KomponentaButton) e.getSource()).getKomponenta();
-			KomponentaDialog kd = new KomponentaDialog();
+			KomponentaDialog kd = new KomponentaDialog((MainFrame) theView);
 			kd.setId(k.getId());
 			kd.setSlika(k.getTipKomponente().getSlika());
 			kd.setNaziv(k.getNaziv());

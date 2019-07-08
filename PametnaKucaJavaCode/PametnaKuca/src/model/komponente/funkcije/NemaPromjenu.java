@@ -9,6 +9,7 @@ import model.komponente.Komponenta;
  * NemaPovecanje
  ***********************************************************************/
 
+@SuppressWarnings("serial")
 public class NemaPromjenu implements Promijeni, Serializable {
 	public void uradi(Komponenta k, int naKoliko) {
 		k.setVrednost(k.getVrednost());

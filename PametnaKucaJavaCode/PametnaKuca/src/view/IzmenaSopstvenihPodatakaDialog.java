@@ -8,16 +8,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import konstante.Konstante;
 import model.korisnik.Pol;
 
 @SuppressWarnings("serial")
@@ -52,26 +54,16 @@ public class IzmenaSopstvenihPodatakaDialog extends JDialog {
 	private JButton btnCancel;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			IzmenaSopstvenihPodatakaDialog dialog = new IzmenaSopstvenihPodatakaDialog();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
 	 * Create the dialog.
 	 * @throws UnsupportedLookAndFeelException 
 	 * @throws IllegalAccessException 
 	 * @throws InstantiationException 
 	 * @throws ClassNotFoundException 
 	 */
-	public IzmenaSopstvenihPodatakaDialog() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+	public IzmenaSopstvenihPodatakaDialog(JFrame main) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+		super(main, true);
+		setTitle("ISAK - Izmena sopstvenih podataka");
+		setIconImage(new ImageIcon(Konstante.APP_LOGO).getImage());
 		setBounds(100, 100, 464, 354);
 		setLocationRelativeTo(null);
 		setResizable(false);

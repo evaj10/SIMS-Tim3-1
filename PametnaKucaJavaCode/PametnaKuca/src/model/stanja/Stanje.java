@@ -9,6 +9,7 @@ import java.io.Serializable;
 
 import model.Aplikacija;
 
+@SuppressWarnings("serial")
 public abstract class Stanje implements Serializable {
 	public Aplikacija aplikacija;
 

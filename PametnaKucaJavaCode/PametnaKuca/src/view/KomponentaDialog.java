@@ -2,7 +2,6 @@ package view;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -10,14 +9,11 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -53,9 +49,10 @@ public class KomponentaDialog extends JDialog {
 	private JButton btnBack;
 	private JButton btnConfirm;
 
-	public KomponentaDialog() {
+	public KomponentaDialog(JFrame main) {
+		super(main, true);
 		setResizable(false);
-		setTitle("ISAK");
+		setTitle("ISAK - Prikaz komponente");
 		setIconImage(new ImageIcon(Konstante.APP_LOGO).getImage());
 
 		// postavljamo dimenziju dijaloga u zavisnosti od velicine ekrana na cetvrtinu
@@ -80,7 +77,6 @@ public class KomponentaDialog extends JDialog {
 		panel = new JPanel(new GridBagLayout());
 
 		lblId = new JLabel("");
-		ImageIcon imgLogo = new ImageIcon(Konstante.COMPANY_LOGO);
 		lblLogo = new JLabel("");
 
 		lblNaziv = new JLabel("Naziv uredjaja:");

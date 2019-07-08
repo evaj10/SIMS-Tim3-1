@@ -8,6 +8,7 @@ import model.komponente.funkcije.NemaPromjenu;
  * Module: Alarm.java Author: Ksenija Purpose: Defines the Class Alarm
  ***********************************************************************/
 
+@SuppressWarnings("serial")
 public class Alarm extends TipKomponente {
 
 	public Alarm() {

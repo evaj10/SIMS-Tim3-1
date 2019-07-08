@@ -7,7 +7,7 @@ import model.komponente.funkcije.ImaUkljuciIskljuci;
 /***********************************************************************
  * Module: Klima.java Author: Ksenija Purpose: Defines the Class Klima s
  **********************************/
-
+@SuppressWarnings("serial")
 public class Klima extends TipKomponente {
 	public Klima() {
 		super(Konstante.COOLING, "Temperatura:");

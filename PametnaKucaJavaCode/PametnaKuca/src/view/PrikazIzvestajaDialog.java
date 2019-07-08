@@ -5,14 +5,15 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import konstante.Konstante;
 
 public class PrikazIzvestajaDialog extends JDialog{
 	
@@ -37,10 +38,11 @@ public class PrikazIzvestajaDialog extends JDialog{
 	private JLabel lblPotrosenaKolicinaPrethodni;
 	private JTextField txfPotrosenaKolicinaPrethodni;
 	
-	public PrikazIzvestajaDialog() {
+	public PrikazIzvestajaDialog(JFrame main) {
+		super(main, true);
 		setResizable(false);
 		setTitle("ISAK - Prikaz izvestaja korisniku");
-		setIconImage(new ImageIcon("logo.gif").getImage());
+		setIconImage(new ImageIcon(Konstante.APP_LOGO).getImage());
 		
 		setWindowSize();
 		setLocationRelativeTo(null);
@@ -184,13 +186,5 @@ public class PrikazIzvestajaDialog extends JDialog{
 	public void setTxfPotrosenaKolicina(String txfPotrosenaKolicina) {
 		this.txfPotrosenaKolicina.setText(txfPotrosenaKolicina);
 	}
-	
 
-	public static void main(String args[]) {
-		PrikazIzvestajaDialog prozor = new PrikazIzvestajaDialog();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Calendar calendar = Calendar.getInstance();
-		prozor.setAll("Masarikova 14", "Zli blizanac - Milojica", "Gas gas", sdf.format(calendar.getTime()), "150", "200", "50");
-		prozor.setVisible(true);
-	}
 }

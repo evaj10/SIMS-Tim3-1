@@ -32,6 +32,7 @@ public class Soba implements Serializable {
 		return komponente;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public java.util.Iterator getIteratorKomponente() {
 		if (komponente == null)
 			komponente = new java.util.ArrayList<Komponenta>();
@@ -40,7 +41,8 @@ public class Soba implements Serializable {
 
 	public void setKomponente(java.util.List<Komponenta> newKomponente) {
 		removeAllKomponente();
-		for (java.util.Iterator iter = newKomponente.iterator(); iter.hasNext();)
+		for (@SuppressWarnings("rawtypes")
+		java.util.Iterator iter = newKomponente.iterator(); iter.hasNext();)
 			addKomponente((Komponenta) iter.next());
 	}
 
@@ -92,7 +94,8 @@ public class Soba implements Serializable {
 	public void removeAllKomponente() {
 		if (komponente != null) {
 			Komponenta oldKomponenta;
-			for (java.util.Iterator iter = getIteratorKomponente(); iter.hasNext();) {
+			for (@SuppressWarnings("rawtypes")
+			java.util.Iterator iter = getIteratorKomponente(); iter.hasNext();) {
 				oldKomponenta = (Komponenta) iter.next();
 				iter.remove();
 				oldKomponenta.setSoba((Soba) null);

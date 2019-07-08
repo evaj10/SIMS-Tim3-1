@@ -5,6 +5,7 @@ package model.stanja;
  * SpoljniRezim
  ***********************************************************************/
 
+@SuppressWarnings("serial")
 public class SpoljniRezim extends Stanje {
 	public boolean logIn() {
 		// TODO: implement

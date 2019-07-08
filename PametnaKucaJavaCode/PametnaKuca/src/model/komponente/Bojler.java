@@ -7,7 +7,7 @@ import model.komponente.funkcije.ImaUkljuciIskljuci;
 /***********************************************************************
  * Module: Bojler.java Author: Ksenija Purpose: Defines the Class Bojler
  ***********************************************************************/
-
+@SuppressWarnings("serial")
 public class Bojler extends TipKomponente {
 	public Bojler() {
 		super(Konstante.HEATING, "Teperatura:");

@@ -4,16 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.MenuItem;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -56,8 +54,7 @@ public class MainFrame extends JFrame {
 	private JScrollPane spSobeScroll;
 	private JLabel lblTlocrtImage;
 	
-	private List<SobaButton> btnsSobe = new ArrayList<SobaButton>();
-	private List<KomponentaButton> btnsKomponente = new ArrayList<KomponentaButton>();
+	private ArrayList<KomponentaButton> uredjaji = new ArrayList<KomponentaButton>();
 	
 	// promena velicine komponenti pri promeni velicine prozora
 	int x;
@@ -80,7 +77,7 @@ public class MainFrame extends JFrame {
 	}
 
 	public void initGUI() {
-		setTitle("Inteligentna Softverska Aplikazija za Kucu " /* + app.getTlocrt().getNaziv() */);
+		setTitle("Inteligentna Softverska Aplikazija za Kucu");
 		setIconImage(new ImageIcon(Konstante.APP_LOGO).getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setWindowSize();
@@ -232,6 +229,7 @@ public class MainFrame extends JFrame {
 	public void addKomponente(Collection<Komponenta> komponente, ActionListener a) {
 		for (Komponenta k : komponente) {
 			KomponentaButton k1 = new KomponentaButton(k);
+			uredjaji.add(k1);
 			k1.setIcon(new ImageIcon(k.getTipKomponente().getSlika()));
 			k1.addActionListener(a);
 			k1.setBounds(k.getTacka().getX(), k.getTacka().getY(), 60, 60);
@@ -239,4 +237,31 @@ public class MainFrame extends JFrame {
 		}
 	}
 	
+	public void restrict() {
+		btnBrisanjeKorisnika.setEnabled(false);
+		btnIzmenaPodatakaKorisnika.setEnabled(false);
+		btnKreiranjeKorisnika.setEnabled(false);
+		btnUnapredjivanjeKorisnika.setEnabled(false);
+		for (KomponentaButton k : uredjaji) {
+			k.setEnabled(false);
+		}
+		menuBar.getMiBrisanjeKorisnika().setEnabled(false);
+		menuBar.getMiIzmeniPodatkeKorisnika().setEnabled(false);
+		menuBar.getMiKreirajKorisnika().setEnabled(false);
+		menuBar.getMiUnaprediKorisnika().setEnabled(false);
+	}
+	
+	public void permit() {
+		btnBrisanjeKorisnika.setEnabled(true);
+		btnIzmenaPodatakaKorisnika.setEnabled(true);
+		btnKreiranjeKorisnika.setEnabled(true);
+		btnUnapredjivanjeKorisnika.setEnabled(true);
+		for (KomponentaButton k : uredjaji) {
+			k.setEnabled(true);
+		}
+		menuBar.getMiBrisanjeKorisnika().setEnabled(true);
+		menuBar.getMiIzmeniPodatkeKorisnika().setEnabled(true);
+		menuBar.getMiKreirajKorisnika().setEnabled(true);
+		menuBar.getMiUnaprediKorisnika().setEnabled(true);
+	}
 }

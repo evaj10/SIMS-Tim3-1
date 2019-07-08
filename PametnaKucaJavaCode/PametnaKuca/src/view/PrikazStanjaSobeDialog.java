@@ -7,12 +7,15 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import konstante.Konstante;
 import model.komponente.Komponenta;
 
 @SuppressWarnings("serial")
@@ -34,26 +37,16 @@ public class PrikazStanjaSobeDialog extends JDialog {
 	private JButton btnOk;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			PrikazStanjaSobeDialog dialog = new PrikazStanjaSobeDialog();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
 	 * Create the dialog.
 	 * @throws UnsupportedLookAndFeelException 
 	 * @throws IllegalAccessException 
 	 * @throws InstantiationException 
 	 * @throws ClassNotFoundException 
 	 */
-	public PrikazStanjaSobeDialog() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+	public PrikazStanjaSobeDialog(JFrame main) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+		super(main, true);
+		setTitle("ISAK - Prikaz sobe");
+		setIconImage(new ImageIcon(Konstante.APP_LOGO).getImage());
 		setBounds(100, 100, 450, 247);
 		setLocationRelativeTo(null);
 		setResizable(false);

@@ -13,10 +13,13 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+
+import konstante.Konstante;
 
 public class BrisanjeKorisnikaDialog extends JDialog{
 	
@@ -31,10 +34,11 @@ public class BrisanjeKorisnikaDialog extends JDialog{
 	private JButton btnUkloni;
 	
 	
-	public BrisanjeKorisnikaDialog() {
+	public BrisanjeKorisnikaDialog(JFrame main) {
+		super(main, true);
 		setResizable(false);
-		setTitle("ISAK - Prikaz izvestaja korisniku");
-		setIconImage(new ImageIcon("logo.gif").getImage());
+		setTitle("ISAK - Brisanje korisnika");
+		setIconImage(new ImageIcon(Konstante.APP_LOGO).getImage());
 		this.dialog = new PredlogKorisnikaDialog();
 		
 		setWindowSize();
@@ -131,29 +135,6 @@ public class BrisanjeKorisnikaDialog extends JDialog{
 				panel.add(lblKorisnik);
 			}
 		}
-	}
-	
-	
-	public static void main(String args[]) {
-		ArrayList<String> korisnici = new ArrayList<String>();
-		korisnici.add("mikelandjelo");
-		korisnici.add("uzbuna111");
-		korisnici.add("lajanjeNaZvezde");
-		korisnici.add("mikelandjelo");
-		korisnici.add("uzbuna111");
-		korisnici.add("lajanjeNaZvezde");
-		korisnici.add("mikelandjelo");
-		korisnici.add("uzbuna111");
-		korisnici.add("lajanjeNaZvezde");
-		korisnici.add("mikelandjelo");
-		korisnici.add("uzbuna111");
-		korisnici.add("lajanjeNaZvezde");
-		korisnici.add("mikelandjelo");
-		korisnici.add("uzbuna111");
-		korisnici.add("lajanjeNaZvezde");
-		BrisanjeKorisnikaDialog prozor = new BrisanjeKorisnikaDialog();
-		prozor.dialog.setKorisnici(korisnici);
-		prozor.setVisible(true);
 	}
 	
 }

@@ -8,6 +8,7 @@ import model.komponente.funkcije.ImaUkljuciIskljuci;
  * Module: Zvucnik.java Author: Ksenija Purpose: Defines the Class Zvucnik
  ***********************************************************************/
 
+@SuppressWarnings("serial")
 public class Zvucnik extends TipKomponente {
 
 	public Zvucnik() {

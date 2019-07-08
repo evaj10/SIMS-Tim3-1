@@ -6,7 +6,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -43,18 +42,18 @@ public class LoginDialog extends JDialog {
 		setResizable(false);
 		setTitle("Inteligentna Softverska Aplikazija za Kucu - Prijava");
 		setIconImage(new ImageIcon(Konstante.APP_LOGO).getImage());
-		
+
 		// postavljamo dimenziju dijaloga u zavisnosti od velicine ekrana na cetvrtinu
 		setWindowSize();
 		setLocationRelativeTo(null);
-		
+
 		// postavljamo raspored komponenti
 		createGUI();
 		createLayout();
-		
+
 		// povezivanje dugmadi
-		//attachBtnListeners();
-		
+		// attachBtnListeners();
+
 		// gasenje dijaloga = gasenje aplikacije
 		terminateOnExit();
 	}
@@ -72,9 +71,9 @@ public class LoginDialog extends JDialog {
 		ImageIcon imgLogo = new ImageIcon(Konstante.APP_LOGO);
 		lblLogo = new JLabel("", imgLogo, JLabel.CENTER);
 		lblLogo.setMaximumSize(new Dimension(100, 100));
-		
+
 		lblLogin = new JLabel("Prijava", JLabel.CENTER);
-		lblLogin.setFont(new Font(Font.DIALOG,Font.BOLD,16));
+		lblLogin.setFont(new Font(Font.DIALOG, Font.BOLD, 16));
 
 		lblName = new JLabel("Korisnicko ime: ");
 		txfUsername = new JTextField();
@@ -111,32 +110,31 @@ public class LoginDialog extends JDialog {
 
 		panel.add(btnReport, new GridBagConstraints(0, 7, 1, 1, 0, 0, GridBagConstraints.EAST, GridBagConstraints.NONE,
 				new Insets(15, 5, 5, 20), 0, 0));
-	
+
 	}
-	
+
 	public void addLoginListener(ActionListener a) {
 		btnLogIn.addActionListener(a);
 	}
-	
+
 	public void addIzvestajListener(ActionListener a) {
 		btnReport.addActionListener(a);
 	}
-	
+
 	private void terminateOnExit() {
 		WindowListener exitListener = new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-            	//System.out.println(lblLogo.getSize().height);
-                   System.exit(0);
-            }
-        };
-        this.addWindowListener(exitListener);
+			@Override
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+		};
+		this.addWindowListener(exitListener);
 	}
-	
+
 	public String getUsername() {
 		return txfUsername.getText();
 	}
-	
+
 	public String getPassword() {
 		return txfPassword.getText();
 	}

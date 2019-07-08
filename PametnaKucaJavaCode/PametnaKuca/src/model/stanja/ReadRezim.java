@@ -4,6 +4,7 @@ package model.stanja;
  * Module: ReadRezim.java Author: Korisnik Purpose: Defines the Class ReadRezim
  ***********************************************************************/
 
+@SuppressWarnings("serial")
 public class ReadRezim extends Stanje {
 	public boolean logIn() {
 		// TODO: implement

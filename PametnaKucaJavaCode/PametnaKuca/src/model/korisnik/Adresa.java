@@ -42,4 +42,5 @@ public class Adresa implements Serializable {
 	public Mesto getMesto() {
 		return mesto;
 	}
+
 }

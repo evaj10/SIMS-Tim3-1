@@ -1,16 +1,11 @@
 package view;
 
-import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -35,6 +30,7 @@ public class IzvjestajDialog extends JDialog {
 	private JPanel panel;
 	private JLabel lblLogo;
 	private JLabel lblLogin;
+	@SuppressWarnings("rawtypes")
 	private JComboBox cmbReports;
 	private JLabel lblMessage;
 	private JButton btnBack;
@@ -42,7 +38,7 @@ public class IzvjestajDialog extends JDialog {
 
 	public IzvjestajDialog() {
 		setResizable(false);
-		setTitle("Inteligentna Softverska Aplikazija za Kucu - Odabir izvjestaja");
+		setTitle("ISAK - Odabir izvjestaja");
 		setIconImage(new ImageIcon(Konstante.APP_LOGO).getImage());
 
 		// postavljamo dimenziju dijaloga u zavisnosti od velicine ekrana na cetvrtinu
@@ -68,6 +64,7 @@ public class IzvjestajDialog extends JDialog {
 		setSize(width / 4, height / 2);
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void createGUI() {
 		panel = new JPanel(new GridBagLayout());
 

@@ -7,7 +7,7 @@ import model.komponente.funkcije.ImaUkljuciIskljuci;
 /***********************************************************************
  * Module: Grejac.java Author: Ksenija Purpose: Defines the Class Grejac
  ***********************************************************************/
-
+@SuppressWarnings("serial")
 public class Grejac extends TipKomponente {
 
 	public Grejac() {

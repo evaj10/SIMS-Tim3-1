@@ -7,11 +7,9 @@ package model;
 
 import java.io.Serializable;
 
-import model.komponente.Komponenta;
 import model.komponente.Tlocrt;
 import model.korisnik.Nalog;
 import model.korisnik.SpoljniKorisnik;
-import model.korisnik.TipIzvestaja;
 import model.korisnik.TipKorisnika;
 import model.stanja.Stanje;
 
@@ -37,10 +35,6 @@ public class Aplikacija implements Serializable {
 	
 	public void unaprediKorisnika(Nalog n) {
 		n.getKorisnik().setTipKorisnika(TipKorisnika.readWrite);
-	}
-	
-	public void kreirajIzvestaj(TipIzvestaja tipIzvestaja) {
-		// TODO: implement
 	}
 
 	public boolean logIn(String korisnickoIme, String lozinka) {
@@ -72,86 +66,8 @@ public class Aplikacija implements Serializable {
 		return false;
 	}
 
-	public void upgradeKorisnik(TipKorisnika r) {
-		// TODO: implement
-	}
-
-	public void ukljuciIskljuci(Komponenta k, int novaVrednost) {
-		// TODO: implement
-	}
-
-	public void promeniVrijednost(Komponenta k, int novaVrednost) {
-		// TODO: implement
-	}
-
-	public void izmenaSopstvenihPodataka() {
-		// TODO: implement
-	}
-
-	public void izmenaPodataka(TipKorisnika r) {
-		// TODO: implement
-	}
-
-	public void ucitavanjeTlocrta() {
-		// TODO: implement
-	}
-
-	public boolean validnostLozinke(String lozinka) {
-		// TODO: implement
-		return false;
-	}
-
-	public void osveziPrikaz(Komponenta k) {
-		// TODO: implement
-	}
-
 	public void promeniStanje(Stanje s) {
-		// TODO: implement
-	}
-
-	public boolean logovanjeSpoljnig() {
-		// TODO: implement
-		return false;
-	}
-
-	public void odabirIzvjestaja() {
-		// TODO: implement
-	}
-
-	public void pritisnutoDugmeIzvjestaji() {
-		// TODO: implement
-	}
-
-	public void pritisnutoDugmePovratak() {
-		// TODO: implement
-	}
-
-	public void prikaziFormuZaLogovanje() {
-		// TODO: implement
-	}
-
-	public void prikaziPorukuGreske() {
-		// TODO: implement
-	}
-
-	public void prikaziTlocrt() {
-		// TODO: implement
-	}
-
-	public void prikaziFormuZaLogovanjeSpoljnog() {
-		// TODO: implement
-	}
-
-	public void prikaziFormuZaIzborIzvjestaja() {
-		// TODO: implement
-	}
-
-	public void posaljiIzvjestaj() {
-		// TODO: implement
-	}
-
-	public void pritisnutoDugmeZaOdustajanje() {
-		// TODO: implement
+		this.stanje = s;
 	}
 
 	public java.util.List<Nalog> getNalozi() {
@@ -186,18 +102,6 @@ public class Aplikacija implements Serializable {
 			}
 		}
 		return readNalozi;
-	}
-	
-	public java.util.Iterator getIteratorNalozi() {
-		if (nalozi == null)
-			nalozi = new java.util.ArrayList<Nalog>();
-		return nalozi.iterator();
-	}
-
-	public void setNalozi(java.util.List<Nalog> newNalozi) {
-		removeAllNalozi();
-		for (java.util.Iterator iter = newNalozi.iterator(); iter.hasNext();)
-			addNalozi((Nalog) iter.next());
 	}
 
 	public void addNalozi(Nalog newNalog) {
@@ -261,5 +165,9 @@ public class Aplikacija implements Serializable {
 
 	public void setSpoljniKorisnici(java.util.List<SpoljniKorisnik> spoljniKorisnici) {
 		this.spoljniKorisnici = spoljniKorisnici;
+	}
+	
+	public String getTlocrtAdresa() {
+		return tlocrt.dobaviAdresu();
 	}
 }

@@ -7,7 +7,7 @@ import model.komponente.funkcije.ImaUkljuciIskljuci;
 /***********************************************************************
  * Module: Radijator.java Author: Ksenija Purpose: Defines the Class Radijator
  ***********************************************************************/
-
+@SuppressWarnings("serial")
 public class Radijator extends TipKomponente {
 
 	public Radijator() {

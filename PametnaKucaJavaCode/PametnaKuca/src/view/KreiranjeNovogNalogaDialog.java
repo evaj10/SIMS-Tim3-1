@@ -11,18 +11,20 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
+import konstante.Konstante;
 import model.korisnik.Pol;
 import model.korisnik.TipKorisnika;
 
@@ -54,31 +56,20 @@ public class KreiranjeNovogNalogaDialog extends JDialog {
 	private JButton btnPrijaviSe;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			KreiranjeNovogNalogaDialog dialog = new KreiranjeNovogNalogaDialog();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
 	 * Create the dialog.
 	 * @throws UnsupportedLookAndFeelException 
 	 * @throws IllegalAccessException 
 	 * @throws InstantiationException 
 	 * @throws ClassNotFoundException 
 	 */
-	public KreiranjeNovogNalogaDialog() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+	public KreiranjeNovogNalogaDialog(JFrame main) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+		super(main, true);
 		setBounds(100, 100, 683, 350);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("ISAK - Kreiranje Novog Naloga");
+		setIconImage(new ImageIcon(Konstante.APP_LOGO).getImage());
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -192,6 +183,7 @@ public class KreiranjeNovogNalogaDialog extends JDialog {
 		{
 			txtLozinka = new JPasswordField();
 			txtLozinka.addFocusListener(new FocusAdapter() {
+				@SuppressWarnings("deprecation")
 				@Override
 				public void focusGained(FocusEvent arg0) {
 					txtLozinka.setEchoChar('*');
@@ -201,6 +193,7 @@ public class KreiranjeNovogNalogaDialog extends JDialog {
 					}
 					
 				}
+				@SuppressWarnings("deprecation")
 				@Override
 				public void focusLost(FocusEvent e) {
 					if(txtLozinka.getText().equals(""))
@@ -389,6 +382,7 @@ public class KreiranjeNovogNalogaDialog extends JDialog {
 	}
 	
 	
+	@SuppressWarnings("deprecation")
 	public String getLozinka()
 	{
 		return txtLozinka.getText();

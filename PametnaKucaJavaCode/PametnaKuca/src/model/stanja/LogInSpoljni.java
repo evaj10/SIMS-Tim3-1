@@ -5,6 +5,7 @@ package model.stanja;
  * LogInSpoljni
  ***********************************************************************/
 
+@SuppressWarnings("serial")
 public class LogInSpoljni extends Stanje {
 	public boolean logIn() {
 		// TODO: implement

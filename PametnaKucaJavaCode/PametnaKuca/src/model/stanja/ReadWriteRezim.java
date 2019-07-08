@@ -5,6 +5,7 @@ package model.stanja;
  * ReadWriteRezim
  ***********************************************************************/
 
+@SuppressWarnings("serial")
 public class ReadWriteRezim extends Stanje {
 	public boolean logIn() {
 		// TODO: implement
