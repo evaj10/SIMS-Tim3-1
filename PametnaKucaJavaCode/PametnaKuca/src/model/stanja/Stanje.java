@@ -11,40 +11,44 @@ import model.Aplikacija;
 
 @SuppressWarnings("serial")
 public abstract class Stanje implements Serializable {
-	public Aplikacija aplikacija;
+	protected Aplikacija aplikacija;
 
-	public boolean logIn() {
-		// TODO: implement
+	public Stanje(Aplikacija app) {
+		this.aplikacija = app;
+	}
+	
+	public boolean logIn(String korisnickoIme, String lozinka) {
 		return false;
 	}
 
-	public void logOut() {
-		// TODO: implement
+	public boolean logOut() {
+		return false;
 	}
 
-	public boolean logovanjeSpoljnog() {
-		// TODO: implement
+	public boolean logovanjeSpoljnog(String id) {
 		return false;
 	}
 
 	public void odabirIzvjestaja() {
-		// TODO: implement
 	}
 
 	public void pritisnutoDugmeIzvjestaji() {
-		// TODO: implement
 	}
 
 	public void pritisnutoDugmePovratak() {
-		// TODO: implement
 	}
 
 	public void entry() {
-		// TODO: implement
 	}
 
 	public void pritisnutoDugmeZaOdustajanje() {
-		// TODO: implement
 	}
 
+	public Aplikacija getAplikacija() {
+		return aplikacija;
+	}
+
+	public void setAplikacija(Aplikacija aplikacija) {
+		this.aplikacija = aplikacija;
+	}
 }

@@ -11,6 +11,7 @@ import model.komponente.Tlocrt;
 import model.korisnik.Nalog;
 import model.korisnik.SpoljniKorisnik;
 import model.korisnik.TipKorisnika;
+import model.stanja.LogInKorisnik;
 import model.stanja.Stanje;
 
 @SuppressWarnings("serial")
@@ -22,7 +23,9 @@ public class Aplikacija implements Serializable {
 	private java.util.List<SpoljniKorisnik> spoljniKorisnici;
 	private Stanje stanje;
 	
-	public Aplikacija() {}
+	public Aplikacija() {
+		this.stanje = new LogInKorisnik(this);
+	}
 	
 	public Nalog getNalog(String korisnickoIme) {
 		for (Nalog n : nalozi) {
@@ -31,6 +34,13 @@ public class Aplikacija implements Serializable {
 			}
 		}
 		return null;
+	}
+	
+	public boolean nalogPostoji(String korisnickoIme) {
+		if (getNalog(korisnickoIme) == null) {
+			return false;
+		}
+		return true;
 	}
 	
 	public void unaprediKorisnika(Nalog n) {

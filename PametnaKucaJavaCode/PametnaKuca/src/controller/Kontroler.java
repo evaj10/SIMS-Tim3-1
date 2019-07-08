@@ -61,7 +61,6 @@ public class Kontroler {
 		this.theApp = theApp;
 		((LoginDialog) this.theView).addLoginListener(new LoginListener());
 		((LoginDialog) this.theView).addIzvestajListener(new IzvestajListener());
-		theApp.setStanje(new LogInKorisnik());
 	}
 
 	private void loginToMainFrame() {
@@ -120,11 +119,11 @@ public class Kontroler {
 			String lozinka = ((LoginDialog) theView).getPassword();
 
 			// promeni theView na MainFrame
-			if (theApp.logIn(korisnickoIme, lozinka)) {
+			if (theApp.getStanje().logIn(korisnickoIme, lozinka)) {
 				if (theApp.getTrenutnoUlogovani().getKorisnik().getTipKorisnika() == TipKorisnika.read) {
-					theApp.promeniStanje(new ReadRezim());
+					theApp.promeniStanje(new ReadRezim(theApp));
 				} else {
-					theApp.promeniStanje(new ReadWriteRezim());
+					theApp.promeniStanje(new ReadWriteRezim(theApp));
 				}
 				loginToMainFrame();
 			} else {
@@ -144,7 +143,7 @@ public class Kontroler {
 			((LoginSpoljniDialog) theView).setVisible(true);
 			((LoginSpoljniDialog) theView).addPovratakListener(new SpoljniDijalogPovratakListener());
 			((LoginSpoljniDialog) theView).addLoginListener(new SpoljniDijalogLoginListener());
-			theApp.promeniStanje(new LogInSpoljni());
+			theApp.promeniStanje(new LogInSpoljni(theApp));
 		}
 	}
 
@@ -203,11 +202,24 @@ public class Kontroler {
 			String ime = ((KreiranjeNovogNalogaDialog) theView).getIme();
 			String prezime = ((KreiranjeNovogNalogaDialog) theView).getPrezime();
 			String korisnickoIme = ((KreiranjeNovogNalogaDialog) theView).getKorisnickoIme();
+			if (theApp.nalogPostoji(korisnickoIme)) {
+				JOptionPane.showMessageDialog((KreiranjeNovogNalogaDialog) theView,
+						"Korisnicko ime vec postoji!", "Neuspesno kreiranje korisnika",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 			String lozinka = ((KreiranjeNovogNalogaDialog) theView).getLozinka();
 			Date datumRodjenja = parseDate(((KreiranjeNovogNalogaDialog) theView).getDatumRodjenja());
 			Pol pol = ((KreiranjeNovogNalogaDialog) theView).getPol();
 			TipKorisnika tipKorisnika = ((KreiranjeNovogNalogaDialog) theView).getTipKorisnika();
-
+			
+			if (ime.equals("Ime") || prezime.equals("Prezime") || korisnickoIme.equals("Korisnicko ime")
+					|| lozinka.equals("Lozinka") || pol == null || tipKorisnika == null) {
+				JOptionPane.showMessageDialog((KreiranjeNovogNalogaDialog) theView,
+						"Morate popuniti sva polja!", "Neuspesno kreiranje korisnika",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 			Korisnik korisnik = new Korisnik(ime, prezime, datumRodjenja, pol, tipKorisnika);
 
 			Nalog nalog = new Nalog(korisnickoIme, lozinka, Konstante.TLOCRT1, korisnik);
@@ -450,7 +462,8 @@ public class Kontroler {
 			((LoginDialog) theView).addIzvestajListener(new IzvestajListener());
 			((LoginDialog) theView).setVisible(true);
 			FileKontroler.writeOutputFile(theApp);
-			theApp.promeniStanje(new LogInKorisnik());
+			theApp.getStanje().logOut();
+			theApp.promeniStanje(new LogInKorisnik(theApp));
 		}
 	}
 
@@ -463,7 +476,7 @@ public class Kontroler {
 
 			((LoginDialog) theView).addLoginListener(new LoginListener());
 			((LoginDialog) theView).addIzvestajListener(new IzvestajListener());
-			theApp.promeniStanje(new LogInKorisnik());
+			theApp.promeniStanje(new LogInKorisnik(theApp));
 		}
 	}
 
@@ -471,14 +484,14 @@ public class Kontroler {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String korisnickoIme = ((LoginSpoljniDialog) theView).getId();
-			if (theApp.loginSpoljni(korisnickoIme)) {
+			if (theApp.getStanje().logovanjeSpoljnog((korisnickoIme))) {
 				((LoginSpoljniDialog) theView).dispose();
 				theView = new IzvjestajDialog();
 				((IzvjestajDialog) theView).setVisible(true);
 
 				((IzvjestajDialog) theView).addPovratakListener(new IzvestajPovratakListener());
 				((IzvjestajDialog) theView).addTraziListener(new IzvestajTraziListener());
-				theApp.promeniStanje(new SpoljniRezim());
+				theApp.promeniStanje(new SpoljniRezim(theApp));
 			} else {
 				JOptionPane.showMessageDialog((LoginSpoljniDialog) theView, "Nepostojeci ID kompanije!",
 						"Neuspesno prijavljivanje", JOptionPane.ERROR_MESSAGE);
@@ -496,7 +509,7 @@ public class Kontroler {
 
 			((LoginDialog) theView).addLoginListener(new LoginListener());
 			((LoginDialog) theView).addIzvestajListener(new IzvestajListener());
-			theApp.promeniStanje(new LogInKorisnik());
+			theApp.promeniStanje(new LogInKorisnik(theApp));
 		}
 	}
 

@@ -1,39 +1,42 @@
 package model.stanja;
 
+import model.Aplikacija;
+
 /***********************************************************************
  * Module: ReadRezim.java Author: Korisnik Purpose: Defines the Class ReadRezim
  ***********************************************************************/
 
 @SuppressWarnings("serial")
 public class ReadRezim extends Stanje {
-	public boolean logIn() {
-		// TODO: implement
-		return false;
+
+	public ReadRezim(Aplikacija app) {
+		super(app);
+	}
+	
+	public boolean logOut() {
+		return true;
 	}
 
-	public void logOut() {
-		// TODO: implement
+	public void entry() {
 	}
-
-	public boolean logovanjeSpoljnog() {
-		// TODO: implement
+	
+	public boolean logovanjeSpoljnog(String id) {
 		return false;
 	}
 
 	public void odabirIzvjestaja() {
-		// TODO: implement
 	}
 
 	public void pritisnutoDugmeIzvjestaji() {
-		// TODO: implement
 	}
 
 	public void pritisnutoDugmePovratak() {
-		// TODO: implement
 	}
 
-	public void entry() {
-		// TODO: implement
+	public void pritisnutoDugmeZaOdustajanje() {
 	}
-
+	
+	public boolean logIn(String korisnickoIme, String lozinka) {
+		return false;
+	}
 }

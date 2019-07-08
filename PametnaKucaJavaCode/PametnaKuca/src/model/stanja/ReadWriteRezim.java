@@ -1,5 +1,7 @@
 package model.stanja;
 
+import model.Aplikacija;
+
 /***********************************************************************
  * Module: ReadWriteRezim.java Author: Korisnik Purpose: Defines the Class
  * ReadWriteRezim
@@ -7,34 +9,35 @@ package model.stanja;
 
 @SuppressWarnings("serial")
 public class ReadWriteRezim extends Stanje {
-	public boolean logIn() {
-		// TODO: implement
-		return false;
+	
+	public ReadWriteRezim(Aplikacija app) {
+		super(app);
+	}
+	
+	public boolean logOut() {
+		return true;
 	}
 
-	public void logOut() {
-		// TODO: implement
+	public void entry() {
 	}
 
-	public boolean logovanjeSpoljnog() {
-		// TODO: implement
+	public boolean logovanjeSpoljnog(String id) {
 		return false;
 	}
 
 	public void odabirIzvjestaja() {
-		// TODO: implement
 	}
 
 	public void pritisnutoDugmeIzvjestaji() {
-		// TODO: implement
 	}
 
 	public void pritisnutoDugmePovratak() {
-		// TODO: implement
 	}
 
-	public void entry() {
-		// TODO: implement
+	public void pritisnutoDugmeZaOdustajanje() {
 	}
-
+	
+	public boolean logIn(String korisnickoIme, String lozinka) {
+		return false;
+	}
 }

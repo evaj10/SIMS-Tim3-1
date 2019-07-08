@@ -405,10 +405,12 @@ public class KreiranjeNovogNalogaDialog extends JDialog {
 		{
 			pol = Pol.muski;
 		}
-		else {
+		else if(rdbtnNeodredjen.isSelected()) {
 			pol = Pol.ostalo;
 		}
-		
+		else {
+			pol = null;
+		}
 		return pol;
 	}
 	
@@ -419,11 +421,13 @@ public class KreiranjeNovogNalogaDialog extends JDialog {
 		{
 			tipKorisnika = TipKorisnika.read;
 		}
-		else
+		else if(rdbtnReadwrite.isSelected())
 		{
 			tipKorisnika = TipKorisnika.readWrite;
 		}
-		
+		else {
+			tipKorisnika = null;
+		}
 		return tipKorisnika;
 	}
 

@@ -1,5 +1,7 @@
 package model.stanja;
 
+import model.Aplikacija;
+
 /***********************************************************************
  * Module: LogInSpoljni.java Author: Korisnik Purpose: Defines the Class
  * LogInSpoljni
@@ -7,34 +9,38 @@ package model.stanja;
 
 @SuppressWarnings("serial")
 public class LogInSpoljni extends Stanje {
-	public boolean logIn() {
-		// TODO: implement
+
+	public LogInSpoljni(Aplikacija app) {
+		super(app);
+	}
+	
+	public boolean logovanjeSpoljnog(String id) {
+		if (aplikacija.loginSpoljni(id)) {
+			return true;
+		}
 		return false;
-	}
-
-	public void logOut() {
-		// TODO: implement
-	}
-
-	public boolean logovanjeSpoljnog() {
-		// TODO: implement
-		return false;
-	}
-
-	public void odabirIzvjestaja() {
-		// TODO: implement
-	}
-
-	public void pritisnutoDugmeIzvjestaji() {
-		// TODO: implement
-	}
-
-	public void pritisnutoDugmePovratak() {
-		// TODO: implement
 	}
 
 	public void entry() {
-		// TODO: implement
 	}
 
+	public void odabirIzvjestaja() {
+	}
+
+	public void pritisnutoDugmeIzvjestaji() {
+	}
+
+	public void pritisnutoDugmePovratak() {
+	}
+
+	public void pritisnutoDugmeZaOdustajanje() {
+	}
+	
+	public boolean logIn(String korisnickoIme, String lozinka) {
+		return false;
+	}
+
+	public boolean logOut() {
+		return false;
+	}
 }

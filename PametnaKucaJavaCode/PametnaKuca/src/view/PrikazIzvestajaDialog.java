@@ -63,7 +63,7 @@ public class PrikazIzvestajaDialog extends JDialog{
 	private void createGUI() {
 		panel = new JPanel(new GridBagLayout());
 		
-		ImageIcon imgLogo = new ImageIcon("files.gif");
+		ImageIcon imgLogo = new ImageIcon(Konstante.FILES_LOGO);
 		lblLogo = new JLabel("", imgLogo, JLabel.CENTER);
 
 		lblAdresaKuce = new JLabel("Adresa kuce: ", JLabel.CENTER);

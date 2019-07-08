@@ -1,5 +1,7 @@
 package model.stanja;
 
+import model.Aplikacija;
+
 /***********************************************************************
  * Module: SpoljniRezim.java Author: Korisnik Purpose: Defines the Class
  * SpoljniRezim
@@ -7,34 +9,35 @@ package model.stanja;
 
 @SuppressWarnings("serial")
 public class SpoljniRezim extends Stanje {
-	public boolean logIn() {
-		// TODO: implement
-		return false;
+
+	public SpoljniRezim(Aplikacija app) {
+		super(app);
+	}
+	
+	public void entry() {
 	}
 
-	public void logOut() {
-		// TODO: implement
-	}
-
-	public boolean logovanjeSpoljnog() {
-		// TODO: implement
+	public boolean logovanjeSpoljnog(String id) {
 		return false;
 	}
 
 	public void odabirIzvjestaja() {
-		// TODO: implement
 	}
 
 	public void pritisnutoDugmeIzvjestaji() {
-		// TODO: implement
 	}
 
 	public void pritisnutoDugmePovratak() {
-		// TODO: implement
 	}
 
-	public void entry() {
-		// TODO: implement
+	public void pritisnutoDugmeZaOdustajanje() {
+	}
+	
+	public boolean logIn(String korisnickoIme, String lozinka) {
+		return false;
 	}
 
+	public boolean logOut() {
+		return false;
+	}
 }
