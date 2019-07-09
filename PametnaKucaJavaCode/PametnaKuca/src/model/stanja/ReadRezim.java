@@ -14,6 +14,7 @@ public class ReadRezim extends Stanje {
 	}
 	
 	public boolean logOut() {
+		aplikacija.promeniStanje(new LogInKorisnik(aplikacija));
 		return true;
 	}
 

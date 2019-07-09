@@ -18,12 +18,8 @@ public class Soba implements Serializable {
 	
 	public Soba(String ime) {
 		this.ime = ime;
-		this.temperatura = 0;
-		this.vlaznost = 0;
-	}
-	
-	public void iscrtajSobu() {
-		// TODO: implement
+		this.temperatura = 21;
+		this.vlaznost = 30;
 	}
 
 	public java.util.List<Komponenta> getKomponente() {

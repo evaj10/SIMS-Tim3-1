@@ -51,8 +51,7 @@ public class LoginDialog extends JDialog {
 		createGUI();
 		createLayout();
 
-		// povezivanje dugmadi
-		// attachBtnListeners();
+		getRootPane().setDefaultButton(btnLogIn);
 
 		// gasenje dijaloga = gasenje aplikacije
 		terminateOnExit();

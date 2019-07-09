@@ -39,7 +39,7 @@ public class BrisanjeKorisnikaDialog extends JDialog{
 		setResizable(false);
 		setTitle("ISAK - Brisanje korisnika");
 		setIconImage(new ImageIcon(Konstante.APP_LOGO).getImage());
-		this.dialog = new PredlogKorisnikaDialog();
+		this.dialog = new PredlogKorisnikaDialog(this);
 		
 		setWindowSize();
 		setLocationRelativeTo(null);
@@ -108,10 +108,11 @@ public class BrisanjeKorisnikaDialog extends JDialog{
 		private JPanel panel;
 		private JScrollPane scroll;
 		
-		public PredlogKorisnikaDialog() {
+		public PredlogKorisnikaDialog(JDialog parent) {
+			super(parent, true);
 			setResizable(false);
 			setTitle("ISAK - Ispis korisnika");
-			setIconImage(new ImageIcon("logo.gif").getImage());
+			setIconImage(new ImageIcon(Konstante.APP_LOGO).getImage());
 			
 			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 			int screenHeight = screenSize.height;

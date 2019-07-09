@@ -22,6 +22,9 @@ public class SpoljniRezim extends Stanje {
 	}
 
 	public void odabirIzvjestaja() {
+		aplikacija.promeniStanje(new LogInKorisnik(aplikacija));
+		// ostaje u istom stanju, moze birati vise izvestaja
+		// po stejtu ne moze
 	}
 
 	public void pritisnutoDugmeIzvjestaji() {
@@ -31,6 +34,7 @@ public class SpoljniRezim extends Stanje {
 	}
 
 	public void pritisnutoDugmeZaOdustajanje() {
+		aplikacija.promeniStanje(new LogInKorisnik(aplikacija));
 	}
 	
 	public boolean logIn(String korisnickoIme, String lozinka) {

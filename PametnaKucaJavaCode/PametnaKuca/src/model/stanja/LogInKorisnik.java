@@ -1,6 +1,7 @@
 package model.stanja;
 
 import model.Aplikacija;
+import model.korisnik.TipKorisnika;
 
 /***********************************************************************
  * Module: LogInKorisnik.java Author: Korisnik Purpose: Defines the Class
@@ -16,6 +17,13 @@ public class LogInKorisnik extends Stanje {
 	
 	public boolean logIn(String korisnickoIme, String lozinka) {
 		if (aplikacija.logIn(korisnickoIme, lozinka)) {
+			if (aplikacija.getNalog(korisnickoIme)
+					.getKorisnik().getTipKorisnika() == TipKorisnika.read) {
+				aplikacija.promeniStanje(new ReadRezim(aplikacija));
+			}
+			else {
+				aplikacija.promeniStanje(new ReadWriteRezim(aplikacija));
+			}
 			return true;
 		}
 		return false;
@@ -36,6 +44,7 @@ public class LogInKorisnik extends Stanje {
 	}
 
 	public void pritisnutoDugmeIzvjestaji() {
+		aplikacija.promeniStanje(new LogInSpoljni(aplikacija));
 	}
 
 	public void pritisnutoDugmePovratak() {

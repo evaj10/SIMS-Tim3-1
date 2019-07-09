@@ -15,6 +15,7 @@ public class ReadWriteRezim extends Stanje {
 	}
 	
 	public boolean logOut() {
+		aplikacija.promeniStanje(new LogInKorisnik(aplikacija));
 		return true;
 	}
 

@@ -67,10 +67,6 @@ public class Komponenta implements Serializable {
 		this.ukljucena = u;
 	}
 
-	public void iscrtajKomponentu() {
-		// TODO: implement
-	}
-
 	public Soba getSoba() {
 		return soba;
 	}

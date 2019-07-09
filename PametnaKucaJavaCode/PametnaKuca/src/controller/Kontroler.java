@@ -30,7 +30,6 @@ import model.korisnik.TipKorisnika;
 import model.stanja.LogInKorisnik;
 import model.stanja.LogInSpoljni;
 import model.stanja.ReadRezim;
-import model.stanja.ReadWriteRezim;
 import model.stanja.SpoljniRezim;
 import view.BrisanjeKorisnikaDialog;
 import view.IzmenaSopstvenihPodatakaDialog;
@@ -119,12 +118,7 @@ public class Kontroler {
 			String lozinka = ((LoginDialog) theView).getPassword();
 
 			// promeni theView na MainFrame
-			if (theApp.getStanje().logIn(korisnickoIme, lozinka)) {
-				if (theApp.getTrenutnoUlogovani().getKorisnik().getTipKorisnika() == TipKorisnika.read) {
-					theApp.promeniStanje(new ReadRezim(theApp));
-				} else {
-					theApp.promeniStanje(new ReadWriteRezim(theApp));
-				}
+			if (theApp.dugmeLogIn(korisnickoIme, lozinka)) {
 				loginToMainFrame();
 			} else {
 				JOptionPane.showMessageDialog((LoginDialog) theView,
@@ -143,7 +137,7 @@ public class Kontroler {
 			((LoginSpoljniDialog) theView).setVisible(true);
 			((LoginSpoljniDialog) theView).addPovratakListener(new SpoljniDijalogPovratakListener());
 			((LoginSpoljniDialog) theView).addLoginListener(new SpoljniDijalogLoginListener());
-			theApp.promeniStanje(new LogInSpoljni(theApp));
+			theApp.pritisnutoDugmeIzvjestaji();
 		}
 	}
 
@@ -406,6 +400,18 @@ public class Kontroler {
 			theApp.getTrenutnoUlogovani().getKorisnik().setIme(((IzmenaSopstvenihPodatakaDialog) theView).getIme());
 			theApp.getTrenutnoUlogovani().getKorisnik()
 					.setPrezime(((IzmenaSopstvenihPodatakaDialog) theView).getPrezime());
+			String korisnickoIme = ((IzmenaSopstvenihPodatakaDialog) theView).getKorisnickoIme();
+			if (!theApp.getTrenutnoUlogovani().getKorisnickoIme().equals(korisnickoIme)) {
+				if (theApp.nalogPostoji(korisnickoIme)) {
+					JOptionPane.showMessageDialog((IzmenaSopstvenihPodatakaDialog) theView,
+							"Korisnicko ime vec postoji!", "Neuspesna promena podataka korisnika",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}	
+			}
+			else {
+				theApp.getTrenutnoUlogovani().setKorisnickoIme(korisnickoIme);
+			}
 			theApp.getTrenutnoUlogovani()
 					.setKorisnickoIme(((IzmenaSopstvenihPodatakaDialog) theView).getKorisnickoIme());
 			theApp.getTrenutnoUlogovani().setSifra(((IzmenaSopstvenihPodatakaDialog) theView).getLozinka());
@@ -418,7 +424,6 @@ public class Kontroler {
 			izmenaSopstvenihPodatakToMainFrame();
 
 		}
-
 	}
 
 	public class IzmenaSopstvenihPodatakaListener implements ActionListener {
@@ -461,9 +466,8 @@ public class Kontroler {
 			((LoginDialog) theView).addLoginListener(new LoginListener());
 			((LoginDialog) theView).addIzvestajListener(new IzvestajListener());
 			((LoginDialog) theView).setVisible(true);
+			theApp.dugmeLogOut();
 			FileKontroler.writeOutputFile(theApp);
-			theApp.getStanje().logOut();
-			theApp.promeniStanje(new LogInKorisnik(theApp));
 		}
 	}
 
@@ -476,22 +480,22 @@ public class Kontroler {
 
 			((LoginDialog) theView).addLoginListener(new LoginListener());
 			((LoginDialog) theView).addIzvestajListener(new IzvestajListener());
-			theApp.promeniStanje(new LogInKorisnik(theApp));
+			theApp.pritisnutoDugmePovratak();
 		}
 	}
 
 	public class SpoljniDijalogLoginListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String korisnickoIme = ((LoginSpoljniDialog) theView).getId();
-			if (theApp.getStanje().logovanjeSpoljnog((korisnickoIme))) {
+			String idFirme = ((LoginSpoljniDialog) theView).getId();
+			if (theApp.dugmeLogovanjeSpoljnog(idFirme)) {
 				((LoginSpoljniDialog) theView).dispose();
 				theView = new IzvjestajDialog();
 				((IzvjestajDialog) theView).setVisible(true);
 
 				((IzvjestajDialog) theView).addPovratakListener(new IzvestajPovratakListener());
 				((IzvjestajDialog) theView).addTraziListener(new IzvestajTraziListener());
-				theApp.promeniStanje(new SpoljniRezim(theApp));
+				//theApp.promeniStanje(new SpoljniRezim(theApp));
 			} else {
 				JOptionPane.showMessageDialog((LoginSpoljniDialog) theView, "Nepostojeci ID kompanije!",
 						"Neuspesno prijavljivanje", JOptionPane.ERROR_MESSAGE);
@@ -509,7 +513,7 @@ public class Kontroler {
 
 			((LoginDialog) theView).addLoginListener(new LoginListener());
 			((LoginDialog) theView).addIzvestajListener(new IzvestajListener());
-			theApp.promeniStanje(new LogInKorisnik(theApp));
+			theApp.pritisnutoDugmeZaOdustajanje();
 		}
 	}
 
@@ -651,3 +655,4 @@ public class Kontroler {
 		}
 	}
 }
+

@@ -1,7 +1,6 @@
 package tests;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
@@ -10,7 +9,7 @@ import model.Aplikacija;
 import model.korisnik.Korisnik;
 import model.korisnik.Nalog;
 
-class PostojanjeNalogaTest {
+public class PostojanjeNalogaTest {
 	Aplikacija app;
 	
 	@Before
@@ -20,9 +19,9 @@ class PostojanjeNalogaTest {
 	}
 	
 	@Test
-	void test() {
+	public void testNalogPostoji() {
 		assertFalse(app.nalogPostoji("JelisavetaRadic"));
-		//assertFalse(app.nalogPostoji("KorisnickoIme"));
+		assertFalse(app.nalogPostoji("KorisnickoIme"));
 	}
 
 }

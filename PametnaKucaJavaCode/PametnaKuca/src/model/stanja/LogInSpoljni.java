@@ -16,6 +16,7 @@ public class LogInSpoljni extends Stanje {
 	
 	public boolean logovanjeSpoljnog(String id) {
 		if (aplikacija.loginSpoljni(id)) {
+			aplikacija.promeniStanje(new SpoljniRezim(aplikacija));
 			return true;
 		}
 		return false;
@@ -31,6 +32,7 @@ public class LogInSpoljni extends Stanje {
 	}
 
 	public void pritisnutoDugmePovratak() {
+		aplikacija.promeniStanje(new LogInKorisnik(aplikacija));
 	}
 
 	public void pritisnutoDugmeZaOdustajanje() {

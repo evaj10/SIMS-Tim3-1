@@ -145,6 +145,39 @@ public class Aplikacija implements Serializable {
 			this.spoljniKorisnici.add(newSpoljniKorisnik);
 	}
 	
+	// login stanje
+	public boolean dugmeLogIn(String korisnickoIme, String lozinka) {
+		return this.stanje.logIn(korisnickoIme, lozinka);
+	}
+	
+	public void pritisnutoDugmeIzvjestaji() {
+		this.stanje.pritisnutoDugmeIzvjestaji();
+	}
+	
+	// read/readWrite rezim
+	public boolean dugmeLogOut() {
+		return this.stanje.logOut();
+	}
+	
+	// logInSpoljni stanje
+	public boolean dugmeLogovanjeSpoljnog(String id) {
+		return this.stanje.logovanjeSpoljnog(id);
+	}
+	
+	public void pritisnutoDugmePovratak() {
+		this.stanje.pritisnutoDugmePovratak();
+	}
+	
+	// spoljni rezim
+	public void dugmeOdabirIzvjestaja() {
+		this.stanje.odabirIzvjestaja();
+	}
+	
+	public void pritisnutoDugmeZaOdustajanje() {
+		this.stanje.pritisnutoDugmeZaOdustajanje();
+	}
+	//
+	
 	public Nalog getTrenutnoUlogovani() {
 		return trenutnoUlogovani;
 	}
